@@ -3,6 +3,7 @@ import { Form, Row, Col, Card, Modal, ProgressBar } from 'react-bootstrap';
 import DocumentsValid from '../../src/pages/documents-valid';
 import Image from 'next/image';
 import certificate from "../services/certificateServices";
+import QRScan from "../components/qr-scanner";
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -128,7 +129,7 @@ const UploadCertificate = () => {
                     } else {
                         // Both API calls failed, handle errors
                         const errorData = await fileResponse.json();
-                        setLoginError(errorData.message || "Error in Verifying certificate");
+                        setLoginError(errorData.message || "Certification is not valid");
                         setShow(true)
                         // Handle error as needed
                     }
@@ -232,6 +233,9 @@ const UploadCertificate = () => {
                                 <div className='container-fluid'>
                                     <Row className="justify-content-center mt-4 verify-documents">
                                         <h1 className='title text-center'>Please upload your certification to validate.</h1>
+                                        <Col md={{ span: 10 }} className="text-center">
+                                            <QRScan/>
+                                        </Col>
                                         <Col md={{ span: 10 }}>
                                             <Card className='p-4'>
                                                 <Row className='card-certificate '>
