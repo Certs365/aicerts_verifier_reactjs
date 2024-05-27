@@ -19,7 +19,7 @@ const QRScan = () => {
 
     const handleScan = async (scanData) => {
         setLoadingScan(true);
-        if (scanData && scanData.text && scanData.text.startsWith("https://verify")) {
+        if (scanData && scanData.text && scanData.text.startsWith("https://tinyurl.com")) {
             console.log(`Navigating to: ${scanData.text}`);
             window.location.href = scanData.text;
         } else {
