@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import QrReader from 'react-qr-scanner';
+import { Button } from 'react-bootstrap';
 
 const QRScan = () => {
     const [selected, setSelected] = useState("certification verification");
@@ -37,15 +38,13 @@ const QRScan = () => {
     };
     return (
         <div>
-            <h1>Certs 365 QR Scanner</h1>
-
-            <button
-                onClick={() => {
-                    setStartScan(!startScan);
-                }}
-            >
-                {startScan ? "Stop Scan" : "Start Scan"}
-            </button>
+            <h2>Certs 365 QR Scanner</h2>
+            <Button 
+            onClick={() => {
+                setStartScan(!startScan);
+            }} className='heading-info' variant="primary">
+            {startScan ? "Stop Scan" : "Start Scan"}
+            </Button>
             {startScan && (
                 <>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
