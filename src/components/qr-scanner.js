@@ -42,9 +42,12 @@ const QRScan = () => {
             <Button 
             onClick={() => {
                 setStartScan(!startScan);
-            }} className='heading-info' variant="primary">
+            }} className='heading-info golden-upload' 
+            variant="primary"
+            >
             {startScan ? "Stop Scan" : "Start Scan"}
             </Button>
+            <div>
             {startScan && (
                 <>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -65,6 +68,7 @@ const QRScan = () => {
             )}
             {loadingScan && <p>Loading</p>}
             {data !== "" && <p>{data}</p>}
+            </div>
         </div>
 
     );
