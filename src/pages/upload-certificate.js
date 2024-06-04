@@ -234,7 +234,8 @@ const UploadCertificate = () => {
                                     <Row className="justify-content-center mt-4 verify-documents">
                                         <h1 className='title text-center'>Please upload your certification to validate.</h1>
                                         <Col md={{ span: 10 }} className="text-center">
-                                            <QRScan/>
+                                            {/* <QRScan /> */}
+                                            <QRScan apiData={apiData} setApiData={setApiData}/>
                                         </Col>
                                         <Col md={{ span: 10 }}>
                                             <Card className='p-4'>
@@ -258,7 +259,7 @@ const UploadCertificate = () => {
                                                                     inputValue = inputValue.replace(/\s/g, '');
                                                     
                                                                     // Validate alphanumeric and character limit
-                                                                    if (/^[a-zA-Z0-9]*$/.test(inputValue) && inputValue.length <= 20) {
+                                                                    if (/^[a-zA-Z0-9]*$/.test(inputValue) && inputValue.length <= 25) {
                                                                         // If input is valid, update state
                                                                         // @ts-ignore
                                                                         setCertificateNumber(inputValue);

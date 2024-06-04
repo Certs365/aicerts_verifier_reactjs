@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import UploadCertificate from './upload-certificate';
 
 const VerifyDocuments = () => {
@@ -9,7 +9,7 @@ const VerifyDocuments = () => {
     });
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    
+
     // @ts-ignore: Implicit any for children prop
     const handleFileChange = async (event) => {
         const selectedFile = event.target.files[0];
@@ -27,6 +27,8 @@ const VerifyDocuments = () => {
                 });
 
                 const responseData = await response.json(); // Assuming response is in JSON format
+
+                console.log("The Verification Data", responseData);
                 setApiData(responseData);
 
             } catch (error) {
@@ -41,7 +43,7 @@ const VerifyDocuments = () => {
     return (
         <div>
             <UploadCertificate
-            // @ts-ignore: Implicit any for children prop
+                // @ts-ignore: Implicit any for children prop
                 handleFileChange={handleFileChange}
                 isLoading={isLoading}
                 apiUrl={apiUrl}
