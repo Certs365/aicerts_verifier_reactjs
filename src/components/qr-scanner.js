@@ -27,21 +27,21 @@ const QRScan = ({ apiData, setApiData }) => {
         console.log("The data", data);
     }, [startScan]);
 
-    const _handleScan = async (scanData) => {
+    const handleScan = async (scanData) => {
         setLoadingScan(true);
         let scanFailed = true; // Flag to track if the scan failed
         var scanResponse = "No URL found";
 
         // Start a timer for 10 seconds
-        const timeout = setTimeout(() => {
-            if (scanFailed) {
-                // If the scan failed after 10 seconds, pass the custom URL to the API
-                scanResponse = "Unable to detect QR, Try again with different Verification method";
-                setLoadingScan(false);
-                setData(scanResponse);
-                setStartScan(false);
-            }
-        }, 10000); // 10 seconds in milliseconds
+        // const timeout = setTimeout(() => {
+        //     if (scanFailed) {
+        //         // If the scan failed after 10 seconds, pass the custom URL to the API
+        //         scanResponse = "Unable to detect QR, Try again with different Verification method";
+        //         setLoadingScan(false);
+        //         setData(scanResponse);
+        //         setStartScan(false);
+        //     }
+        // }, 10000); // 10 seconds in milliseconds
 
         if (scanData) {
             try {
@@ -82,7 +82,7 @@ const QRScan = ({ apiData, setApiData }) => {
         setLoadingScan(false);
     };
 
-    const handleScan = async (scanData) => {
+    const _handleScan = async (scanData) => {
         setLoadingScan(true);
         let scanFailed = true; // Flag to track if the scan failed
         let scanResponse = "No URL found";
@@ -172,17 +172,8 @@ const QRScan = ({ apiData, setApiData }) => {
             <div>
                 {startScan && (
                     <>
-                        <div className="qr-dropdown" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <div className="qr-dropdown custom-dropdown" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <select
-                                style={{
-                                    backgroundColor: '#c7a95a',
-                                    color: '#000000',
-                                    fontSize: '16px',
-                                    padding: '15px',
-                                    margin: '5px',
-                                    borderRadius: '4px',
-                                    border: '1px solid #000',
-                                }}
                                 onChange={(e) => setSelected(e.target.value)}>
                                 <option
                                     value={"environment"}>Back Camera
@@ -206,7 +197,7 @@ const QRScan = ({ apiData, setApiData }) => {
                     </>
                 )}
                 {loadingScan && <p>Loading</p>}
-                <div><h4>Response: {data}</h4></div>
+                {/* <div><h4>Response: {data}</h4></div> */}
             </div>
             <Modal onHide={handleClose} className='loader-modal text-center' show={show} centered>
                 <Modal.Body className='p-5'>

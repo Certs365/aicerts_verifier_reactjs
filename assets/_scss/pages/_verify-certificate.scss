@@ -67,3 +67,46 @@
 .cert-label{
     font-weight: bold;
 }
+
+
+/*  Custome QR Scan Styles  */
+
+.custom-dropdown select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #c7a95a;
+    color: #000000;
+    font-size: 16px;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px solid #000;
+}
+
+/* Style the dropdown arrow */
+.custom-dropdown select::-ms-expand {
+    display: none;
+}
+
+.custom-dropdown select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 18px;
+    right: 10px;
+}
+
+/* Style the options */
+.custom-dropdown select option {
+    background-color: #c7a95a;
+    color: #000000;
+    font-size: 16px;
+    padding: 15px;
+    border: none;
+}
+
+/* Style the selected option */
+.custom-dropdown select option:checked {
+    background-color: #000000;
+    color: #ffffff;
+}
