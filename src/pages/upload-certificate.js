@@ -5,6 +5,7 @@ import Image from 'next/image';
 import certificate from "../services/certificateServices";
 import QRScan from "../components/qr-scanner";
 import QrReader from "../components/QrReader";
+import QrReaders from "../components/QrReaders";
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -245,7 +246,7 @@ const UploadCertificate = () => {
                                                 <button onClick={() => setOpenQr(!openQr)}>
                                                     {openQr ? "Close" : "Open"} QR Scanner
                                                 </button>
-                                                {openQr && <QrReader apiData={apiData} setApiData={setApiData}/>}
+                                                {openQr && <QrReaders/>}
                                             </div>
                                         </Col>
                                         <Col md={{ span: 10 }}>

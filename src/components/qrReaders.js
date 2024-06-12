@@ -1,139 +1,105 @@
 import { useEffect, useRef, useState } from "react";
-import { Form, Row, Col, Card, Modal, ProgressBar } from 'react-bootstrap';
-import Image from 'next/image';
+// Qr Scanner
+import QrScanner from "qr-scanner";
+import QrFrame from "../../assets/img/qr-frame.svg";
 
-const QrReaders = ({ apiData, setApiData }) => {
-  const scannerRef = useRef(null);
-  const videoElRef = useRef(null);
-  const qrBoxElRef = useRef(null);
-
+const QrReaders = () => {
+  // QR States
+  const scanner = useRef();
+  const videoEl = useRef(null);
+  const qrBoxEl = useRef(null);
   const [qrOn, setQrOn] = useState(true);
-  const [scannedResult, setScannedResult] = useState(undefined);
-  const [loginError, setLoginError] = useState('');
-  const [loginSuccess, setLoginSuccess] = useState('');
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => {
-    setShow(false);
-    setLoginError(''); // Reset error state on close
-    setLoginSuccess(''); // Reset success state on close
+  // Result
+  const [scannedResult, setScannedResult] = useState("");
+
+  // Success
+  const onScanSuccess = (result) => {
+    // Print the "result" to browser console.
+    console.log(result);
+    // Handle success.
+    // You can do whatever you want with the scanned result.
+    setScannedResult(result?.data);
+  };
+
+  // Fail
+  const onScanFail = (err) => {
+    // Print the "err" to browser console.
+    console.log(err);
   };
 
   useEffect(() => {
-    if (videoElRef.current && !scannerRef.current) {
-      scannerRef.current = new window.QrScanner(
-        videoElRef.current,
-        (result) => {
-          setScannedResult(result?.data);
-          setApiData(result?.data);
-          scannerRef.current.stop(); // Stop scanner on successful scan
-        },
-        {
-          onDecodeError: (err) => console.error('Scan failed:', err),
-          preferredCamera: 'environment',
-          highlightScanRegion: true,
-          highlightCodeOutline: true,
-          overlay: qrBoxElRef.current || undefined,
-        }
-      );
+    if (videoEl.current && !scanner.current) {
+      // Instantiate the QR Scanner
+      scanner.current = new QrScanner(videoEl.current, onScanSuccess, {
+        onDecodeError: onScanFail,
+        // This is the camera facing mode. In mobile devices, "environment" means back camera and "user" means front camera.
+        preferredCamera: "environment",
+        // This will help us position our "QrFrame.svg" so that user can only scan when qr code is put in between our QrFrame.svg.
+        highlightScanRegion: true,
+        // This will produce a yellow (default color) outline around the qr code that we scan, showing a proof that our qr-scanner is scanning that qr code.
+        highlightCodeOutline: true,
+        // A custom div which will pair with "highlightScanRegion" option above. This gives us full control over our scan region.
+        overlay: qrBoxEl.current || undefined,
+      });
 
-      // Handle successful scan result if already scanned
-      if (scannedResult) {
-        console.log('Success Scan:', scannedResult);
-      }
-
-      scannerRef.current
+      // Start QR Scanner
+      scanner.current
         .start()
         .then(() => setQrOn(true))
         .catch((err) => {
           if (err) setQrOn(false);
-          console.error('Scanner start error:', err);
         });
     }
 
+    // Clean up on unmount.
+    // This removes the QR Scanner from rendering and using camera when it is closed or removed from the UI.
     return () => {
-      if (scannerRef.current) {
-        scannerRef.current.stop();
+      if (!videoEl.current) {
+        scanner.current.stop();
       }
     };
-  }, [scannedResult]);
+  }, []);
 
+  // If "camera" is not allowed in browser permissions, show an alert.
   useEffect(() => {
-    if (!qrOn) {
+    if (!qrOn)
       alert(
-        'Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload.'
+        "Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload."
       );
-    }
   }, [qrOn]);
 
-  // Handle login success/error logic here (assuming external API calls)
-  // ...
-
   return (
-    <div>
-      <div>
-        <div className="qr-reader">
-          {/* QR */}
-          <video ref={videoElRef}></video>
-          <div ref={qrBoxElRef} className="qr-box">
-            <img
-              src={QrFrame} // Replace with your QR frame image path
-              alt="Qr Frame"
-              width={256}
-              height={256}
-              className="qr-frame"
-            />
-          </div>
-
-          {/* Show Data Result if scan is successful */}
-          {scannedResult && (
-            <p
-              style={{
-                position: 'relative',
-                top: 0,
-                left: 0,
-                zIndex: 99999,
-                color: 'red',
-              }}
-            >
-              Scanned Result: {scannedResult}
-            </p>
-          )}
-        </div>
+    <div className="qr-reader">
+      {/* QR */}
+      <video ref={videoEl}></video>
+      <div ref={qrBoxEl} className="qr-box">
+        <img
+          src={QrFrame}
+          alt="Qr Frame"
+          width={256}
+          height={256}
+          className="qr-frame"
+        />
       </div>
-      <Modal onHide={handleClose} className='loader-modal text-center' show={show} centered>
-                <Modal.Body className='p-5'>
-                    {loginError !== '' ? (
-                        <>
-                            <div className='error-icon'>
-                                <Image
-                                    src="/icons/close.svg"
-                                    layout='fill'
-                                    objectFit='contain'
-                                    alt='Loader'
-                                />
-                            </div>
-                            <h3 style={{ color: 'red' }}>{loginError}</h3>
-                            <button className='warning' onClick={handleClose}>Ok</button>
-                        </>
-                    ) : (
-                        <>
-                            <div className='error-icon'>
-                                <Image
-                                    src="/icons/check-mark.svg"
-                                    layout='fill'
-                                    objectFit='contain'
-                                    alt='Loader'
-                                />
-                            </div>
-                            <h3 style={{ color: '#198754' }}>{loginSuccess}</h3>
-                            <button className='success' onClick={handleClose}>Ok</button>
-                        </>
-                    )}
-                </Modal.Body>
-            </Modal>
-        </div>
-    );
+
+      {/* Show Data Result if scan is success */}
+      {scannedResult && (
+        <p
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: 99999,
+            color: "white",
+          }}
+        >
+          Scanned Result: {scannedResult}
+        </p>
+      )}
+    </div>
+  );
 };
 
 export default QrReaders;
+
