@@ -1,9 +1,8 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, Card, Modal, ProgressBar } from 'react-bootstrap';
+import { Form, Row, Col, Card, Modal, ProgressBar, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import QrReader from 'react-qr-scanner';
-import { Button } from 'react-bootstrap';
 
 const QRScan = ({ apiData, setApiData }) => {
     const [selected, setSelected] = useState("certification verification");

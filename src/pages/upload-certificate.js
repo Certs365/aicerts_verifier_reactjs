@@ -4,6 +4,7 @@ import DocumentsValid from '../../src/pages/documents-valid';
 import Image from 'next/image';
 import certificate from "../services/certificateServices";
 import QRScan from "../components/qr-scanner";
+import QrReader from "../components/QrReader";
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +16,8 @@ const UploadCertificate = () => {
     const [loginError, setLoginError] = useState('');
     const [loginSuccess, setLoginSuccess] = useState('');
     const [show, setShow] = useState(false);
+    const [openQr, setOpenQr] = useState(false);
+
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -64,7 +67,7 @@ const UploadCertificate = () => {
     }
 
     console.log(apiData)
-    
+
     // @ts-ignore: Implicit any for children prop
     const handleFileChange = async (event) => {
         // setSelectedFile(event.target.files[0]);
@@ -141,7 +144,7 @@ const UploadCertificate = () => {
             }
         } catch (error) {
             console.error('Error during API calls:', error);
-            setLoginError("Unable to verify the certification. Please review and try again.")
+            setLoginError("Unable to verify the certification. Please review and try again!")
             setShow(true)
             // Handle error as needed
         } finally {
@@ -233,9 +236,17 @@ const UploadCertificate = () => {
                                 <div className='container-fluid'>
                                     <Row className="justify-content-center mt-4 verify-documents">
                                         <h1 className='title text-center'>Please upload your certification to validate.</h1>
-                                        <Col md={{ span: 10 }} className="text-center">
-                                            {/* <QRScan /> */}
+                                        {/* <QRScan /> */}
+                                        {/* <Col md={{ span: 10 }} className="text-center">
                                             <QRScan apiData={apiData} setApiData={setApiData}/>
+                                        </Col> */}
+                                        <Col md={{ span: 10 }} className="text-center">
+                                            <div>
+                                                <button onClick={() => setOpenQr(!openQr)}>
+                                                    {openQr ? "Close" : "Open"} QR Scanner
+                                                </button>
+                                                {openQr && <QrReader apiData={apiData} setApiData={setApiData}/>}
+                                            </div>
                                         </Col>
                                         <Col md={{ span: 10 }}>
                                             <Card className='p-4'>
@@ -250,14 +261,14 @@ const UploadCertificate = () => {
                                                                 value={certificateNumber}
                                                                 // @ts-ignore: Implicit any for children prop
                                                                 // onChange={(e) => setCertificateNumber(e.target.value)}
-                                                                
+
                                                                 onChange={(e) => {
                                                                     // Get the input value
                                                                     let inputValue = e.target.value;
-                                                    
+
                                                                     // Remove spaces from the input value
                                                                     inputValue = inputValue.replace(/\s/g, '');
-                                                    
+
                                                                     // Validate alphanumeric and character limit
                                                                     if (/^[a-zA-Z0-9]*$/.test(inputValue) && inputValue.length <= 25) {
                                                                         // If input is valid, update state
@@ -302,8 +313,8 @@ const UploadCertificate = () => {
                                                         Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
                                                     </div>
                                                     <div className='d-flex justify-content-center align-items-center'>
-                                                        <label 
-                                                            onClick={handleSubmit} 
+                                                        <label
+                                                            onClick={handleSubmit}
                                                             className={`golden-upload-cert ${selectedFile ? 'has-file' : ''}`}
                                                         >
                                                             Verify

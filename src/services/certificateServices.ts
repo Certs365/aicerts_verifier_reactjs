@@ -50,9 +50,6 @@ const verifyCertificatePDF = (data: any, callback: (response: Response) => void)
     });
 };
 
-
-
-
 const certificate = {
   verifyCertificate,
   verifyCertificatePDF
