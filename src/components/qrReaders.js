@@ -72,7 +72,7 @@ const QrReaders = () => {
   return (
     <div className="qr-reader">
       {/* QR */}
-      <video ref={videoEl}></video>
+       <video ref={videoEl}></video>
       <div ref={qrBoxEl} className="qr-box">
         <img
           src={QrFrame}
@@ -91,7 +91,7 @@ const QrReaders = () => {
             top: 0,
             left: 0,
             zIndex: 99999,
-            color: "white",
+            color: "red",
           }}
         >
           Scanned Result: {scannedResult}
