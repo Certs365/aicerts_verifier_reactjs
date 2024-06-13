@@ -4,8 +4,6 @@ import DocumentsValid from '../../src/pages/documents-valid';
 import Image from 'next/image';
 import certificate from "../services/certificateServices";
 import QRScan from "../components/qr-scanner";
-import QrReader from "../components/QrReader";
-import QrReaders from "../components/QrReaders";
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -238,16 +236,8 @@ const UploadCertificate = () => {
                                     <Row className="justify-content-center mt-4 verify-documents">
                                         <h1 className='title text-center'>Please upload your certification to validate.</h1>
                                         {/* <QRScan /> */}
-                                        {/* <Col md={{ span: 10 }} className="text-center">
-                                            <QRScan apiData={apiData} setApiData={setApiData}/>
-                                        </Col> */}
                                         <Col md={{ span: 10 }} className="text-center">
-                                            <div>
-                                                <button onClick={() => setOpenQr(!openQr)}>
-                                                    {openQr ? "Close" : "Open"} QR Scanner
-                                                </button>
-                                                {openQr && <QrReaders/>}
-                                            </div>
+                                            <QRScan apiData={apiData} setApiData={setApiData}/>
                                         </Col>
                                         <Col md={{ span: 10 }}>
                                             <Card className='p-4'>

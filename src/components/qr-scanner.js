@@ -187,7 +187,10 @@ const QRScan = ({ apiData, setApiData }) => {
                                     delay={500}
                                     onError={handleError}
                                     onScan={handleScan}
-                                    // chooseDeviceId={()=>selected}
+                                    constraints={{
+                                        audio: false,
+                                        video: { facingMode: "environment" }
+                                      }}
                                     style={{ width: "600px", height: "400px" }} // Adjust dimensions accordingly
                                 />
                             </div>
