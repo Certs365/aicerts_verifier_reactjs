@@ -4,6 +4,8 @@ import DocumentsValid from '../../src/pages/documents-valid';
 import Image from 'next/image';
 import certificate from "../services/certificateServices";
 import Button from '../../shared/button/button';
+import { useRouter } from 'next/router';
+
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [apiData, setApiData] = useState(null);
@@ -16,7 +18,7 @@ const UploadCertificate = () => {
     const [show, setShow] = useState(false);
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
+    const router = useRouter();
 
     useEffect(() => {
         if (isLoading) {
@@ -128,6 +130,13 @@ const UploadCertificate = () => {
                     } else {
                         // Both API calls failed, handle errors
                         const errorData = await fileResponse.json();
+                        if(errorData.message=='Certification has revoked') {
+                            router.push('/certificate-revoked')
+                        }
+                        else{
+                            router.push('/invalid-certificate')
+                        }
+                        console.error('Error during API calls:', errorData.message);
                         setLoginError(errorData.message || "Unable to verify the certification. Please review and try again.");
                         setShow(true)
                         // Handle error as needed
@@ -191,6 +200,7 @@ const UploadCertificate = () => {
 
                 } else if (response.data.status === 'FAILED') {
                     // @ts-ignore: Implicit any for children prop
+                    router.push('/invalid-certificate')
                     setApiData((prevData) => {
                         // Perform actions based on prevData and update state
                         return {
@@ -348,6 +358,7 @@ const UploadCertificate = () => {
                                         <Modal.Body className='p-5'>
                                             {loginError !== '' ? (
                                                 <>
+{/*                                                 
                                                     <div className='error-icon'>
                                                         <Image
                                                             src="/icons/invalid-password.gif"
@@ -357,7 +368,7 @@ const UploadCertificate = () => {
                                                         />
                                                     </div>
                                                     <div className='text' style={{ color: '#ff5500' }}>{loginError}</div>
-                                                    <button className='warning' onClick={handleClose}>Ok</button>
+                                                    <button className='warning' onClick={handleClose}>Ok</button> */}
                                                 </>
                                             ) : (
                                                 <>

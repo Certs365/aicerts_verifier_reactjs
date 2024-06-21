@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
+import { useRouter } from 'next/router';
 
     // @ts-ignore: Implicit any for children prop
     const DocumentsValid = ({ handleFileChange, apiData, isLoading }) => {
@@ -186,7 +187,9 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 layout='fill'
                                                                 objectFit='contain'
                                                                 alt='Badge Banner'
+
                                                             />
+                                                            {router.push("/invalid-certificate")}
                                                         </div>
                                                         <Form>
                                                             <div className='d-flex justify-content-center align-items-center'>
