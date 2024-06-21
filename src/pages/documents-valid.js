@@ -1,77 +1,81 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Form, Row, Col, Card, Modal, ProgressBar, Button, InputGroup } from 'react-bootstrap';
+import { Form, Row, Col, Card, Modal, ProgressBar, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
 import { useRouter } from 'next/router';
 
-    // @ts-ignore: Implicit any for children prop
-    const DocumentsValid = ({ handleFileChange, apiData, isLoading }) => {
-        const [progress, setProgress] = useState(0);
-        const certificateRef = useRef(null);
-        const [certificateImage, setCertificateImage] = useState(null);
-        const [shareModal, setShareModal] = useState(false);
-        const [copied, setCopied] = useState(false);
+const DocumentsValid = ({ handleFileChange, apiData, isLoading }) => {
+    const [progress, setProgress] = useState(0);
+    const certificateRef = useRef(null);
+    const [certificateImage, setCertificateImage] = useState(null);
+    const [shareModal, setShareModal] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const [isClient, setIsClient] = useState(false); // New state for client-side check
 
-        const handleClose = () => setShareModal(false);
+    const router = useRouter();
+    const handleClose = () => setShareModal(false);
 
-        useEffect(() => {
-            if (isLoading) {
-                const interval = setInterval(() => {
-                    setProgress((prevProgress) => (prevProgress < 100 ? prevProgress + 10 : 100));
-                }, 500);
+    useEffect(() => {
+        setIsClient(true); // Indicate that the component is mounted on the client side
+    }, []);
 
-                return () => clearInterval(interval);
-            } else {
-                setProgress(0);
-            }
-        }, [isLoading]);
+    useEffect(() => {
+        if (isLoading) {
+            const interval = setInterval(() => {
+                setProgress((prevProgress) => (prevProgress < 100 ? prevProgress + 10 : 100));
+            }, 500);
 
-        useEffect(() => {
-            if (certificateRef.current) {
-                toPng(certificateRef.current)
-                    .then((dataUrl) => {
-                        // @ts-ignore: Implicit any for children prop
-                        setCertificateImage(dataUrl);
-                    })
-                    .catch((error) => {
-                        console.error('Error generating certificate image:', error);
-                    });
-            }
-        }, [apiData]);
+            return () => clearInterval(interval);
+        } else {
+            setProgress(0);
+        }
+    }, [isLoading]);
 
-        const handleLogoClick = () => {
+    useEffect(() => {
+        if (certificateRef.current) {
+            toPng(certificateRef.current)
+                .then((dataUrl) => {
+                    setCertificateImage(dataUrl);
+                })
+                .catch((error) => {
+                    console.error('Error generating certificate image:', error);
+                });
+        }
+    }, [apiData]);
+
+    const handleLogoClick = () => {
+        if (isClient) {
             window.location.reload();
-        };
+        }
+    };
 
-        const { message, Details } = apiData || {};
+    const { message, Details } = apiData || {};
+    const shareValue = apiData?.Details?.["Polygon URL"];
 
-        const shareValue = apiData.Details["Polygon URL"];
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(shareValue).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 3000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    };
 
-        const copyToClipboard = () => {
-            navigator.clipboard.writeText(shareValue).then(() => {
-                setCopied(true)
-                setTimeout(() => setCopied(false), 3000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        };
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
 
-        // @ts-ignore: Implicit any for children prop
-        const formatDate = (dateString) => {
-            if (!dateString) return '';
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return 'Invalid Date';
 
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) return 'Invalid Date';
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const year = date.getFullYear();
 
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            const year = date.getFullYear();
-
-            return `${month}/${day}/${year}`;
-        };
+        return `${month}/${day}/${year}`;
+    };
 
     const shareUrl = Details?.url;
     const shareTitle = "Aicerts Certification";
@@ -82,8 +86,7 @@ import { useRouter } from 'next/router';
 
     return (
         <>
-          
-           <Head>
+            <Head>
                 <title>{title}</title>
                 <meta name="description" content={description} />
                 <meta property="og:title" content={title} />
@@ -123,11 +126,11 @@ import { useRouter } from 'next/router';
                                                                         <Row className='position-relative'>
                                                                             <Col className='border-right' xs={{ span: 12 }} md={{ span: 6 }}>
                                                                                 <div className='hash-title'>Certification Number</div>
-                                                                                <div className='hash-info'>{Details['Certificate Number'] ? Details['Certificate Number'] : Details['Certification Number'] || Details['certificateNumber']}</div>
+                                                                                <div className='hash-info'>{Details?.['Certificate Number'] ? Details?.['Certificate Number'] : Details?.['Certification Number'] || Details?.['certificateNumber']}</div>
                                                                             </Col>
                                                                             <Col xs={{ span: 12 }} md={{ span: 6 }}>
                                                                                 <div className='hash-title'>Certification Name</div>
-                                                                                <div className='hash-info'>{Details['Course Name'] ? Details['Course Name'] : Details['Certification Name'] || Details['course']}</div>
+                                                                                <div className='hash-info'>{Details?.['Course Name'] ? Details?.['Course Name'] : Details?.['Certification Name'] || Details?.['course']}</div>
                                                                             </Col>
                                                                             <hr />
                                                                             <hr className='vertical-line' />
@@ -139,21 +142,21 @@ import { useRouter } from 'next/router';
                                                             <div className='cerficate-external-info d-block d-lg-flex justify-content-between align-items-center text-md-left text-center mb-md-0 mb-4'>
                                                                 <div className='details'>
                                                                     <div className='heading'>Name</div>
-                                                                    <div className='heading-info'>{Details['Name'] || Details['name']}</div>
+                                                                    <div className='heading-info'>{Details?.['Name'] || Details?.['name']}</div>
                                                                 </div>
                                                                 <div className='details'>
                                                                     <div className='heading'>Grant Date</div>
-                                                                    <div className='heading-info'>{formatDate(Details['Grant Date'] || Details['grantDate'])}</div>
+                                                                    <div className='heading-info'>{formatDate(Details?.['Grant Date'] || Details?.['grantDate'])}</div>
                                                                 </div>
                                                                 <div className='details'>
                                                                     <div className='heading'>Expiration Date</div>
                                                                     <div className='heading-info'>
-                                                                        {Details['Expiration Date'] === "1" || Details['expirationDate'] === "1" ? "-" : formatDate(Details['Expiration Date'] || Details['expirationDate']) || 'No Expiration Date available'}
+                                                                        {Details?.['Expiration Date'] === "1" || Details?.['expirationDate'] === "1" ? "-" : formatDate(Details?.['Expiration Date'] || Details?.['expirationDate']) || 'No Expiration Date available'}
                                                                     </div>
                                                                 </div>
 
                                                                 <div className='details varification-info'>
-                                                                    <Button href={Details['Polygon URL'] ? Details['Polygon URL'] : Details['Verify On Blockchain']} target="_blank" className='heading-info' variant="primary">
+                                                                    <Button href={Details?.['Polygon URL'] ? Details?.['Polygon URL'] : Details?.['Verify On Blockchain']} target="_blank" className='heading-info' variant="primary">
                                                                         Verify on Blockchain
                                                                     </Button>
                                                                 </div>
@@ -187,9 +190,8 @@ import { useRouter } from 'next/router';
                                                                 layout='fill'
                                                                 objectFit='contain'
                                                                 alt='Badge Banner'
-
                                                             />
-                                                            {router.push("/invalid-certificate")}
+                                                            {isClient && router.push("/invalid-certificate")}
                                                         </div>
                                                         <Form>
                                                             <div className='d-flex justify-content-center align-items-center'>
@@ -231,4 +233,3 @@ import { useRouter } from 'next/router';
 }
 
 export default DocumentsValid;
-
