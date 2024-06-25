@@ -71,7 +71,10 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
             return `${month}/${day}/${year}`;
         };
 
-    const shareUrl = apiData?.Details?.url;
+    let shareUrl = apiData?.Details?.url;
+    if(shareUrl) {
+        shareUrl = shareUrl.replace('/verify-documents', '');
+    }
     const shareTitle =  apiData?.message || "Certification is Valid";
 
     const title = 'Test title';
@@ -157,15 +160,10 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 </div>
                                                             </div>
                                                         </Card>
-                                                        <Form className='p-4 p-md-0'>
-                                                            <div className='d-flex justify-content-center align-items-center'>
-                                                                <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again">Validate Another</Link>
-                                                            </div>
-                                                            <div className='information text-center'>
-                                                                Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
-                                                            </div>
-                                                        </Form>
-                                                        <div className='d-flex justify-content-center align-items-center mt-4'>
+                                                        <div className='d-flex justify-content-center mt-4'>
+                                                        <p className='share-text'>Share Your Certificate:</p>
+                                                        </div>
+                                                        <div className='d-flex justify-content-center align-items-center '>
                                                             <FacebookShareButton url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <FacebookIcon size={32} round />
                                                             </FacebookShareButton>
@@ -176,6 +174,18 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 <LinkedinIcon size={32} round />
                                                             </LinkedinShareButton>
                                                         </div>
+                                                        <div className='d-flex justify-content-center'>
+                                                        <hr className='horizontal-line-cert'/>
+                                                        </div>
+                                                        <Form className='p-4 p-md-0'>
+                                                            <div className='d-flex justify-content-center align-items-center'>
+                                                                <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again">Validate Another</Link>
+                                                            </div>
+                                                            <div className='information text-center'>
+                                                                Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
+                                                            </div>
+                                                        </Form>
+                                                      
                                                     </>
                                                 ) : (
                                                     <>
@@ -227,4 +237,3 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
 }
 
 export default DocumentsValid;
-

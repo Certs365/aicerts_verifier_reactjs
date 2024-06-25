@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Button = ({ label = '', onClick = () => {}, className = '', disabled = false }) => {
-
     return (
         <button className={`global-button ${className}`} onClick={onClick} disabled={disabled}>
             {label}
