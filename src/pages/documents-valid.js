@@ -46,16 +46,16 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
         };
 
 
-        const shareValue = apiData?.Details["Polygon URL"];
+        // const shareValue = apiData?.Details["Polygon URL"];
 
-        const copyToClipboard = () => {
-            navigator.clipboard.writeText(shareValue).then(() => {
-                setCopied(true)
-                setTimeout(() => setCopied(false), 3000);
-            }).catch(err => {
-                // console.error('Failed to copy text: ', err);
-            });
-        };
+        // const copyToClipboard = () => {
+        //     navigator.clipboard.writeText(shareValue).then(() => {
+        //         setCopied(true)
+        //         setTimeout(() => setCopied(false), 3000);
+        //     }).catch(err => {
+        //         // console.error('Failed to copy text: ', err);
+        //     });
+        // };
 
         // @ts-ignore: Implicit any for children prop
         const formatDate = (dateString) => {
