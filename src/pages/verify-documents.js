@@ -6,10 +6,7 @@ import DocumentsValid from './documents-valid';
 
 const VerifyDocuments = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [apiData, setApiData] = useState({
-        message: "",
-        detailsQR: {}
-    });
+    const [apiData, setApiData] = useState(null);
     const [loginError, setLoginError] = useState('');
     const [show, setShow] = useState(false);
 
