@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
+
+        // @ts-ignore: Implicit any for children prop
 function convertToCustomArray(jsonString) {
     // Parse the JSON string
     const jsonObject = JSON.parse(jsonString);
@@ -17,6 +19,7 @@ function convertToCustomArray(jsonString) {
       if (jsonObject.hasOwnProperty(key)) {
         // Create a new object with the key-value pair
         const keyValuePair = {};
+        // @ts-ignore: Implicit any for children prop
         keyValuePair[key] = jsonObject[key];
   
         // Append the key-value pair object to the array
@@ -67,6 +70,7 @@ function convertToCustomArray(jsonString) {
         useEffect(() => {
             if (apiData && apiData?.Details && apiData?.Details['Custom Fields']) {
               const customFields = convertToCustomArray(apiData.Details['Custom Fields']);
+        // @ts-ignore: Implicit any for children prop
               setCustomFieldsArray(customFields);
             }
             
@@ -155,7 +159,7 @@ function convertToCustomArray(jsonString) {
                                                                     <div className='hash-info'>
                                                                         <Row className='position-relative'>
                                                                             <Col className='border-right' xs={{ span: 12 }} md={{ span: 6 }}>
-                                                                                <div className='hash-title'>Certification Number</div>
+                                                                                <div className='hash-title'>Document Number</div>
                                                                                 <div className='hash-info'>{apiData?.Details['Certificate Number'] ? apiData?.Details['Certificate Number'] : apiData?.Details['Certification Number'] || apiData?.Details['certificateNumber']}</div>
                                                                             </Col>
                                                                             <Col xs={{ span: 12 }} md={{ span: 6 }}>
