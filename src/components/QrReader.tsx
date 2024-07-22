@@ -62,7 +62,7 @@ const QrReader = ({ apiData, setApiData }) => {
                 // console.log("The response", responseData?.details?.url);
                 setApiData({
                   // @ts-ignore: Implicit any for children prop
-                  Details: responseData?.Details,
+                  Details: responseData?.details,
                   message: responseData?.message
               });
                 // window.location.href = responseData?.details?.url;
