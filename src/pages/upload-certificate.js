@@ -4,6 +4,7 @@ import DocumentsValid from '../../src/pages/documents-valid';
 import Image from 'next/image';
 import Button from '../../shared/button/button';
 import { useRouter } from 'next/router';
+import DocumentDetail from '../components/DocumentDetail';
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -174,7 +175,12 @@ const UploadCertificate = () => {
         <>
             {apiData ? (
                 <>
-                    <DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+                {apiData?.Details?.type == 'dynamic'?
+                    <DocumentDetail handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+:
+<DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+
+                }
                 </>
             ) : (
                 <>

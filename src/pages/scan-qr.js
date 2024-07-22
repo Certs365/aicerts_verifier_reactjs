@@ -7,8 +7,18 @@ import { useRouter } from 'next/router';
 import QrReader from '@/components/QrReader';
 import DocumentsValid from '../../src/pages/documents-valid';
 import certificate from '@/services/certificateServices';
+import DocumentDetail from '../components/DocumentDetail';
+
+
+
 const ScanDocuments = () => {
-    const [apiData, setApiData] = useState(null);
+    const [apiData, setApiData] = useState({
+        Details:{
+            type:null,
+            "Certificate Number": null
+        },
+        message:null
+    });
     const [scannerActive, setScannerActive] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -112,7 +122,6 @@ const ScanDocuments = () => {
 
         certificate?.verifyCertificate(data, (response) => {
             // Handle the API response here (success or error)
-
             if (response.status == "SUCCESS") {
                 if (response.data.status === 'PASSED') {
                     // @ts-ignore: Implicit any for children prop
@@ -170,10 +179,15 @@ const ScanDocuments = () => {
 
     return (
         <>
-        {apiData ? (
+        {apiData && apiData.Details["Certificate Number"] !=null  ? (
             <>
-                <DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
-            </>
+            
+{apiData?.Details?.type == 'dynamic'?
+                    <DocumentDetail handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+:
+<DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+
+                }            </>
         ) : (
         <>
             {/* <Navigation /> */}
