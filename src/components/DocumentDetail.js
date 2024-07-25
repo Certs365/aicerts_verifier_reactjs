@@ -6,16 +6,51 @@ import { toPng } from 'html-to-image';
 import Head from 'next/head';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
 
+        // @ts-ignore: Implicit any for children prop
+function convertToCustomArray(jsonString) {
+    // Parse the JSON string
+    const jsonObject = JSON.parse(jsonString);
+  
+    // Initialize an array to store the custom key-value pair objects
+    const customArray = [];
+  
+    // Iterate over each key-value pair in the JSON object
+    for (const key in jsonObject) {
+      if (jsonObject.hasOwnProperty(key)) {
+        // Create a new object with the key-value pair
+        const keyValuePair = {};
+        // @ts-ignore: Implicit any for children prop
+        keyValuePair[key] = jsonObject[key];
+  
+        // Append the key-value pair object to the array
+        customArray.push(keyValuePair);
+      }
+    }
+  
+    return customArray;
+  }
+        // @ts-ignore: Implicit any for children prop
+
+  const ensureHttp = (url) => {
+    if (!url) return '';
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `http://${url}`;
+    }
+    return url;
+  };
     // @ts-ignore: Implicit any for children prop
-    const DocumentsValid = ({ handleFileChange, apiData, isLoading }) => {
+    const DocumentDetail = ({ handleFileChange, apiData, isLoading }) => {
         const [progress, setProgress] = useState(0);
         const certificateRef = useRef(null);
         const [certificateImage, setCertificateImage] = useState(null);
         const [shareModal, setShareModal] = useState(false);
         const [copied, setCopied] = useState(false);
+        const [customFieldsArray, setCustomFieldsArray] = useState([]);
 
         const handleClose = () => setShareModal(false);
 
+
+          
         useEffect(() => {
             if (isLoading) {
                 const interval = setInterval(() => {
@@ -41,19 +76,18 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
             }
         }, [apiData]);
 
+        useEffect(() => {
+            if (apiData && apiData?.Details && apiData?.Details['Custom Fields']) {
+              const customFields = convertToCustomArray(apiData.Details['Custom Fields']);
+        // @ts-ignore: Implicit any for children prop
+              setCustomFieldsArray(customFields);
+            }
+            
+          }, [apiData]);
+
         const handleLogoClick = () => {
             window.location.reload();
         };
-
-                        // @ts-ignore: Implicit any for children prop
-
-        const ensureHttp = (url) => {
-            if (!url) return '';
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-              return `http://${url}`;
-            }
-            return url;
-          };
 
 
         // const shareValue = apiData?.Details["Polygon URL"];
@@ -134,12 +168,12 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                     <div className='hash-info'>
                                                                         <Row className='position-relative'>
                                                                             <Col className='border-right' xs={{ span: 12 }} md={{ span: 6 }}>
-                                                                                <div className='hash-title'>Certification Number</div>
+                                                                                <div className='hash-title'>Document Number</div>
                                                                                 <div className='hash-info'>{apiData?.Details['Certificate Number'] ? apiData?.Details['Certificate Number'] : apiData?.Details['Certification Number'] || apiData?.Details['certificateNumber']}</div>
                                                                             </Col>
                                                                             <Col xs={{ span: 12 }} md={{ span: 6 }}>
-                                                                                <div className='hash-title'>Certification Name</div>
-                                                                                <div className='hash-info'>{apiData?.Details['Course Name'] ? apiData?.Details['Course Name'] : apiData?.Details['Certification Name'] || apiData?.Details['course']}</div>
+                                                                                <div className='hash-title'>Name</div>
+                                                                                <div className='hash-info'>{apiData?.Details['Name'] || apiData?.Details['name']}</div>
                                                                             </Col>
                                                                             <hr />
                                                                             <hr className='vertical-line' />
@@ -148,47 +182,28 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 </div>
                                                             </Card>
 
-                                                            <div className='cerficate-external-info d-block d-lg-flex justify-content-between align-items-center text-md-left text-center mb-md-0 mb-4'>
-                                                                <div className='details'>
-                                                                    <div className='heading'>Name</div>
-                                                                    <div className='heading-info'>{apiData?.Details['Name'] || apiData?.Details['name']}</div>
-                                                                </div>
-                                                                <div className='details'>
-                                                                    <div className='heading'>Grant Date</div>
-                                                                    <div className='heading-info'>{formatDate(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}</div>
-                                                                </div>
-                                                                <div className='details'>
-                                                                    <div className='heading'>Expiration Date</div>
-                                                                    <div className='heading-info'>
-                                                                        {apiData?.Details['Expiration Date'] === "1" || apiData?.Details['expirationDate'] === "1" ? "-" : formatDate(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate']) || 'No Expiration Date available'}
-                                                                    </div>
-                                                                </div>
+                                                            <div className='cerficate-external-info d-block d-lg-flex  text-md-left text-center mb-md-0 mb-4'>
+                                                            <div className='col-12 col-md-6'>
+                                                            <table style={{ backgroundColor: "transparent"}} className='table table-bordered'>
+    <tbody>
+        {customFieldsArray.map((field, index) => (
+            <tr key={index} style={{ backgroundColor: "transparent" }}>
+                <td style={{ backgroundColor: "transparent" }}>{Object.keys(field)[0]}</td>
+                <td style={{ backgroundColor: "transparent"}}>{Object.values(field)[0]}</td>
+            </tr>
+        ))}
+    </tbody>
+</table>
 
+                                                        </div>
+<div className='col-12 col-md-6'>
                                                                 <div className='details varification-info'>
                                                                     <Button href={apiData?.Details['Polygon URL'] ? ensureHttp(apiData?.Details['Polygon URL']) : ensureHttp(apiData?.Details['Verify On Blockchain'])} target="_blank" className='heading-info' variant="primary">
                                                                         Verify on Blockchain
                                                                     </Button>
                                                                 </div>
-                                                            </div>
-                                                        </Card>
-                                                        <div className='d-flex justify-content-center mt-4'>
-                                                        <p className='share-text'>Share Your Certificate:</p>
-                                                        </div>
-                                                        <div className='d-flex justify-content-center align-items-center '>
-                                                            <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <FacebookIcon size={32} round />
-                                                            </FacebookShareButton>
-                                                            <TwitterShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <TwitterIcon size={32} round />
-                                                            </TwitterShareButton>
-                                                            <LinkedinShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <LinkedinIcon size={32} round />
-                                                            </LinkedinShareButton>
-                                                        </div>
-                                                        <div className='d-flex justify-content-center'>
-                                                        <hr className='horizontal-line-cert'/>
-                                                        </div>
-                                                        <Form className='p-4 p-md-0'>
+
+                                                                <Form className='p-4 p-md-0'>
                                                             <div className='d-flex justify-content-center align-items-center'>
                                                                 <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again">Validate Another</Link>
                                                             </div>
@@ -196,6 +211,28 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
                                                             </div>
                                                         </Form>
+                                                                <div className='d-flex justify-content-center mt-4'>
+                                                        <p className='share-text'>Share Your Certificate:</p>
+                                                        </div>
+                                                        <div className='d-flex justify-content-center align-items-center '>
+                                                            <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-5'>
+                                                                <FacebookIcon size={32} round />
+                                                            </FacebookShareButton>
+                                                            <TwitterShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
+                                                                <TwitterIcon size={32} round />
+                                                            </TwitterShareButton>
+                                                            <LinkedinShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
+                                                                <LinkedinIcon size={32} round />
+                                                            </LinkedinShareButton>
+                                                        </div>
+                                                        </div>
+                                                            </div>
+                                                        </Card>
+                                                       
+                                                        <div className='d-flex justify-content-center'>
+                                                        <hr className='horizontal-line-cert'/>
+                                                        </div>
+                                                       
                                                       
                                                     </>
                                                 ) : (
@@ -247,5 +284,5 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
     );
 }
 
-export default DocumentsValid;
+export default DocumentDetail;
 
