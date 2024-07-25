@@ -123,17 +123,25 @@ const UploadCertificate = () => {
                         method: "POST",
                         body: formData,
                     });
+                     
+
                     if (fileResponse.ok) {
                         const fileData = await fileResponse.json();
-                        if (fileData.Details["Certificate Number"] === certificateNumber) {
+                     
+
+                        if ( fileData?.details["Certificate Number"] === certificateNumber) {
                             setApiData(fileData);
+                             
+
                         } else {
+
                             // Certificate Number and Certificate PDF doesn't match
                             router.push('/mismatch-certificate')
                             setLoginError("Certificate Number and Certificate PDF doesn't match")
                             setShow(true)
                         }
                     } else {
+
                         // Both API calls failed, handle errors
                         const errorData = await fileResponse.json();
                         if(errorData.message=='Certification has revoked') {
@@ -159,6 +167,8 @@ const UploadCertificate = () => {
                 setShow(true)
             }
         } catch (error) {
+             
+
             // console.error('Error during API calls:', error);
             router.push('/unable-certificate')
             setLoginError("Unable to verify the certification. Please review and try again.")

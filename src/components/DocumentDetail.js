@@ -29,6 +29,15 @@ function convertToCustomArray(jsonString) {
   
     return customArray;
   }
+        // @ts-ignore: Implicit any for children prop
+
+  const ensureHttp = (url) => {
+    if (!url) return '';
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `http://${url}`;
+    }
+    return url;
+  };
     // @ts-ignore: Implicit any for children prop
     const DocumentDetail = ({ handleFileChange, apiData, isLoading }) => {
         const [progress, setProgress] = useState(0);
@@ -174,7 +183,7 @@ function convertToCustomArray(jsonString) {
                                                             </Card>
 
                                                             <div className='cerficate-external-info d-block d-lg-flex  text-md-left text-center mb-md-0 mb-4'>
-                                                            <div className='col-6'>
+                                                            <div className='col-12 col-md-6'>
                                                             <table style={{ backgroundColor: "transparent"}} className='table table-bordered'>
     <tbody>
         {customFieldsArray.map((field, index) => (
@@ -187,9 +196,9 @@ function convertToCustomArray(jsonString) {
 </table>
 
                                                         </div>
-<div className='col-6'>
+<div className='col-12 col-md-6'>
                                                                 <div className='details varification-info'>
-                                                                    <Button href={apiData?.Details['Polygon URL'] ? apiData?.Details['Polygon URL'] : apiData?.Details['Verify On Blockchain']} target="_blank" className='heading-info' variant="primary">
+                                                                    <Button href={apiData?.Details['Polygon URL'] ? ensureHttp(apiData?.Details['Polygon URL']) : ensureHttp(apiData?.Details['Verify On Blockchain'])} target="_blank" className='heading-info' variant="primary">
                                                                         Verify on Blockchain
                                                                     </Button>
                                                                 </div>
@@ -206,13 +215,13 @@ function convertToCustomArray(jsonString) {
                                                         <p className='share-text'>Share Your Certificate:</p>
                                                         </div>
                                                         <div className='d-flex justify-content-center align-items-center '>
-                                                            <FacebookShareButton url={shareUrl} title={shareTitle} className='mr-2'>
+                                                            <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-5'>
                                                                 <FacebookIcon size={32} round />
                                                             </FacebookShareButton>
-                                                            <TwitterShareButton url={shareUrl} title={shareTitle} className='mr-2'>
+                                                            <TwitterShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <TwitterIcon size={32} round />
                                                             </TwitterShareButton>
-                                                            <LinkedinShareButton url={shareUrl} title={shareTitle} className='mr-2'>
+                                                            <LinkedinShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <LinkedinIcon size={32} round />
                                                             </LinkedinShareButton>
                                                         </div>
