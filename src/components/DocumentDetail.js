@@ -126,12 +126,14 @@ function convertToCustomArray(jsonString) {
     const description = 'Test description';
     const image = 'https://images.netcomlearning.com/ai-certs/cer365AllPageBg.png';
 
+    
+
     return (
         <>
           
            <Head>
                 <title>{title}</title>
-                <meta name="description" content={description} />
+                {/* <meta name="description" content={description} />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
                 <meta property="og:image" content={image} />
@@ -139,7 +141,7 @@ function convertToCustomArray(jsonString) {
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:type" content="image/png" />
                 <meta property="og:url" content={shareUrl} />
-                <meta property="og:type" content='website' />
+                <meta property="og:type" content='website' /> */}
             </Head>
 
             <div className='page-bg'>
@@ -188,8 +190,8 @@ function convertToCustomArray(jsonString) {
     <tbody>
         {customFieldsArray.map((field, index) => (
             <tr key={index} style={{ backgroundColor: "transparent" }}>
-                <td style={{ backgroundColor: "transparent" }}>{Object.keys(field)[0]}</td>
-                <td style={{ backgroundColor: "transparent"}}>{Object.values(field)[0]}</td>
+                <td style={{ backgroundColor: "transparent",maxWidth:"200px"  }}>{Object.keys(field)[0]}</td>
+                <td style={{ backgroundColor: "transparent",maxWidth:"200px" }}>{Object.values(field)[0]}</td>
             </tr>
         ))}
     </tbody>
@@ -224,6 +226,7 @@ function convertToCustomArray(jsonString) {
                                                             <LinkedinShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <LinkedinIcon size={32} round />
                                                             </LinkedinShareButton>
+                                                            
                                                         </div>
                                                         </div>
                                                             </div>

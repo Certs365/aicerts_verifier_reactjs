@@ -16,7 +16,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     <>
       
       <Head>
-                <meta property="og:type" content="website" />
+                {/* <meta property="og:type" content="website" />
                 <meta property="og:title" content={shareTitle} />
                 <meta property="og:description" content={shareDescription} />
                 <meta property="og:image" content={apiUrl} />
@@ -29,7 +29,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
                 <meta name="twitter:description" content={shareDescription} />
                 <meta name="twitter:image" content={apiUrl} />
                 <title>{shareTitle}</title>
-                <meta name="description" content={shareDescription} />
+                <meta name="description" content={shareDescription} /> */}
         <link rel="icon" href="https://images.netcomlearning.com/ai-certs/favIcon.svg" />
             </Head>
       <Component {...pageProps} router={router} />

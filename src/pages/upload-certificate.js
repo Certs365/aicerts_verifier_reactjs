@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Button from '../../shared/button/button';
 import { useRouter } from 'next/router';
 import DocumentDetail from '../components/DocumentDetail';
+import Head from 'next/head';
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -183,6 +184,17 @@ const UploadCertificate = () => {
     return (
 
         <>
+          <Head>
+                <meta name="description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
+                <meta property="og:title" content={encodeURIComponent(apiData?.Details['Name'])} />
+                <meta property="og:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
+                <meta property="og:image" content={encodeURIComponent(apiData?.Details['certificateUrl'])} />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+                <meta property="og:image:type" content="image/png" />
+                <meta property="og:url" content={encodeURIComponent(apiData?.Details['url'])} />
+                <meta property="og:type" content='website' />
+            </Head>
             {apiData ? (
                 <>
                 {apiData?.Details?.type == 'dynamic'?
