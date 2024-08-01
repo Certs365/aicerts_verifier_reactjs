@@ -179,7 +179,7 @@ const ScanDocuments = () => {
 
     return (
         <>
-        {apiData && apiData.Details["Certificate Number"] !=null  ? (
+        {apiData && apiData?.Details["Certificate Number"] !=null  ? (
             <>
             
 {apiData?.Details?.type == 'dynamic'?

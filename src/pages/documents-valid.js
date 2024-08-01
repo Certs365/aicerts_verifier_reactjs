@@ -84,7 +84,7 @@ import CertificateContext from '@/utils/CertificateContext';
             return `${month}/${day}/${year}`;
         };
 
-        let shareUrl = apiData?.Details?.url;
+        let shareUrl = apiData?.Details?.url || "";
         if(shareUrl) {
              shareUrl = shareUrl.replace('/verify-documents', '');
         }
@@ -102,22 +102,43 @@ import CertificateContext from '@/utils/CertificateContext';
     return (
         <>
           
-           <Head>
-                <title>{title}</title>
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={shareTitle} />
-        <meta property="og:description" content={encodeURIComponent(metaDetails?.Details['Course Name'])} />
-        <meta property="og:image" content={encodeURIComponent(metaDetails?.Details['certificateUrl'])} />
-        <meta property="og:image:secure_url" content={encodeURIComponent(metaDetails?.Details['certificateUrl'])} />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:description" content={encodeURIComponent(metaDetails?.Details['Course Name'])} />
-        <meta name="twitter:image" content={encodeURIComponent(metaDetails?.Details['certificateUrl'])} />
-        <meta name="description" content={encodeURIComponent(metaDetails?.Details['Course Name'])} />
-        <meta property="og:url" content={encodeURIComponent(metaDetails?.Details['url'])} />
-            </Head>
+          <Head>
+  <title>{shareTitle}</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={shareTitle} />
+
+  {metaDetails?.Details && (
+    <>
+      <meta property="og:description" content={encodeURIComponent(metaDetails.Details['Course Name'] || "")} />
+      <meta property="og:image" content={encodeURIComponent(metaDetails.Details['certificateUrl'] || "")} />
+      <meta property="og:image:secure_url" content={encodeURIComponent(metaDetails.Details['certificateUrl'] || "")} />
+      <meta name="twitter:description" content={encodeURIComponent(metaDetails.Details['Course Name'] || "")} />
+      <meta name="twitter:image" content={encodeURIComponent(metaDetails.Details['certificateUrl'] || "")} />
+      <meta property="og:url" content={encodeURIComponent(metaDetails.Details['url'] || "")} />
+      <meta name="description" content={encodeURIComponent(metaDetails.Details['Course Name'] || "")} />
+
+    </>
+  )}
+
+  {metaDetails?.details && (
+    <>
+      <meta property="og:description" content={encodeURIComponent(metaDetails.details['Course Name'] || "")} />
+      <meta property="og:image" content={encodeURIComponent(metaDetails.details['certificateUrl'] || "")} />
+      <meta property="og:image:secure_url" content={encodeURIComponent(metaDetails.details['certificateUrl'] || "")} />
+      <meta name="twitter:description" content={encodeURIComponent(metaDetails.details['Course Name'] || "")} />
+      <meta name="twitter:image" content={encodeURIComponent(metaDetails.details['certificateUrl'] || "")} />
+      <meta name="description" content={encodeURIComponent(metaDetails.details['Course Name'] || "")} />
+      <meta property="og:url" content={encodeURIComponent(metaDetails.details['url'] || "")} />
+    </>
+  )}
+
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="https://images.netcomlearning.com/ai-certs/favIcon.svg" />
+</Head>
+
 
             <div className='page-bg'>
                 <div className='position-relative h-100'>
@@ -182,22 +203,28 @@ import CertificateContext from '@/utils/CertificateContext';
                                                                 </div>
                                                             </div>
                                                         </Card>
+                                                        {shareUrl &&
+                                                        <>
                                                         <div className='d-flex justify-content-center mt-4'>
                                                         <p className='share-text'>Share Your Certificate:</p>
                                                         </div>
                                                         <button onClick={handleShare}>share</button>
-                                                        <div className='d-flex justify-content-center align-items-center '>
-                                                            <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <FacebookIcon size={32} round />
-                                                            </FacebookShareButton>
-                                                            <TwitterShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <TwitterIcon size={32} round />
-                                                            </TwitterShareButton>
-                                                            <LinkedinShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <LinkedinIcon size={32} round />
-                                                            </LinkedinShareButton>
+                                                       
+                                                         <div className='d-flex justify-content-center align-items-center '>
+                                                         <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
+                                                             <FacebookIcon size={32} round />
+                                                         </FacebookShareButton>
+                                                         <TwitterShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
+                                                             <TwitterIcon size={32} round />
+                                                         </TwitterShareButton>
+                                                         <LinkedinShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
+                                                             <LinkedinIcon size={32} round />
+                                                         </LinkedinShareButton>
+                                                     </div>
+</>
+                                                        }
+                                                       
 
-                                                        </div>
                                                         {/* <button onClick={()=>{handleShare()}}>share</button> */}
                                                         <div className='d-flex justify-content-center'>
                                                         <hr className='horizontal-line-cert'/>

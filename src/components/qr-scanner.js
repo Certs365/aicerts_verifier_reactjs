@@ -65,7 +65,11 @@ const QRScan = ({ apiData, setApiData }) => {
                     // console.log("The response", responseData.data); // Do something with the response data
                     // console.log("The response", responseData?.details?.url); // Do something with the response data
                     window.location.href=responseData?.details?.url;
-                    setApiData(responseData);
+                    setApiData({
+                        // @ts-ignore: Implicit any for children prop
+                        Details: responseData?.details,
+                        message: responseData?.message
+                    });
                     scanFailed = false;
                     // clearTimeout(timeout); // Clear the timeout if the API call succeeds before the 10-second timeout
                 } else {

@@ -7,6 +7,11 @@ const CertificateContext = createContext({
       certificateUrl: "",
       url: ""
     },
+    details: {
+      'Course Name': "",
+      certificateUrl: "",
+      url: ""
+    },
     message: ""
   },
   setMetaDetails: (metaDetails: any) => {}

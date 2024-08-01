@@ -1,8 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import UploadCertificate from './upload-certificate';
 import Navigation from '@/app/navigation';
 import certificate from '../services/certificateServices';
 import DocumentsValid from './documents-valid';
+import CertificateContext from '@/utils/CertificateContext';
 
 const VerifyDocuments = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -10,6 +11,7 @@ const VerifyDocuments = () => {
     const [loginError, setLoginError] = useState('');
     const [show, setShow] = useState(false);
 
+    const {metaDetails, setMetaDetails} = useContext(CertificateContext);
 
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -31,8 +33,16 @@ const VerifyDocuments = () => {
                 });
 
                 const responseData = await response.json(); // Assuming response is in JSON format
-                setApiData(responseData);
-
+                setApiData({
+                    // @ts-ignore: Implicit any for children prop
+                    Details: responseData?.details,
+                    message: responseData?.message
+                });
+                setMetaDetails({
+                    // @ts-ignore: Implicit any for children prop
+                    Details: responseData?.details,
+                    message: responseData?.message
+                })
             } catch (error) {
                 // console.error('Error uploading file:', error);
                 // Handle error
@@ -126,12 +136,15 @@ const VerifyDocuments = () => {
             if (response.status == "SUCCESS") {
                 if (response.data.status === 'PASSED') {
                     // @ts-ignore: Implicit any for children prop
-                    setApiData((prevData) => {
-                        // Perform actions based on prevData and update state
-                        return {
-                            message: "Certificate is Valid",
-                            Details: response.data.data
-                        };
+                    setApiData({
+                        // @ts-ignore: Implicit any for children prop
+                        Details: response?.details,
+                        message: response?.message
+                    });
+                    setMetaDetails({
+                        // @ts-ignore: Implicit any for children prop
+                        Details: response?.details,
+                        message: response?.message
                     });
 
                     // @ts-ignore: Implicit any for children prop

@@ -138,9 +138,16 @@ const UploadCertificate = () => {
                      
 
                         if ( fileData?.details["Certificate Number"] === certificateNumber) {
-                            setApiData(fileData);
-                            setMetaDetails(fileData);
-                             
+                            setApiData({
+                                // @ts-ignore: Implicit any for children prop
+                                Details: fileData?.details,
+                                message: fileData?.message
+                            });
+                            setMetaDetails({
+                                // @ts-ignore: Implicit any for children prop
+                                Details: fileData?.details,
+                                message: fileData?.message
+                            });
 
                         } else {
 
@@ -191,17 +198,40 @@ const UploadCertificate = () => {
     return (
 
         <>
-          <Head>
-                <meta name="description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:title" content={encodeURIComponent(apiData?.Details['Name'])} />
-                <meta property="og:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:image" content={encodeURIComponent(apiData?.Details['certificateUrl'])} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:image:type" content="image/png" />
-                <meta property="og:url" content={encodeURIComponent(apiData?.Details['url'])} />
-                <meta property="og:type" content='website' />
-            </Head>
+        <Head>
+  <meta property="og:type" content="website" />
+
+  {metaDetails?.Details && (
+    <>
+      <meta property="og:description" content={encodeURIComponent(metaDetails.Details['Course Name'] || "")} />
+      <meta property="og:image" content={encodeURIComponent(metaDetails.Details['certificateUrl'] || "")} />
+      <meta property="og:image:secure_url" content={encodeURIComponent(metaDetails.Details['certificateUrl'] || "")} />
+      <meta name="twitter:description" content={encodeURIComponent(metaDetails.Details['Course Name'] || "")} />
+      <meta name="twitter:image" content={encodeURIComponent(metaDetails.Details['certificateUrl'] || "")} />
+      <meta name="description" content={encodeURIComponent(metaDetails.Details['Course Name'] || "")} />
+      <meta property="og:url" content={encodeURIComponent(metaDetails.Details['url'] || "")} />
+    </>
+  )}
+
+  {metaDetails?.details && (
+    <>
+      <meta property="og:description" content={encodeURIComponent(metaDetails.details['Course Name'] || "")} />
+      <meta property="og:image" content={encodeURIComponent(metaDetails.details['certificateUrl'] || "")} />
+      <meta property="og:image:secure_url" content={encodeURIComponent(metaDetails.details['certificateUrl'] || "")} />
+      <meta name="twitter:description" content={encodeURIComponent(metaDetails.details['Course Name'] || "")} />
+      <meta name="twitter:image" content={encodeURIComponent(metaDetails.details['certificateUrl'] || "")} />
+      <meta name="description" content={encodeURIComponent(metaDetails.details['Course Name'] || "")} />
+      <meta property="og:url" content={encodeURIComponent(metaDetails.details['url'] || "")} />
+    </>
+  )}
+
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="https://images.netcomlearning.com/ai-certs/favIcon.svg" />
+</Head>
+
             {apiData ? (
                 <>
                 {apiData?.Details?.type == 'dynamic'?
