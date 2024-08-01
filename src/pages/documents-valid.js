@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import Image from 'next/image';
 import { Form, Row, Col, Card, Modal, ProgressBar, Button} from 'react-bootstrap';
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
+import CertificateContext from '@/utils/CertificateContext';
 
     // @ts-ignore: Implicit any for children prop
     const DocumentsValid = ({ handleFileChange, apiData, isLoading }) => {
@@ -15,6 +16,8 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
         const [copied, setCopied] = useState(false);
 
         const handleClose = () => setShareModal(false);
+        const { metaDetails } = useContext(CertificateContext);
+
 
         useEffect(() => {
             if (isLoading) {
@@ -101,15 +104,19 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
           
            <Head>
                 <title>{title}</title>
-                <meta name="description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:title" content={encodeURIComponent(apiData?.Details['Name'])} />
-                <meta property="og:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:image" content={encodeURIComponent(apiData?.Details['certificateUrl'])} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:image:type" content="image/png" />
-                <meta property="og:url" content={encodeURIComponent(apiData?.Details['url'])} />
-                <meta property="og:type" content='website' />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={shareTitle} />
+        <meta property="og:description" content={encodeURIComponent(metaDetails?.Details['Course Name'])} />
+        <meta property="og:image" content={encodeURIComponent(metaDetails?.Details['certificateUrl'])} />
+        <meta property="og:image:secure_url" content={encodeURIComponent(metaDetails?.Details['certificateUrl'])} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:description" content={encodeURIComponent(metaDetails?.Details['Course Name'])} />
+        <meta name="twitter:image" content={encodeURIComponent(metaDetails?.Details['certificateUrl'])} />
+        <meta name="description" content={encodeURIComponent(metaDetails?.Details['Course Name'])} />
+        <meta property="og:url" content={encodeURIComponent(metaDetails?.Details['url'])} />
             </Head>
 
             <div className='page-bg'>
@@ -178,6 +185,7 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                         <div className='d-flex justify-content-center mt-4'>
                                                         <p className='share-text'>Share Your Certificate:</p>
                                                         </div>
+                                                        <button onClick={handleShare}>share</button>
                                                         <div className='d-flex justify-content-center align-items-center '>
                                                             <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <FacebookIcon size={32} round />

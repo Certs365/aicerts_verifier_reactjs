@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Row, Col, Card, Modal, ProgressBar } from 'react-bootstrap';
 import DocumentsValid from '../../src/pages/documents-valid';
 import Image from 'next/image';
@@ -6,6 +6,7 @@ import Button from '../../shared/button/button';
 import { useRouter } from 'next/router';
 import DocumentDetail from '../components/DocumentDetail';
 import Head from 'next/head';
+import CertificateContext from '@/utils/CertificateContext';
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +18,7 @@ const UploadCertificate = () => {
     const [loginError, setLoginError] = useState('');
     const [loginSuccess, setLoginSuccess] = useState('');
     const [show, setShow] = useState(false);
+    const {metaDetails, setMetaDetails} = useContext(CertificateContext);
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -55,7 +57,7 @@ const UploadCertificate = () => {
             const responseData = await response.json();
             // Assuming response is in JSON format
             setApiData(responseData);
-
+            setMetaDetails(responseData)
         } catch (error) {
             // console.error('Error Verifying Certificate:', error);
             // Handle error
@@ -109,6 +111,11 @@ const UploadCertificate = () => {
                         Details: certificateData?.details,
                         message: certificateData?.message
                     });
+                    setMetaDetails({
+                        // @ts-ignore: Implicit any for children prop
+                        Details: certificateData?.details,
+                        message: certificateData?.message
+                    });
                 } else {
 
                     const errorData = await certificateResponse.json();
@@ -132,6 +139,7 @@ const UploadCertificate = () => {
 
                         if ( fileData?.details["Certificate Number"] === certificateNumber) {
                             setApiData(fileData);
+                            setMetaDetails(fileData);
                              
 
                         } else {
@@ -169,7 +177,6 @@ const UploadCertificate = () => {
             }
         } catch (error) {
              
-
             // console.error('Error during API calls:', error);
             router.push('/unable-certificate')
             setLoginError("Unable to verify the certification. Please review and try again.")
