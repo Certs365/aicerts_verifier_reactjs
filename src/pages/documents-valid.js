@@ -71,10 +71,10 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
             return `${month}/${day}/${year}`;
         };
 
-        let shareUrl = apiData?.Details?.url;
-        if(shareUrl) {
-             shareUrl = shareUrl.replace('/verify-documents', '');
-        }
+        let shareUrl = `https://testverify.certs365.io/certificate/${apiData.Details["Certificate Number"]}`;
+        // if(shareUrl) {
+        //      shareUrl = shareUrl.replace('/verify-documents', '');
+        // }
         
     const shareTitle =  apiData?.message || "Ai Certification";
 
@@ -175,6 +175,9 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 <LinkedinIcon size={32} round />
                                                             </LinkedinShareButton>
                                                         </div>
+                                                        <button>
+                                                            
+                                                        </button>
                                                         <div className='d-flex justify-content-center'>
                                                         <hr className='horizontal-line-cert'/>
                                                         </div>
