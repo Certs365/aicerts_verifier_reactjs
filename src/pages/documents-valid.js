@@ -55,16 +55,16 @@ var imageUrl = `https://certs365-live.s3.amazonaws.com/issuetesting1244.png`;
         };
 
 
-        const shareValue = apiData?.Details["Polygon URL"];
+        // const shareValue = apiData?.Details["Polygon URL"];
 
-        const copyToClipboard = () => {
-            navigator.clipboard.writeText(shareValue).then(() => {
-                setCopied(true)
-                setTimeout(() => setCopied(false), 3000);
-            }).catch(err => {
-                // console.error('Failed to copy text: ', err);
-            });
-        };
+        // const copyToClipboard = () => {
+        //     navigator.clipboard.writeText(shareValue).then(() => {
+        //         setCopied(true)
+        //         setTimeout(() => setCopied(false), 3000);
+        //     }).catch(err => {
+        //         // console.error('Failed to copy text: ', err);
+        //     });
+        // };
 
         // @ts-ignore: Implicit any for children prop
         const formatDate = (dateString) => {
@@ -80,7 +80,7 @@ var imageUrl = `https://certs365-live.s3.amazonaws.com/issuetesting1244.png`;
             return `${month}/${day}/${year}`;
         };
 
-        let shareUrl = `https://testverify.certs365.io/certificate/${apiData.Details["Certificate Number"]}`;
+        let shareUrl = `https://testverify.certs365.io/certificate/${apiData?.Details["Certificate Number"]}`;
         // if(shareUrl) {
         //      shareUrl = shareUrl.replace('/verify-documents', '');
         // }
