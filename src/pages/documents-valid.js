@@ -27,6 +27,15 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                 setProgress(0);
             }
         }, [isLoading]);
+const text = "AI Certification";
+var url = `https://testverify.certs365.io/certificate/issuetesting1244`;
+var imageUrl = `https://certs365-live.s3.amazonaws.com/issuetesting1244.png`;
+        const tweetUrl = `
+        https://www.linkedin.com/shareArticle?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&media=${encodeURIComponent(imageUrl)}`;
+      
+        const handleClick = () => {
+            window.open(tweetUrl, '_blank', 'width=600,height=400');
+          };
 
         useEffect(() => {
             if (certificateRef.current) {
@@ -175,9 +184,9 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 <LinkedinIcon size={32} round />
                                                             </LinkedinShareButton>
                                                         </div>
-                                                        <button>
-                                                            
-                                                        </button>
+                                                        <button onClick={handleClick}>
+      Share 
+    </button>
                                                         <div className='d-flex justify-content-center'>
                                                         <hr className='horizontal-line-cert'/>
                                                         </div>
