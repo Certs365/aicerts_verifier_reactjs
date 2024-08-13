@@ -131,7 +131,7 @@ const UploadCertificate = () => {
                     });
                     if (fileResponse.ok) {
                         const fileData = await fileResponse.json();
-                        if (fileData.Details["Certificate Number"] === certificateNumber) {
+                        if (fileData?.Details["Certificate Number"] === certificateNumber) {
                             setApiData(fileData);
                             setCertificate(fileData);
                         } else {
