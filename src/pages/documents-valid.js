@@ -27,6 +27,56 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                 setProgress(0);
             }
         }, [isLoading]);
+
+
+        // useEffect(() => {
+        //     if (certificateRef.current) {
+        //         toPng(certificateRef.current)
+        //             .then((dataUrl) => {
+        //                 // Create a link element for downloading
+        //                 const link = document.createElement('a');
+        //                 link.download = 'certificate.png';
+        //                 link.href = dataUrl;
+        //                 link.click();
+        
+        //                 // Convert dataUrl to File
+        //                 const byteString = atob(dataUrl.split(',')[1]);
+        //                 const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+        //                 const ab = new ArrayBuffer(byteString.length);
+        //                 const ia = new Uint8Array(ab);
+        //                 for (let i = 0; i < byteString.length; i++) {
+        //                     ia[i] = byteString.charCodeAt(i);
+        //                 }
+        
+        //                 // Create a File object (last parameter is the filename)
+        //                 const file = new File([ab], 'certificate.png', { type: mimeString });
+        
+        //                 // Create a FormData object to upload the file
+        //                 const formData = new FormData();
+        //                 formData.append('file', file);
+        
+        //                 // Send the file to the server
+        //                 fetch('/api/upload', {
+        //                     method: 'POST',
+        //                     body: formData
+        //                 })
+        //                 .then((response) => response.json())
+        //                 .then((result) => {
+        //                     console.log('Upload successful:', result);
+        //                 })
+        //                 .catch((error) => {
+        //                     console.error('Upload failed:', error);
+        //                 });
+        //             })
+        //             .catch((error) => {
+        //                 console.error('Error generating certificate image:', error);
+        //             });
+        //     }
+        // }, [apiData]);
+        
+        
+        
+        
 const text = "AI Certification";
 var url = `https://testverify.certs365.io/certificate/issuetesting1244`;
 var imageUrl = `https://certs365-live.s3.amazonaws.com/issuetesting1244.png`;

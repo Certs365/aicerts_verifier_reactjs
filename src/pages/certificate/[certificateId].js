@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Image } from 'react-bootstrap';
 import Head from 'next/head';
+import Image from 'next/image';
 
 const CertificateId = () => {
   const router = useRouter();
@@ -29,9 +29,9 @@ const CertificateId = () => {
             </Head>
     <div className='d-flex justify-content-center align-items-center' style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
       <Image 
-        src={`https://certs365-live.s3.amazonaws.com/${certificateId}.png`}
-        style={{ height: '90vh', width: '70vw' }}
-        fluid
+        src={`/uploads/${certificateId}.png`}
+        layout='fill'
+        objectFit='contain'
         />
     </div>
         </>
