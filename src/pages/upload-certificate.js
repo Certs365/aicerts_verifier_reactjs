@@ -180,7 +180,7 @@ const UploadCertificate = () => {
         }
     };
 
-
+    const imageUrl = `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationDate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
     return (
 
         <>
@@ -188,11 +188,11 @@ const UploadCertificate = () => {
                 <meta name="description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
                 <meta property="og:title" content={encodeURIComponent(apiData?.Details['Name'])} />
                 <meta property="og:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:image" content={encodeURIComponent(apiData?.Details['certificateUrl'])} />
+                <meta property="og:image" content={imageUrl} />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:type" content="image/png" />
-                <meta property="og:url" content={encodeURIComponent(apiData?.Details['url'])} />
+                <meta property="og:url" content={imageUrl} />
                 <meta property="og:type" content='website' />
             </Head>
             {apiData ? (
