@@ -185,6 +185,7 @@ const UploadCertificate = () => {
 
         <>
           <Head>
+                <title>{encodeURIComponent(apiData?.Details['Course Name'])}</title>
                 <meta name="description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
                 <meta property="og:title" content={encodeURIComponent(apiData?.Details['Name'])} />
                 <meta property="og:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
@@ -194,6 +195,12 @@ const UploadCertificate = () => {
                 <meta property="og:image:type" content="image/png" />
                 <meta property="og:url" content={imageUrl} />
                 <meta property="og:type" content='website' />
+                <meta name="twitter:card" content="summary_large_image" /> 
+                <meta name="twitter:title" content={encodeURIComponent(apiData?.Details['Name'])} />
+                <meta name="twitter:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
+                <meta name="twitter:image" content={imageUrl} />
+                <meta name="twitter:image:width" content="1200" />
+                <meta name="twitter:image:height" content="630" />
             </Head>
             {apiData ? (
                 <>

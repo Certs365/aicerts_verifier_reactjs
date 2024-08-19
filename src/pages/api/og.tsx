@@ -9,11 +9,11 @@ export const config = {
 
 const handle = (req: NextRequest) => {
     const { searchParams } = new URL(req.url)
-    const certificatenumber = searchParams.get('certificatenumber') || '331234ABSSDCDE2'
-    const coursename = searchParams.get('coursename') || 'AI Certs'
-    const grantdate = new Date(searchParams.get('grantdate') || '2022-11-05T12:00:00.000Z')
-    const expirationDate = new Date(searchParams.get('expirationDate') || '2022-11-05T12:00:00.000Z')
-    const name = searchParams.get('name') || 'AI Certs'
+    const certificatenumber = searchParams.get('certificatenumber') || "-"
+    const coursename = searchParams.get('coursename') || '-'
+    const grantdate = searchParams.get('grantdate') || "-"
+    const expirationDate = searchParams.get('expirationDate') || "-"
+    const name = searchParams.get('name') || '-'
     const baseUrl = req.nextUrl.origin
 
     return new ImageResponse(
@@ -223,7 +223,7 @@ const handle = (req: NextRequest) => {
                                 fontWeight: 700,
                             }}
                         >
-                            {grantdate?.toLocaleDateString('en-GB') || ""}
+                            {grantdate|| "-"}
                         </div>
                     </div>
                     <div style={{
@@ -250,7 +250,7 @@ const handle = (req: NextRequest) => {
                                 fontWeight: 700,
                             }}
                         >
-                            {expirationDate?.toLocaleDateString('en-GB') || ""}
+                            {expirationDate || "-"}
 
                         </div>
                     </div>
@@ -258,7 +258,7 @@ const handle = (req: NextRequest) => {
                 </div>
             </div>
         ),
-        { width: 700, height: 478 }
+        { width: 1200, height: 630 }
     )
 }
 
