@@ -94,7 +94,8 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
     const imageUrl = `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
     let shareUrl = imageUrl;
     const handleShare = (()=>{
-        const url = `https://www.linkedin.com/shareArticle?text=${apiData?.Details['Course Name']}&url=${imageUrl}&media=${imageUrl}`;
+        // const url = `https://www.linkedin.com/shareArticle?text=${apiData?.Details['Course Name']}&url=${imageUrl}&media=${imageUrl}`;
+        const url = `https://twitter.com/share?text=${apiData?.Details['Course Name']}&url=${encodeURIComponent(imageUrl)}&original_referer=${encodeURIComponent(imageUrl)}`
         window.open(url, "_blank", "width=550,height=350")
             })
     return (
@@ -114,9 +115,11 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                 <meta name="twitter:card" content="summary_large_image" /> 
                 <meta name="twitter:title" content={encodeURIComponent(apiData?.Details['Name'])} />
                 <meta name="twitter:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta name="twitter:image" content={imageUrl} />
+                <meta name="twitter:image" content={encodeURIComponent(imageUrl)} />
                 <meta name="twitter:image:width" content="1200" />
                 <meta name="twitter:image:height" content="630" />
+                <meta name="twitter:card" content="summary" />
+
             </Head>
 
             <div className='page-bg'>
@@ -195,9 +198,9 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                             <LinkedinShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <LinkedinIcon size={32} round />
                                                             </LinkedinShareButton>
-{/* <button onClick={()=>{handleShare()}}>
+<button onClick={()=>{handleShare()}}>
     share
-</button> */}
+</button>
                                                         </div>
                                                         {/* <button onClick={()=>{handleShare()}}>share</button> */}
                                                         <div className='d-flex justify-content-center'>

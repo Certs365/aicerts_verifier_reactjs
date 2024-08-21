@@ -128,10 +128,13 @@ const UploadCertificate = () => {
 
                     if (fileResponse.ok) {
                         const fileData = await fileResponse.json();
-                     
 
                         if ( fileData?.details["Certificate Number"] === certificateNumber) {
-                            setApiData(fileData);
+                    setApiData({
+                                // @ts-ignore: Implicit any for children prop
+                                Details: fileData?.details,
+                                message: fileData?.message
+                            });
                              
 
                         } else {
