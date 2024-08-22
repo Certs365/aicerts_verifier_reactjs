@@ -123,15 +123,13 @@ const ScanDocuments = () => {
         certificate?.verifyCertificate(data, (response) => {
             // Handle the API response here (success or error)
             if (response.status == "SUCCESS") {
-                if (response.data.status === 'PASSED') {
+                if (response.data.status === 'SUCCESS') {
                     // @ts-ignore: Implicit any for children prop
-                    setApiData((prevData) => {
-                        // Perform actions based on prevData and update state
-                        return {
+                    setApiData({
+                    // @ts-ignore: Implicit any for children prop
                             message: "Certificate is Valid",
                             Details: response.data.data
-                        };
-                    });
+                        });
 
                     // @ts-ignore: Implicit any for children prop
                     setData(response.data.data)

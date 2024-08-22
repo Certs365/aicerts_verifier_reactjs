@@ -115,6 +115,7 @@ const VerifyDocuments = () => {
     // @ts-ignore: Implicit any for children prop
     const handleVerifyCertificate = (qValue, ivValue) => {
         // Call the verify API with the encrypted link
+
         const data = {
             qValue, ivValue
         }
@@ -122,20 +123,16 @@ const VerifyDocuments = () => {
 
         certificate?.verifyCertificate(data, (response) => {
             // Handle the API response here (success or error)
+            debugger
 
             if (response.status == "SUCCESS") {
                 if (response.data.status === 'PASSED') {
                     // @ts-ignore: Implicit any for children prop
-                    setApiData((prevData) => {
-                        // Perform actions based on prevData and update state
-                        return {
+                    setApiData({
                             message: "Certificate is Valid",
                             Details: response.data.data
-                        };
-                    });
+                        });
 
-                    // @ts-ignore: Implicit any for children prop
-                    setData(response.data.data)
 
                     setIsLoading(false)
 

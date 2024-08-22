@@ -8,27 +8,7 @@ const CertificateId = () => {
   const imageUrl = `https://testverify.certs365.io/api/og?certificatenumber=${certificatenumber}&coursename=${coursename}&grantdate=${grantdate}&expirationdate=${expirationdate}&name=${name}`;
   return (
     <>
-    <Head>
-         <title>AiCerts Certificate</title>
-         <meta name="description" content={certificatenumber} />
-         <meta property="og:title" content={name} />
-         <meta property="og:description" content={coursename} />
-         <meta property="og:image" content={imageUrl} />
-         <meta property="og:image:width" content="1200" />
-         <meta property="og:image:height" content="630" />
-         <meta property="og:image:type" content="image/png" />
-         <meta property="og:url" content={imageUrl} />
-         <meta property="og:type" content='website' />
-         <meta name="twitter:card" content="summary_large_image" /> 
-         <meta name="twitter:title" content={name} />
-         <meta name="twitter:description" content={coursename} />
-         <meta name="twitter:image" content={imageUrl} />
-         <meta name="twitter:image:width" content="1200" />
-         <meta name="twitter:image:height" content="630" />
-         <meta name="twitter:url" content={imageUrl} />
-         <meta name="twitter:card" content="summary" />
 
-     </Head>
     <div
                 style={{
                     backgroundColor: '#F3F4F6',

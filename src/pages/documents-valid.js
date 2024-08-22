@@ -93,36 +93,30 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
 
     const imageUrl = `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
     const certificateUrl = `https://testverify.certs365.io/certificate/${apiData?.Details['Certificate Number']}?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
-    let shareUrl = imageUrl;
-    const handleShare = (()=>{
-        // const url = `https://www.linkedin.com/shareArticle?text=${apiData?.Details['Course Name']}&url=${imageUrl}&media=${imageUrl}`;
-        const url = `https://twitter.com/share?text=${apiData?.Details['Course Name']}&url=${encodeURIComponent(imageUrl)}&original_referer=${encodeURIComponent(imageUrl)}`
-        window.open(url, "_blank", "width=550,height=350")
-            })
+    let shareUrl = apiData?.Details?.url;
+    if(shareUrl) {
+         shareUrl = shareUrl.replace('/verify-documents', '');
+    }
     return (
         <>
           
            <Head>
-                <title>AiCerts Certification</title>
-                <meta name="description" content="AiCerts Certification" />
-                <meta property="og:title" content="AiCerts Certification"  />
-                <meta property="og:description" content="AiCerts Certification"  />
+           <title>{title}</title>
+                <meta name="description" content={description} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
                 <meta property="og:image" content={imageUrl} />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:type" content="image/png" />
-                <meta property="og:url"  content={encodeURIComponent(apiData?.Details['url'])} />
+                <meta property="og:image:secure_url" content={imageUrl} />
+                <meta property="og:url" content={shareUrl} />
                 <meta property="og:type" content='website' />
-
-                {/* twitters tags */}
-                <meta name="twitter:card" content="summary_large_image" /> 
-                <meta name="twitter:title" content="AiCerts Certification" />
-                <meta name="twitter:description" content="AiCerts Certification" />
-                <meta name="twitter:image" content={encodeURIComponent(imageUrl)} />
-                <meta name="twitter:image:width" content="1200" />
-                <meta name="twitter:image:height" content="630" />
-                <meta name="twitter:url" content={encodeURIComponent(certificateUrl)} />
-                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={description} />
+                <meta name="twitter:image" content={imageUrl} />
+                <meta name="description" content={description} />
 
             </Head>
 
