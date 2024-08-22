@@ -201,6 +201,7 @@ const UploadCertificate = () => {
                 <meta name="twitter:card" content="summary_large_image" /> 
                 <meta name="twitter:title" content={encodeURIComponent(apiData?.Details['Name'])} />
                 <meta name="twitter:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
+                <meta name="twitter:url" content={encodeURIComponent(imageUrl)} />
                 <meta name="twitter:image" content={imageUrl} />
                 <meta name="twitter:image:width" content="1200" />
                 <meta name="twitter:image:height" content="630" />

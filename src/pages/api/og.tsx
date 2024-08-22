@@ -12,12 +12,13 @@ const handle = (req: NextRequest) => {
     const certificatenumber = searchParams.get('certificatenumber') || "-"
     const coursename = searchParams.get('coursename') || '-'
     const grantdate = searchParams.get('grantdate') || "-"
-    const expirationDate = searchParams.get('expirationDate') || "-"
+    const expirationDate = searchParams.get('expirationdate') || "-"
     const name = searchParams.get('name') || '-'
     const baseUrl = req.nextUrl.origin
 
     return new ImageResponse(
         (
+            
             <div
                 style={{
                     backgroundColor: '#F3F4F6',

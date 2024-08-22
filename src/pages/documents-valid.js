@@ -118,6 +118,7 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                 <meta name="twitter:image" content={encodeURIComponent(imageUrl)} />
                 <meta name="twitter:image:width" content="1200" />
                 <meta name="twitter:image:height" content="630" />
+                <meta name="twitter:url" content={encodeURIComponent(imageUrl)} />
                 <meta name="twitter:card" content="summary" />
 
             </Head>
