@@ -1,25 +1,35 @@
+import React from 'react';
+import { useRouter } from 'next/router'; 
+import Head from 'next/head';
 
-import { ImageResponse } from '@vercel/og'
-import { NextRequest } from 'next/server'
+const CertificateId = () => {
+  const router = useRouter();
+  const { certificatenumber = "-", coursename = "-", grantdate = "-", expirationdate = "-", name = "-" } = router.query;
+  const imageUrl = `https://testverify.certs365.io/api/og?certificatenumber=${certificatenumber}&coursename=${coursename}&grantdate=${grantdate}&expirationdate=${expirationdate}&name=${name}`;
+  return (
+    <>
+    <Head>
+         <title>AiCerts Certificate</title>
+         <meta name="description" content={certificatenumber} />
+         <meta property="og:title" content={name} />
+         <meta property="og:description" content={coursename} />
+         <meta property="og:image" content={imageUrl} />
+         <meta property="og:image:width" content="1200" />
+         <meta property="og:image:height" content="630" />
+         <meta property="og:image:type" content="image/png" />
+         <meta property="og:url" content={imageUrl} />
+         <meta property="og:type" content='website' />
+         <meta name="twitter:card" content="summary_large_image" /> 
+         <meta name="twitter:title" content={name} />
+         <meta name="twitter:description" content={coursename} />
+         <meta name="twitter:image" content={imageUrl} />
+         <meta name="twitter:image:width" content="1200" />
+         <meta name="twitter:image:height" content="630" />
+         <meta name="twitter:url" content={imageUrl} />
+         <meta name="twitter:card" content="summary" />
 
-
-export const config = {
-    runtime: 'experimental-edge',
-}
-
-const handle = (req: NextRequest) => {
-    const { searchParams } = new URL(req.url)
-    const certificatenumber = searchParams.get('certificatenumber') || "-"
-    const coursename = searchParams.get('coursename') || '-'
-    const grantdate = searchParams.get('grantdate') || "-"
-    const expirationdate = searchParams.get('expirationdate') || "-"
-    const name = searchParams.get('name') || '-'
-    const baseUrl = req.nextUrl.origin
-
-    return new ImageResponse(
-        (
-            
-            <div
+     </Head>
+    <div
                 style={{
                     backgroundColor: '#F3F4F6',
                     padding: '40px',
@@ -50,7 +60,7 @@ const handle = (req: NextRequest) => {
                             position: 'absolute',
                             right: '25px',
                             top: '25px',
-                            backgroundImage: `url(${baseUrl}/backgrounds/varified-certificate-badge.gif)`,
+                            backgroundImage: `url(/backgrounds/varified-certificate-badge.gif)`,
                             width: '80px',
                             height: '80px',
                             backgroundRepeat: 'no-repeat',
@@ -79,7 +89,7 @@ const handle = (req: NextRequest) => {
                             }}
                         >
                             <img
-                                src={`${baseUrl}/backgrounds/varified-certificate-badge.gif`}
+                                src={`/backgrounds/varified-certificate-badge.gif`}
                                 alt="Badge Banner"
                                 style={{
                                     width: '100%',
@@ -258,9 +268,9 @@ const handle = (req: NextRequest) => {
 
                 </div>
             </div>
-        ),
-        { width: 1200, height: 530 }
-    )
+        </>
+
+  )
 }
 
-export default handle
+export default CertificateId;

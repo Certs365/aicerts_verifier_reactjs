@@ -92,6 +92,7 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
  
 
     const imageUrl = `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
+    const certificateUrl = `https://testverify.certs365.io/certificate/${apiData?.Details['Certificate Number']}?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
     let shareUrl = imageUrl;
     const handleShare = (()=>{
         // const url = `https://www.linkedin.com/shareArticle?text=${apiData?.Details['Course Name']}&url=${imageUrl}&media=${imageUrl}`;
@@ -102,23 +103,25 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
         <>
           
            <Head>
-                <title>{encodeURIComponent(apiData?.Details['Course Name'])}</title>
-                <meta name="description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:title" content={encodeURIComponent(apiData?.Details['Name'])} />
-                <meta property="og:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
+                <title>AiCerts Certification</title>
+                <meta name="description" content="AiCerts Certification" />
+                <meta property="og:title" content="AiCerts Certification"  />
+                <meta property="og:description" content="AiCerts Certification"  />
                 <meta property="og:image" content={imageUrl} />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:type" content="image/png" />
-                <meta property="og:url" content={imageUrl} />
+                <meta property="og:url"  content={encodeURIComponent(apiData?.Details['url'])} />
                 <meta property="og:type" content='website' />
+
+                {/* twitters tags */}
                 <meta name="twitter:card" content="summary_large_image" /> 
-                <meta name="twitter:title" content={encodeURIComponent(apiData?.Details['Name'])} />
-                <meta name="twitter:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
+                <meta name="twitter:title" content="AiCerts Certification" />
+                <meta name="twitter:description" content="AiCerts Certification" />
                 <meta name="twitter:image" content={encodeURIComponent(imageUrl)} />
                 <meta name="twitter:image:width" content="1200" />
                 <meta name="twitter:image:height" content="630" />
-                <meta name="twitter:url" content={encodeURIComponent(imageUrl)} />
+                <meta name="twitter:url" content={encodeURIComponent(certificateUrl)} />
                 <meta name="twitter:card" content="summary" />
 
             </Head>
@@ -199,9 +202,9 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                             <LinkedinShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <LinkedinIcon size={32} round />
                                                             </LinkedinShareButton>
-<button onClick={()=>{handleShare()}}>
+{/* <button onClick={()=>{handleShare()}}>
     share
-</button>
+</button> */}
                                                         </div>
                                                         {/* <button onClick={()=>{handleShare()}}>share</button> */}
                                                         <div className='d-flex justify-content-center'>
