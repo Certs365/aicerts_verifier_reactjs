@@ -9,7 +9,7 @@ import axios from "axios";
 
 //@ts-ignore
 const QrReader = ({ apiData, setApiData }) => {
-  // QR States
+  // QR StatesDetails
   const scanner = useRef<QrScanner>();
   const videoEl = useRef<HTMLVideoElement>(null);
   const qrBoxEl = useRef<HTMLDivElement>(null);
@@ -38,36 +38,41 @@ const QrReader = ({ apiData, setApiData }) => {
     let scanResponse = "No URL found"
     setScannedResult(result?.data);
     const scannedUrl = result.data 
-    console.log('scannedResult',scannedUrl);
+    // console.log('scannedResult',scannedUrl);
 
     if (scannedUrl) {
         try {
           const url = scannedUrl;
           const paramValue = url.split('=')[1];
-          console.log(paramValue);
+          // debugger
+          // console.log(paramValue);
+          // console.log(paramValue);
             // First API call with QR Scanned data
            try{
             const qrScanResponse = await axios.post(`${apiUrl}/api/decode-qr-scan`, {
-                receivedCode: paramValue.toString(),
+                receivedCode: url,
             }, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-
             if (qrScanResponse.status === 200) {
                 const responseData = qrScanResponse.data;
-                console.log("The response", responseData.data);
-                console.log("The response", responseData?.details?.url);
-                window.location.href = responseData?.details?.url;
-                setApiData();
+                // console.log("The response", responseData.data);
+                // console.log("The response", responseData?.details?.url);
+                setApiData({
+                  // @ts-ignore: Implicit any for children prop
+                  Details: responseData?.details,
+                  message: responseData?.message
+              });
+                // window.location.href = responseData?.details?.url;
                 scanFailed = false;
             }
 
            } catch (error:any) {
-             console.log("Error", error.response.data);
+            //  console.log("Error", error.response.data);
              if(error.response.data.message === 'Certification has revoked') {
-                router.push('/invalid-certificate');
+                router.push('/certificate-revoked');
              } else{
                 router.push('/invalid-certificate')
             }
@@ -87,7 +92,7 @@ const QrReader = ({ apiData, setApiData }) => {
             setData(scanResponse);
             setStartScan(false);
         } catch (error) {
-            console.error("Error during API call:", error);
+            // console.error("Error during API call:", error);
             scanFailed = true; // Set flag to true if the scan failed
         }
     }
@@ -97,7 +102,7 @@ const QrReader = ({ apiData, setApiData }) => {
   // Fail
   const onScanFail = (err: string | Error) => {
     // 🖨 Print the "err" to browser console.
-    console.log(err);
+    // console.log(err);
   };
 
   useEffect(() => {
@@ -132,6 +137,7 @@ const QrReader = ({ apiData, setApiData }) => {
         scanner?.current?.stop();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ❌ If "camera" is not allowed in browser permissions, show an alert.
@@ -143,6 +149,7 @@ const QrReader = ({ apiData, setApiData }) => {
   }, [qrOn]);
 
   return (
+    <>
     <div className="qr-reader">
       {/* QR */}
       <video ref={videoEl}></video>
@@ -171,6 +178,7 @@ const QrReader = ({ apiData, setApiData }) => {
         </p>
       )}
     </div>
+    </>
   );
 };
 
