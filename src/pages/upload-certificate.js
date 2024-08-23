@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Row, Col, Card, Modal, ProgressBar } from 'react-bootstrap';
 import DocumentsValid from '../../src/pages/documents-valid';
 import Image from 'next/image';
@@ -6,10 +6,10 @@ import Button from '../../shared/button/button';
 import { useRouter } from 'next/router';
 import DocumentDetail from '../components/DocumentDetail';
 import Head from 'next/head';
+import { ApiDataContext } from '../utils/ContextState';
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [apiData, setApiData] = useState(null);
     const [progress, setProgress] = useState(0);
     const [certificateNumber, setCertificateNumber] = useState(null);
     const [rendered, setRendered] = useState(false);
@@ -17,6 +17,7 @@ const UploadCertificate = () => {
     const [loginError, setLoginError] = useState('');
     const [loginSuccess, setLoginSuccess] = useState('');
     const [show, setShow] = useState(false);
+    const { apiData, setApiData } = useContext(ApiDataContext);
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -188,7 +189,7 @@ const UploadCertificate = () => {
 
         <>
        
-            {apiData ? (
+            {apiData && apiData?.Details['Certificate Number']!==null ? (
                 <>
                 {apiData?.Details?.type == 'dynamic'?
                     <DocumentDetail handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />

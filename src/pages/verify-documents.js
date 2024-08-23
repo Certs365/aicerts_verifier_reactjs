@@ -1,12 +1,12 @@
-import React, { useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import UploadCertificate from './upload-certificate';
 import Navigation from '@/app/navigation';
 import certificate from '../services/certificateServices';
 import DocumentsValid from './documents-valid';
-
+import { ApiDataContext } from '../utils/ContextState';
 const VerifyDocuments = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [apiData, setApiData] = useState(null);
+     const { apiData, setApiData } = useContext(ApiDataContext);
     const [loginError, setLoginError] = useState('');
     const [show, setShow] = useState(false);
 
@@ -123,7 +123,6 @@ const VerifyDocuments = () => {
 
         certificate?.verifyCertificate(data, (response) => {
             // Handle the API response here (success or error)
-            debugger
 
             if (response.status == "SUCCESS") {
                 if (response.data.status === 'PASSED') {
@@ -162,7 +161,7 @@ const VerifyDocuments = () => {
     return (
         <div>
             <Navigation />
-            {apiData ? (
+            {apiData && apiData?.Details['Certificate Number']!==null ? (
             <>
                 <DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
             </>

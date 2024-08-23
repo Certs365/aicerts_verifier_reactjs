@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 // Qr Scanner
 import "../app/QrStyles.css"
 import QrScanner from "qr-scanner";
@@ -6,9 +6,10 @@ import QrFrame from "../../assets/img/qr-frame.svg";
 import Image from "next/image";
 import { useRouter } from 'next/router';
 import axios from "axios";
+import { ApiDataContext } from "@/utils/ContextState";
 
 //@ts-ignore
-const QrReader = ({ apiData, setApiData }) => {
+const QrReader = () => {
   // QR StatesDetails
   const scanner = useRef<QrScanner>();
   const videoEl = useRef<HTMLVideoElement>(null);
@@ -26,6 +27,7 @@ const QrReader = ({ apiData, setApiData }) => {
     const [loginError, setLoginError] = useState('');
     const [loginSuccess, setLoginSuccess] = useState('');
     const [show, setShow] = useState(false);
+    const { apiData, setApiData } = useContext(ApiDataContext);
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 

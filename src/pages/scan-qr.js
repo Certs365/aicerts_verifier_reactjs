@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navigation from '@/app/navigation';
 import { Form, Row, Col, Card, Modal, ProgressBar } from 'react-bootstrap';
 import Image from 'next/image';
@@ -8,17 +8,12 @@ import QrReader from '@/components/QrReader';
 import DocumentsValid from '../../src/pages/documents-valid';
 import certificate from '@/services/certificateServices';
 import DocumentDetail from '../components/DocumentDetail';
+import { ApiDataContext } from '@/utils/ContextState';
 
 
 
 const ScanDocuments = () => {
-    const [apiData, setApiData] = useState({
-        Details:{
-            type:null,
-            "Certificate Number": null
-        },
-        message:null
-    });
+    const { apiData, setApiData } = useContext(ApiDataContext);
     const [scannerActive, setScannerActive] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -208,7 +203,8 @@ const ScanDocuments = () => {
                                             </div>
                                         ) : (
                                             <div className='d-flex flex-column align-items-center'>
-                                                <QrReader apiData={apiData} setApiData={setApiData} />
+                                                
+                                                <QrReader />
                                             </div>
                                         )}
                                         {/* {scannerActive && <QrReader />} */}
