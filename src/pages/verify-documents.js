@@ -4,6 +4,7 @@ import Navigation from '@/app/navigation';
 import certificate from '../services/certificateServices';
 import DocumentsValid from './documents-valid';
 import { ApiDataContext } from '../utils/ContextState';
+import DocumentDetail from '../components/DocumentDetail';
 const VerifyDocuments = () => {
     const [isLoading, setIsLoading] = useState(false);
      const { apiData, setApiData } = useContext(ApiDataContext);
@@ -163,7 +164,12 @@ const VerifyDocuments = () => {
             <Navigation />
             {apiData && apiData?.Details['Certificate Number']!==null ? (
             <>
-                <DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+                 {apiData?.Details?.type == 'dynamic'?
+                    <DocumentDetail handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+:
+<DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+
+                }
             </>
         ) : (
             <UploadCertificate

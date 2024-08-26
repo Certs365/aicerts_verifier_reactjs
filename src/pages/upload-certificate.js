@@ -229,7 +229,7 @@ const UploadCertificate = () => {
                                                                     inputValue = inputValue.replace(/\s/g, '');
 
                                                                     // Validate alphanumeric and character limit
-                                                                    if (/^[a-zA-Z0-9]*$/.test(inputValue) && inputValue.length <= 20) {
+                                                                    if (/^[a-zA-Z0-9]*$/.test(inputValue) && inputValue.length <= 50) {
                                                                         // If input is valid, update state
                                                                         // @ts-ignore
                                                                         setCertificateNumber(inputValue);
