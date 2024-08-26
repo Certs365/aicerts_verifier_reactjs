@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navigation from '@/app/navigation';
 import { Form, Row, Col, Card, Modal, ProgressBar } from 'react-bootstrap';
 import Image from 'next/image';
@@ -8,17 +8,12 @@ import QrReader from '@/components/QrReader';
 import DocumentsValid from '../../src/pages/documents-valid';
 import certificate from '@/services/certificateServices';
 import DocumentDetail from '../components/DocumentDetail';
+import { ApiDataContext } from '@/utils/ContextState';
 
 
 
 const ScanDocuments = () => {
-    const [apiData, setApiData] = useState({
-        Details:{
-            type:null,
-            "Certificate Number": null
-        },
-        message:null
-    });
+    const { apiData, setApiData } = useContext(ApiDataContext);
     const [scannerActive, setScannerActive] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -123,15 +118,13 @@ const ScanDocuments = () => {
         certificate?.verifyCertificate(data, (response) => {
             // Handle the API response here (success or error)
             if (response.status == "SUCCESS") {
-                if (response.data.status === 'PASSED') {
+                if (response.data.status === 'SUCCESS') {
                     // @ts-ignore: Implicit any for children prop
-                    setApiData((prevData) => {
-                        // Perform actions based on prevData and update state
-                        return {
+                    setApiData({
+                    // @ts-ignore: Implicit any for children prop
                             message: "Certificate is Valid",
                             Details: response.data.data
-                        };
-                    });
+                        });
 
                     // @ts-ignore: Implicit any for children prop
                     setData(response.data.data)
@@ -179,7 +172,7 @@ const ScanDocuments = () => {
 
     return (
         <>
-        {apiData && apiData.Details["Certificate Number"] !=null  ? (
+        {apiData  && apiData?.Details["Certificate Number"] !=null  ? (
             <>
             
 {apiData?.Details?.type == 'dynamic'?
@@ -210,7 +203,8 @@ const ScanDocuments = () => {
                                             </div>
                                         ) : (
                                             <div className='d-flex flex-column align-items-center'>
-                                                <QrReader apiData={apiData} setApiData={setApiData} />
+                                                
+                                                <QrReader />
                                             </div>
                                         )}
                                         {/* {scannerActive && <QrReader />} */}

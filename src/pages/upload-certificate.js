@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Row, Col, Card, Modal, ProgressBar } from 'react-bootstrap';
 import DocumentsValid from '../../src/pages/documents-valid';
 import Image from 'next/image';
@@ -6,10 +6,10 @@ import Button from '../../shared/button/button';
 import { useRouter } from 'next/router';
 import DocumentDetail from '../components/DocumentDetail';
 import Head from 'next/head';
+import { ApiDataContext } from '../utils/ContextState';
 
 const UploadCertificate = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [apiData, setApiData] = useState(null);
     const [progress, setProgress] = useState(0);
     const [certificateNumber, setCertificateNumber] = useState(null);
     const [rendered, setRendered] = useState(false);
@@ -17,6 +17,7 @@ const UploadCertificate = () => {
     const [loginError, setLoginError] = useState('');
     const [loginSuccess, setLoginSuccess] = useState('');
     const [show, setShow] = useState(false);
+    const { apiData, setApiData } = useContext(ApiDataContext);
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -128,10 +129,13 @@ const UploadCertificate = () => {
 
                     if (fileResponse.ok) {
                         const fileData = await fileResponse.json();
-                     
 
                         if ( fileData?.details["Certificate Number"] === certificateNumber) {
-                            setApiData(fileData);
+                    setApiData({
+                                // @ts-ignore: Implicit any for children prop
+                                Details: fileData?.details,
+                                message: fileData?.message
+                            });
                              
 
                         } else {
@@ -179,23 +183,13 @@ const UploadCertificate = () => {
             setIsLoading(false);
         }
     };
-
-
+    const certificateUrl = `https://testverify.certs365.io/certificate/${apiData?.Details['Certificate Number']}?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
+    const imageUrl = `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
     return (
 
         <>
-          <Head>
-                <meta name="description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:title" content={encodeURIComponent(apiData?.Details['Name'])} />
-                <meta property="og:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:image" content={encodeURIComponent(apiData?.Details['certificateUrl'])} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:image:type" content="image/png" />
-                <meta property="og:url" content={encodeURIComponent(apiData?.Details['url'])} />
-                <meta property="og:type" content='website' />
-            </Head>
-            {apiData ? (
+       
+            {apiData && apiData?.Details['Certificate Number']!==null ? (
                 <>
                 {apiData?.Details?.type == 'dynamic'?
                     <DocumentDetail handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
@@ -235,7 +229,7 @@ const UploadCertificate = () => {
                                                                     inputValue = inputValue.replace(/\s/g, '');
 
                                                                     // Validate alphanumeric and character limit
-                                                                    if (/^[a-zA-Z0-9]*$/.test(inputValue) && inputValue.length <= 20) {
+                                                                    if (/^[a-zA-Z0-9]*$/.test(inputValue) && inputValue.length <= 50) {
                                                                         // If input is valid, update state
                                                                         // @ts-ignore
                                                                         setCertificateNumber(inputValue);

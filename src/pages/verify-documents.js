@@ -1,12 +1,13 @@
-import React, { useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import UploadCertificate from './upload-certificate';
 import Navigation from '@/app/navigation';
 import certificate from '../services/certificateServices';
 import DocumentsValid from './documents-valid';
-
+import { ApiDataContext } from '../utils/ContextState';
+import DocumentDetail from '../components/DocumentDetail';
 const VerifyDocuments = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [apiData, setApiData] = useState(null);
+     const { apiData, setApiData } = useContext(ApiDataContext);
     const [loginError, setLoginError] = useState('');
     const [show, setShow] = useState(false);
 
@@ -115,6 +116,7 @@ const VerifyDocuments = () => {
     // @ts-ignore: Implicit any for children prop
     const handleVerifyCertificate = (qValue, ivValue) => {
         // Call the verify API with the encrypted link
+
         const data = {
             qValue, ivValue
         }
@@ -126,16 +128,11 @@ const VerifyDocuments = () => {
             if (response.status == "SUCCESS") {
                 if (response.data.status === 'PASSED') {
                     // @ts-ignore: Implicit any for children prop
-                    setApiData((prevData) => {
-                        // Perform actions based on prevData and update state
-                        return {
+                    setApiData({
                             message: "Certificate is Valid",
                             Details: response.data.data
-                        };
-                    });
+                        });
 
-                    // @ts-ignore: Implicit any for children prop
-                    setData(response.data.data)
 
                     setIsLoading(false)
 
@@ -165,9 +162,14 @@ const VerifyDocuments = () => {
     return (
         <div>
             <Navigation />
-            {apiData ? (
+            {apiData && apiData?.Details['Certificate Number']!==null ? (
             <>
-                <DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+                 {apiData?.Details?.type == 'dynamic'?
+                    <DocumentDetail handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+:
+<DocumentsValid handleFileChange={handleFileChange} apiData={apiData} isLoading={isLoading} />
+
+                }
             </>
         ) : (
             <UploadCertificate

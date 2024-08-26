@@ -1,10 +1,11 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Row, Col, Card, Modal, ProgressBar, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import QrReader from 'react-qr-scanner';
+import { ApiDataContext } from '@/utils/ContextState';
 
-const QRScan = ({ apiData, setApiData }) => {
+const QRScan = () => {
     const [selected, setSelected] = useState("certification verification");
     const [startScan, setStartScan] = useState(true);
     const [loadingScan, setLoadingScan] = useState(false);
@@ -12,6 +13,7 @@ const QRScan = ({ apiData, setApiData }) => {
     const [loginError, setLoginError] = useState('');
     const [loginSuccess, setLoginSuccess] = useState('');
     const [show, setShow] = useState(false);
+    const { apiData, setApiData } = useContext(ApiDataContext);
     // const [apiData, setApiData] = useState([]);
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -65,7 +67,14 @@ const QRScan = ({ apiData, setApiData }) => {
                     // console.log("The response", responseData.data); // Do something with the response data
                     // console.log("The response", responseData?.details?.url); // Do something with the response data
                     window.location.href=responseData?.details?.url;
-                    setApiData(responseData);
+                   
+
+                    setApiData({
+                        // @ts-ignore: Implicit any for children prop
+                        Details: responseData?.Details ? responseData?.Details : responseData?.details,
+                        message: responseData?.message
+                    });
+                    
                     scanFailed = false;
                     // clearTimeout(timeout); // Clear the timeout if the API call succeeds before the 10-second timeout
                 } else {
@@ -135,7 +144,11 @@ const QRScan = ({ apiData, setApiData }) => {
                     const responseData = await qrScanResponse.json(); // Parse response body as JSON
                     // console.log("The response", responseData.data); // Do something with the response data
                     window.location.href=responseData?.details?.url;
-                    setApiData(responseData);
+                    setApiData({
+                        // @ts-ignore: Implicit any for children prop
+                        Details: responseData?.Details ? responseData?.Details : responseData?.details,
+                        message: responseData?.message
+                    });
                     scanFailed = false;
                 } else {
                     const responseData = await qrScanResponse.json(); // Parse response body as JSON

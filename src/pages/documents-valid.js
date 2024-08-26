@@ -81,10 +81,7 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
             return `${month}/${day}/${year}`;
         };
 
-        let shareUrl = apiData?.Details?.url;
-        if(shareUrl) {
-             shareUrl = shareUrl.replace('/verify-documents', '');
-        }
+       
         
     const shareTitle =  apiData?.message || "Ai Certification";
 
@@ -92,24 +89,35 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
     const description = 'Test description';
     const image = 'https://images.netcomlearning.com/ai-certs/cer365AllPageBg.png';
 
-    const handleShare = (()=>{
-        const url = `https://www.linkedin.com/shareArticle?text=${encodeURIComponent(apiData?.Details['Course Name'])}&url=${encodeURIComponent(apiData?.Details['url'])}&media=${encodeURIComponent(apiData?.Details['certificateUrl'])}`;
-        window.open(url, "_blank", "width=550,height=350")
-            })
+ 
+
+    const imageUrl = apiData?.Details && `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
+    // const certificateUrl = `https://testverify.certs365.io/certificate/${apiData?.Details['Certificate Number']}?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
+    let shareUrl = apiData?.Details?.url;
+    if(shareUrl) {
+         shareUrl = shareUrl.replace('/verify-documents', '');
+    }
     return (
         <>
           
            <Head>
-                <title>{title}</title>
-                <meta name="description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:title" content={encodeURIComponent(apiData?.Details['Name'])} />
-                <meta property="og:description" content={encodeURIComponent(apiData?.Details['Course Name'])} />
-                <meta property="og:image" content={encodeURIComponent(apiData?.Details['certificateUrl'])} />
+           <title>{title}</title>
+                <meta name="description" content={description} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta property="og:image" content={imageUrl} />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:type" content="image/png" />
-                <meta property="og:url" content={encodeURIComponent(apiData?.Details['url'])} />
+                <meta property="og:image:secure_url" content={imageUrl} />
+                <meta property="og:url" content={shareUrl} />
                 <meta property="og:type" content='website' />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={description} />
+                <meta name="twitter:image" content={imageUrl} />
+                <meta name="description" content={description} />
+
             </Head>
 
             <div className='page-bg'>
@@ -188,7 +196,9 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                             <LinkedinShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <LinkedinIcon size={32} round />
                                                             </LinkedinShareButton>
-
+{/* <button onClick={()=>{handleShare()}}>
+    share
+</button> */}
                                                         </div>
                                                         {/* <button onClick={()=>{handleShare()}}>share</button> */}
                                                         <div className='d-flex justify-content-center'>
