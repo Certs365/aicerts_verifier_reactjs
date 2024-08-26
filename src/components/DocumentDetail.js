@@ -173,6 +173,9 @@ function convertToCustomArray(jsonString) {
                                                             </Card>
 
                                                             <div className='cerficate-external-info d-block d-lg-flex  text-md-left text-center mb-md-0 mb-4'>
+                                                          {customFieldsArray.length > 0 &&
+                                                          
+                                                          
                                                             <div className='col-12 col-md-6'>
                                                             <table style={{ backgroundColor: "transparent"}} className='table table-bordered'>
     <tbody>
@@ -186,7 +189,9 @@ function convertToCustomArray(jsonString) {
 </table>
 
                                                         </div>
-<div className='col-12 col-md-6'>
+                                                          }
+
+<div className={`col-12 ${customFieldsArray?.length >0 ? "col-md-6" : "col-md-12"}`}>
                                                                 <div className='details varification-info'>
                                                                     <Button href={apiData?.Details['Polygon URL'] ? ensureHttp(apiData?.Details['Polygon URL']) : ensureHttp(apiData?.Details['Verify On Blockchain'])} target="_blank" className='heading-info' variant="primary">
                                                                         Verify on Blockchain
