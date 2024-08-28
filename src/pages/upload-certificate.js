@@ -249,14 +249,14 @@ const UploadCertificate = () => {
                                                     />
                                                 </div>
                                                 <Form >
-                                                    <div className='d-flex flex-column align-items-center'>
+                                                    <div className='d-flex flex-column align-items-center '>
                                                         {selectedFile ? (
                                                             // @ts-ignore: Implicit any for children prop
                                                             <p className="selected-file-name">{selectedFile.name}</p>
                                                         ) : (
                                                             <p className="selected-file-name">&nbsp;</p>
                                                         )}
-                                                        <label htmlFor="fileInput" className="golden-upload mt-0">
+                                                        <label htmlFor="fileInput" className="golden-upload mt-0 ">
                                                             Upload Certification
                                                         </label>
 

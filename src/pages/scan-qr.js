@@ -189,7 +189,7 @@ const ScanDocuments = () => {
                     <div className='vertical-center verify-cert'>
                         <div className='container-fluid'>
                             <Row className="justify-content-center mt-4 verify-documents">
-                                <h1 className='title text-center'>Scan your certificate to validate.</h1>
+                                <h1 className='title text-center'>Scan your certificate QR Code to validate.</h1>
                                 <Col md={{ span: 10 }}>
                                     <Card className='p-4'>
                                         {!scannerActive ? (
@@ -223,11 +223,11 @@ const ScanDocuments = () => {
                                     </Card>
                                 </Col>
                             </Row>
-                            <div className='text-center mt-4'>
+                            <div className='text-center mt-4 '>
                                 <p><strong><i>or</i></strong></p>
 
                                 <Button
-                                className='w-[256px] h-[50px] p-[14px] gap-[10px] border-t-2 border-r-0 border-b-0 border-l-0 border-[#CFA935] opacity-1 rounded-0 upload cert'
+                                className=' w-[256px] h-[50px] p-[14px] gap-[10px] border-t-2 mb-2 border-r-0 border-b-0 border-l-0 border-[#CFA935] opacity-1 rounded-0 upload cert'
                                 label="Upload Certificate"
                                 onClick={handleClick}
                             />
