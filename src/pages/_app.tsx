@@ -14,9 +14,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     const { apiData } = useContext(ApiDataContext);
 
     const isLoginPage = router.pathname === '/';
-    const imageUrl = apiData?.Details
-      ? `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${apiData?.Details['Grant Date'] || apiData?.Details['grantDate']}&expirationdate=${apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate']}&name=${apiData?.Details['Name']}`
-      : null;
+    // const imageUrl = apiData?.Details
+    //   ? `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${apiData?.Details['Grant Date'] || apiData?.Details['grantDate']}&expirationdate=${apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate']}&name=${apiData?.Details['Name']}`
+    //   : null;
+    const imageUrl = process.env.NEXT_PUBLIC_BASE_URL_IMAGE;
+
 
     const shareTitle = "Aicerts Certification";
     const shareDescription = "Aicerts Certification details.";
