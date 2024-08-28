@@ -88,12 +88,12 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
     const title = 'Ai Certificate';
     const description = 'Test description';
     const image = 'https://images.netcomlearning.com/ai-certs/cer365AllPageBg.png';
-
+    const imageUrl = process.env.NEXT_PUBLIC_BASE_URL_IMAGE;
  
 
-    const imageUrl = apiData?.Details && `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
+    // const imageUrl = apiData?.Details && `https://testverify.certs365.io/api/og?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
     // const certificateUrl = `https://testverify.certs365.io/certificate/${apiData?.Details['Certificate Number']}?certificatenumber=${apiData?.Details['Certificate Number']}&coursename=${apiData?.Details['Course Name']}&grantdate=${(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}&expirationdate=${(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate'])}&name=${apiData?.Details['Name']}`;
-    let shareUrl = apiData?.Details?.url;
+    let shareUrl = apiData?.Details?.url || "";
     if(shareUrl) {
          shareUrl = shareUrl.replace('/verify-documents', '');
     }
