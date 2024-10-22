@@ -77,7 +77,11 @@ const UploadCertificate = () => {
 
     if (file && file.size > maxSize) {
       // File size exceeds the maximum allowed size
-      alert("File size exceeds 2MB limit. Please select a smaller file.");
+    //   alert("File size exceeds 2MB limit. Please select a smaller file.");
+    router.push("/invalid-pdfsize");
+      setLoginError(
+        "Unable to verify the certification. Please review and try again."
+      );
       setSelectedFile(null); // Clear the selected file
     } else {
       // File size is within the limit, proceed with the upload
