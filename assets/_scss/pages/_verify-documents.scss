@@ -1,22 +1,28 @@
 .verify-documents {
+    font-family: 'Montserrat', sans-serif;
     .title {
+        // border: 1px solid red;
         color: #2F3847;
-        font-size: 40px;
+        font-size: 24px;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
+        font-family: 'Montserrat', sans-serif;
     }
 
     .card {
-        border: 2px dashed #E5E7E8;
+        border: 2px dashed #BFC0C2;
         border-radius: 0;
         -webkit-border-radius: 0;
         -moz-border-radius: 0;
         -ms-border-radius: 0;
         -o-border-radius: 0;
+        
 
         .badge-banner {
+           
+           
             position: relative;
             width: 100%;
             height: 300px;
@@ -69,6 +75,7 @@
             font-weight: 500;
             line-height: 22px;
             margin-top: 20px;
+            
         }
 
         .divider {
@@ -148,6 +155,43 @@
             }
         }
     }
+    /* Media query for mobile screens */
+@media (max-width: 768px) {
+    .card{
+        .badge-banner {
+            height: 130px; /* Adjust height to 200px for mobile screens */
+        }
+        .golden-upload{
+            color: $white;
+            font-size: 17px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            padding: 12px 20px 12px 46px;
+            border-radius: 0;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            -ms-border-radius: 0;
+            -o-border-radius: 0;
+            background: $golden;
+            position: relative;
+            transition: 0.5s;
+            -webkit-transition: 0.5s;
+            -moz-transition: 0.5s;
+            -ms-transition: 0.5s;
+            -o-transition: 0.5s;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            
+        }
+        .information{
+            font-size: 14px;
+        }
+
+    }
+  
+}
 
     .golden-upload-cert {
         color: $white;
@@ -361,7 +405,7 @@
     @media (min-width: $large-min) and (max-width: $large-max) {
         .card {
             .badge-banner {
-                height: 250px;
+                height: 200px;
             }
         }
     }
@@ -388,6 +432,8 @@
 
             .information {
                 margin-top: 10px;
+                
+                
             }
 
             .valid-cerficate-info {    
@@ -418,6 +464,7 @@
 
             .golden-upload {
                 margin-top: 0;
+                
 
                 &.valid-again {
                     margin-top: 14px;
@@ -426,6 +473,7 @@
 
             .information {
                 margin-top: 10px;
+               
             }
         }
 
@@ -514,7 +562,7 @@
 
     @media (min-width: $mobile-min) and (max-width: $mobile-max) {
         .title {
-            font-size: 26px;
+            font-size: 20px;
         }
 
         .valid-cerficate-info {
@@ -522,8 +570,7 @@
     
             .cerficate-external-info {
                 .details {
-                    &:not(:last-child) {
-                        margin-bottom: 14px;
+                    &:not(:last-child) {                        margin-bottom: 14px;
                     }
                     .heading {
                         font-size: 16px;

@@ -153,7 +153,7 @@ const QrReader = () => {
 
   return (
     <>
-    <div className="qr-reader">
+    <div className="qr-reader" >
       {/* QR */}
       <video ref={videoEl}></video>
       <div ref={qrBoxEl} className="qr-box">

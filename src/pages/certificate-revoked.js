@@ -41,7 +41,7 @@ const RevokedCertificate = () => {
                                                 <Button className="golden-upload" label='Upload again' onClick={handleUploadRedirect} />
                                             </div>
                                             <div className='information text-center'>
-                                                Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
+                                                Only <strong>PDF</strong> is supported. (Upto 2 MB)
                                             </div>
                                         </Form >
                                     </Card>
