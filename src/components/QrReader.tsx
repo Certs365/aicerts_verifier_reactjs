@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from 'next/router';
 import axios from "axios";
 import { ApiDataContext } from "@/utils/ContextState";
+import { apiCallWithRetries } from "@/utils/apiUtils";
 
 //@ts-ignore
 const QrReader = () => {
@@ -28,6 +29,7 @@ const QrReader = () => {
     const [loginSuccess, setLoginSuccess] = useState('');
     const [show, setShow] = useState(false);
     const { apiData, setApiData } = useContext(ApiDataContext);
+    const [hasScanned, setHasScanned] = useState<boolean>(false); // Flag to track scanning state
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -50,13 +52,7 @@ const QrReader = () => {
           // console.log(paramValue);
             // First API call with QR Scanned data
            try{
-            const qrScanResponse = await axios.post(`${apiUrl}/api/decode-qr-scan`, {
-                receivedCode: url,
-            }, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const qrScanResponse = await apiCallWithRetries(`${apiUrl}/api/decode-qr-scan`, { receivedCode: scannedUrl });
             if (qrScanResponse.status === 200) {
                 const responseData = qrScanResponse.data;
                 // console.log("The response", responseData.data);
@@ -70,6 +66,7 @@ const QrReader = () => {
               });
                 // window.location.href = responseData?.details?.url;
                 scanFailed = false;
+                setHasScanned(true); // Set the flag to prevent further scans
             }
 
            } catch (error:any) {
