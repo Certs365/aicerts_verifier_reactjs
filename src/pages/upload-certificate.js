@@ -111,9 +111,8 @@ const UploadCertificate = () => {
                         message: certificateData?.message
                     });
                 } else {
-
                     const errorData = await certificateResponse.json();
-                    if(errorData.message=='Certification has revoked') {
+                    if(errorData.message=='Certification has revoked' ||errorData.message== "Credential has revoked") {
                         router.push('/certificate-revoked')
                         return
                     }

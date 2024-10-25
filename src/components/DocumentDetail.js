@@ -120,7 +120,7 @@ function convertToCustomArray(jsonString) {
              shareUrl = shareUrl.replace('/verify-documents', '');
         }
         
-    const shareTitle =  apiData?.message || "Ai Certification";
+    const shareTitle =  apiData?.message || "Certs365 Blockchain Based Secured Document Verification Platform";
 
     const title = 'Ai Certificate';
     const description = 'Test description';
