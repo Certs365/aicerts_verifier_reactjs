@@ -111,9 +111,8 @@ const UploadCertificate = () => {
                         message: certificateData?.message
                     });
                 } else {
-
                     const errorData = await certificateResponse.json();
-                    if(errorData.message=='Certification has revoked') {
+                    if(errorData.message=='Certification has revoked' ||errorData.message== "Credential has revoked") {
                         router.push('/certificate-revoked')
                         return
                     }
@@ -146,16 +145,17 @@ const UploadCertificate = () => {
                             setShow(true)
                         }
                     } else {
-
                         // Both API calls failed, handle errors
                         const errorData = await fileResponse.json();
-                        if(errorData.message=='Certification has revoked') {
+                        if(errorData.message=='Certification has revoked' ||errorData.message== "Credential has revoked") {
                             // console.log(errorData.message)
                             router.push('/certificate-revoked')
+                            return;
                         }
                         else if(errorData.message=='Certification is not valid') {
                             // console.log(errorData.message)
                             router.push('/invalid-certificate')
+                            return;
                         }
                         //failed to interact with blockchain network
                         router.push('/unable-certificate')
@@ -249,10 +249,10 @@ const UploadCertificate = () => {
                                                     />
                                                 </div>
                                                 <Form >
-                                                    <div className='d-flex flex-column align-items-center '>
+                                                    <div  className='d-flex flex-column align-items-center '>
                                                         {selectedFile ? (
                                                             // @ts-ignore: Implicit any for children prop
-                                                            <p className="selected-file-name">{selectedFile.name}</p>
+                                                            <p  className="selected-file-name">{selectedFile.name}</p>
                                                         ) : (
                                                             <p className="selected-file-name">&nbsp;</p>
                                                         )}
