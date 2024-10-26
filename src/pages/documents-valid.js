@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
+import { SlSocialFacebook, SlSocialLinkedin, SlSocialTwitter } from 'react-icons/sl';
 
     // @ts-ignore: Implicit any for children prop
     const DocumentsValid = ({ handleFileChange, apiData, isLoading }) => {
@@ -189,12 +190,21 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                         <div className='d-flex justify-content-center align-items-center '>
                                                             <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <FacebookIcon size={32} round />
+                                                                {/* <div className="px-2 py-1  rounded" style={{backgroundColor:"#F3F3F3"}}>
+                                        <SlSocialFacebook size={"1.3em"} />
+                                     </div> */}
                                                             </FacebookShareButton>
                                                             <TwitterShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <TwitterIcon size={32} round />
+                                                                {/* <div className="px-2 py-1  rounded"style={{backgroundColor:"#F3F3F3"}}>
+                                        <SlSocialTwitter size={"1.3em"} />
+                                     </div> */}
                                                             </TwitterShareButton>
                                                             <LinkedinShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
                                                                 <LinkedinIcon size={32} round />
+                                                                {/* <div className="px-2 py-1  rounded" style={{backgroundColor:"#F3F3F3"}}>
+                                        <SlSocialLinkedin size={"1.3em"} />
+                                     </div> */}
                                                             </LinkedinShareButton>
 {/* <button onClick={()=>{handleShare()}}>
     share
@@ -209,7 +219,7 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again">Validate Another</Link>
                                                             </div>
                                                             <div className='information text-center'>
-                                                                Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
+                                                                Only <strong>PDF</strong> is supported. (Upto 2 MB)
                                                             </div>
                                                         </Form>
                                                       
@@ -230,7 +240,7 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
                                                                 <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
                                                             </div>
                                                             <div className='information text-center pb-md-0 pb-4'>
-                                                                Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
+                                                                Only <strong>PDF</strong> is supported. (Upto 2 MB)
                                                             </div>
                                                         </Form>
                                                     </>

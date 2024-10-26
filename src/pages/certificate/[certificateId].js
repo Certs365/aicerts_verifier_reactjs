@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router'; 
 import Head from 'next/head';
+import Image from 'next/image';
 
 const CertificateId = () => {
   const router = useRouter();
@@ -68,7 +69,7 @@ const CertificateId = () => {
 
                             }}
                         >
-                            <img
+                            <Image
                                 src={`/backgrounds/varified-certificate-badge.gif`}
                                 alt="Badge Banner"
                                 style={{

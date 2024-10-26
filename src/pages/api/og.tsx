@@ -1,5 +1,6 @@
 
 import { ImageResponse } from '@vercel/og'
+import Image from 'next/image'
 import { NextRequest } from 'next/server'
 
 
@@ -78,15 +79,12 @@ const handle = (req: NextRequest) => {
 
                             }}
                         >
-                            <img
-                                src={`${baseUrl}/backgrounds/varified-certificate-badge.gif`}
-                                alt="Badge Banner"
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    objectFit: 'contain',
-                                }}
-                            />
+                          <Image
+        src={`${baseUrl}/backgrounds/varified-certificate-badge.gif`}
+        alt="Badge Banner"
+        layout="fill" // Adjusts the image to fill the container
+        objectFit="contain" // Ensures the image maintains its aspect ratio
+    />
                         </div>
                         <div style={{ display: 'flex', flexWrap: 'wrap', position: 'relative' }}>
                             <div style={{

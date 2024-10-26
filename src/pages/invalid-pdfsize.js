@@ -6,11 +6,11 @@ import Button from '../../shared/button/button';
 import { useRouter } from 'next/router';
 
 
-const RevokedCertificate = () => {
+const InvalidPdfSize = () => {
     const router = useRouter();
 
     const handleUploadRedirect = () => {
-        router.push('/'); // Redirect to the home page
+        router.push('/');
     }
     const handlebackRedirect = () => {
         router.push('/verify-documents');
@@ -23,14 +23,14 @@ const RevokedCertificate = () => {
                 <div className='position-relative h-100'>
                     <div className='vertical-center verify-cert'>
                         <div className='container-fluid'>
-                            <Button className='back-btn' label='Back' onClick={handlebackRedirect}/>
+                            <Button className='back-btn' label='Back' onClick={handlebackRedirect} />
                             <Row className="justify-content-center mt-4 verify-documents">
-                                <h1 className='title text-center'>Your Certification has been revoked.</h1>
+                                <h1 className='title text-center'>File size exceeds 2MB limit. Please select a smaller file.</h1>
                                 <Col md={{ span: 10 }}>
                                     <Card className='p-4'>
                                         <div className='badge-banner'>
                                             <Image
-                                                src="/icons/revoked-certificate.gif"
+                                                src="/icons/invalid-certificate.gif"
                                                 layout='fill'
                                                 objectFit='contain'
                                                 alt='Badge banner'
@@ -41,7 +41,7 @@ const RevokedCertificate = () => {
                                                 <Button className="golden-upload" label='Upload again' onClick={handleUploadRedirect} />
                                             </div>
                                             <div className='information text-center'>
-                                                Only <strong>PDF</strong> is supported. (Upto 2 MB)
+                                                Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
                                             </div>
                                         </Form >
                                     </Card>
@@ -56,4 +56,4 @@ const RevokedCertificate = () => {
     );
 }
 
-export default RevokedCertificate;
+export default InvalidPdfSize;
