@@ -20,8 +20,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     const imageUrl = process.env.NEXT_PUBLIC_BASE_URL_IMAGE;
 
 
-    const shareTitle = "Aicerts Certification";
-    const shareDescription = "Aicerts Certification details.";
+    const shareTitle = "Certs365 Blockchain Based Secured Document Verification Platform";
+    const shareDescription = "Online authenticity verification of certificates and documents is simple with Cert365. Our platform for blockchain-based certificate verification is user-friendly and safe.";
 
     return (
       <>
