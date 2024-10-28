@@ -85,8 +85,8 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookI
         
     const shareTitle =  apiData?.message || "Certs365 Blockchain Based Secured Document Verification Platform";
 
-    const title = 'Ai Certificate';
-    const description = 'Test description';
+    const title = 'Certs365 Blockchain Based Secured Document Verification Platform';
+    const description = "Online authenticity verification of certificates and documents is simple with Cert365. Our platform for blockchain-based certificate verification is user-friendly and safe.";
     const image = 'https://images.netcomlearning.com/ai-certs/cer365AllPageBg.png';
     const imageUrl = process.env.NEXT_PUBLIC_BASE_URL_IMAGE;
  
