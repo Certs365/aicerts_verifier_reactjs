@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import axios from "axios";
 import { ApiDataContext } from "@/utils/ContextState";
 import { apiCallWithRetries } from "@/utils/apiUtils";
+import { Modal, ProgressBar } from "react-bootstrap";
 
 //@ts-ignore
 const QrReader = () => {
@@ -16,7 +17,7 @@ const QrReader = () => {
   const videoEl = useRef<HTMLVideoElement>(null);
   const qrBoxEl = useRef<HTMLDivElement>(null);
   const [qrOn, setQrOn] = useState<boolean>(true);
-
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   // Result
@@ -34,69 +35,34 @@ const QrReader = () => {
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   // Success
-  const onScanSuccess = async(result: QrScanner.ScanResult) => {
-    // 🖨 Print the "result" to browser console.    
-    // ✅ Handle success.
-    // 😎 You can do whatever you want with the scanned result.
-    let scanFailed = true; // Flag to track if the scan failed
-    let scanResponse = "No URL found"
-    setScannedResult(result?.data);
-    const scannedUrl = result.data 
-    // console.log('scannedResult',scannedUrl);
+  const onScanSuccess = async (result: QrScanner.ScanResult) => {
+    if (loading) return;  // Prevent additional scans during loading
+    setLoading(true);  // Start loading
 
-    if (scannedUrl) {
-        try {
-          const url = scannedUrl;
-          const paramValue = url.split('=')[1];
-          // console.log(paramValue);
-          // console.log(paramValue);
-            // First API call with QR Scanned data
-           try{
-            const qrScanResponse = await apiCallWithRetries(`${apiUrl}/api/decode-qr-scan`, { receivedCode: scannedUrl });
-            if (qrScanResponse.status === 200) {
-                const responseData = qrScanResponse.data;
-                // console.log("The response", responseData.data);
-                // console.log("The response", responseData?.details?.url);
-               
+    try {
+      setScannedResult(result.data);
+      const scannedUrl = result.data;
 
-                setApiData({
-                  // @ts-ignore: Implicit any for children prop
-                  Details: responseData?.Details ? responseData?.Details : responseData?.details,
-                  message: responseData?.message
-              });
-                // window.location.href = responseData?.details?.url;
-                scanFailed = false;
-                setHasScanned(true); // Set the flag to prevent further scans
-            }
-
-           } catch (error:any) {
-            //  console.log("Error", error.response.data);
-             if(error.response.data.message === 'Certification has revoked' ||error.response.data.message== "Credential has revoked") {
-                router.push('/certificate-revoked');
-             } else{
-                router.push('/invalid-certificate')
-            }
-
-           }
-            // console.log("scanResponse", qrScanResponse);
-            //  {
-            //     const responseData = qrScanResponse.data;
-            //     if (responseData.message === "Invalid Certificate") {
-            //         router.push('/invalid-certificate'); // Navigate to /invalid-certificate
-            //     }
-            //     scanFailed = true;
-            //     setLoginError(responseData.message || "Unable to scan the QR. Please review and try again.");
-            //     setShow(true);
-            // }
-
-            setData(scanResponse);
-            setStartScan(false);
-        } catch (error) {
-            // console.error("Error during API call:", error);
-            scanFailed = true; // Set flag to true if the scan failed
+      if (scannedUrl) {
+        const qrScanResponse = await apiCallWithRetries(`${apiUrl}/api/decode-qr-scan`, { receivedCode: scannedUrl });
+        
+        if (qrScanResponse.status === "SUCCESS") {
+          setApiData({
+            Details: qrScanResponse?.Details || qrScanResponse?.details,
+            message: qrScanResponse?.message,
+          });
+          setLoading(false);  // Stop loading after success
         }
-    }
+      }
+    } catch (error: any) {
+      setLoading(false);  // Stop loading on error
 
+      if (error.response.data.message === 'Certification has revoked' || error.response.data.message === "Credential has revoked") {
+        router.push('/certificate-revoked');
+      } else {
+        router.push('/invalid-certificate');
+      }
+    }
   };
 
   // Fail
@@ -178,6 +144,18 @@ const QrReader = () => {
         </p>
       )}
     </div>
+    <Modal className='loader-modal' show={loading} centered>
+                <Modal.Body>
+                    <div className='certificate-loader'>
+                        <Image
+                            src="/backgrounds/certification-loader.gif"
+                            layout='fill'
+                            objectFit='contain'
+                            alt='Loader'
+                        />
+                    </div>
+                </Modal.Body>
+            </Modal>
     </>
   );
 };
