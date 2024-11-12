@@ -66,7 +66,7 @@ const ScanDocuments = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
+  // @ts-ignore: Implicit any for children prop
     const verifyExam = async (eid) => {
 
         try {
@@ -86,6 +86,7 @@ const ScanDocuments = () => {
                     //     message: certificateData?.message
                     // });
                     setApiData({
+                         // @ts-ignore: Implicit any for children prop
                         Details: certificateData,
                         message: certificateData.passed == 1 ? "Pass" : "Fail",
                         type:"exam"
