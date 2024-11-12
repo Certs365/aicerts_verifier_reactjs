@@ -9,6 +9,9 @@ import DocumentsValid from '../../src/pages/documents-valid';
 import certificate from '@/services/certificateServices';
 import DocumentDetail from '../components/DocumentDetail';
 import { ApiDataContext } from '@/utils/ContextState';
+import ExamDocumentsValid from "../../src/pages/exam-certificate"
+import InvalidCertificate from "../../src/pages/unable-certificate"
+import CertificateTemplateOne from "../../src/pages/certificate/temp1"
 
 
 
