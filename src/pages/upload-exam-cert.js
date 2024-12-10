@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import DocumentDetail from '../components/DocumentDetail';
 import Head from 'next/head';
 import { ApiDataContext } from '../utils/ContextState';
-import CertificateTemplateOne from "../../src/pages/certificate/temp3"
+import CertificateTemplateOne from "../../src/pages/certificate/temp7"
 import ExamDocumentsValid from "../../src/pages/exam-certificate"
 
 const UploadExamCertificate = () => {

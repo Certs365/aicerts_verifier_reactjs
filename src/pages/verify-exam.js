@@ -7,7 +7,7 @@ import { ApiDataContext } from '../utils/ContextState';
 import DocumentDetail from '../components/DocumentDetail';
 import ExamDocumentsValid from "../../src/pages/exam-certificate"
 import InvalidCertificate from "../../src/pages/unable-certificate"
-import CertificateTemplateOne from "../../src/pages/certificate/temp3"
+import CertificateTemplateOne from "../../src/pages/certificate/temp7"
 const VerifyDocuments = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { apiData, setApiData } = useContext(ApiDataContext);
