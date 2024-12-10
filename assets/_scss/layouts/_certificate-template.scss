@@ -7,6 +7,7 @@
 
     &#template-3 {
         background-image: url(/backgrounds/certifiicate-template-3-bg.svg);
+        background-size:cover;
         padding: 32px 0 5.625em;
 
         .badge-position {
@@ -17,6 +18,51 @@
             bottom: 190px;
         }
     }
+
+
+    &#template-4 {
+        background-image: url(/backgrounds/certificate-template-4-bg.svg);
+        background-size:cover;
+        padding: 32px 0 5.625em;
+
+        .badge-position {
+            bottom: 240px;
+        }
+
+        .bottom-info {
+            bottom: 190px;
+        }
+    }
+
+
+    &#template-5 {
+        background-image: url(/backgrounds/certificate-template-5-bg.svg);
+        background-size:cover;
+        padding: 32px 0 5.625em;
+
+        .badge-position {
+            bottom: 240px;
+        }
+
+        .bottom-info {
+            bottom: 190px;
+        }
+    }
+
+    &#template-6 {
+        background-image: url(/backgrounds/certificate-template-6-bg.svg);
+        background-size:cover;
+        padding: 32px 0 5.625em;
+
+        .badge-position {
+            bottom: 240px;
+        }
+
+        .bottom-info {
+            bottom: 190px;
+        }
+    }
+
 
     .hero-logo {
         img {

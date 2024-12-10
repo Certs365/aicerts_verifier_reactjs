@@ -1,66 +1,100 @@
-// pages/api/proxy-exam-results.js
+async function fetchFromAPI(url, options = {}) {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch from API. Status: ${response.status}`);
+  }
+  return response.json();
+}
+
+function convertToMMDDYYYY(unixTimestamp) {
+  const date = new Date(unixTimestamp * 1000); // Convert seconds to milliseconds
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${month}/${day}/${year}`;
+}
 
 export default async function handler(req, res) {
-    // Extract `eid` from the query parameters
-    const { eid } = req.query;
-  
-    if (!eid) {
-      return res.status(400).json({ error: "Missing `eid` parameter" });
-    }
-  
-    try {
-      // Fetch data from the external API
-      const response = await fetch(
-        `https://exam.proctoring365.io/index.php?option=com_exams&task=api.queryResults&format=raw&code=${process.env.NEXT_PUBLIC_EXAM_APIKEY}&eid=${eid}`,
-        {
-          method: "GET",
-        }
-      );
-  
-      if (!response.ok) {
-        return res
-          .status(response.status)
-          .json({ error: "Error fetching data from external API" });
-      }
-  
-      // Get the response data as text or JSON based on your needs
-      const data = await response.json(); // Or `await response.json()` if JSON response
+  const { eid } = req.query;
 
-      const examresp = await fetch(
-        `https://exam.proctoring365.io/index.php?option=com_exams&task=api.getExams&format=raw&code=${process.env.NEXT_PUBLIC_EXAM_APIKEY}&eid=${eid}`,
-        {
-          method: "GET",
-        }
-      );
-  
-      if (!examresp.ok) {
-        return res
-          .status(examresp.status)
-          .json({ error: "Error fetching data from external API" });
-      }
-  
-      // Get the response data as text or JSON based on your needs
-      const examdata = await examresp.json(); // Or `await response.json()` if JSON response
-     
-      // Your Unix timestamps (in seconds)
-const startTime =data[0].startTime;
-const endTime = data[0].endTime;
-
-// Convert Unix timestamp (seconds) to JavaScript Date object
-const startDate = new Date(parseInt(startTime) * 1000); // Multiply by 1000 to convert to milliseconds
-const endDate = new Date(parseInt(endTime) * 1000); // Multiply by 1000 to convert to milliseconds
-
-// Convert to human-readable date format (e.g., "October 19, 2024 1:45:02 PM")
- data[0].startTime = startDate.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
- data[0].endTime = endDate.toLocaleString('en-US', {  year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
-
- console.log(data[0])
-
-      // Forward the data to the client
-      res.status(200).json({...data[0],...examdata[0]});
-    } catch (error) {
-      console.error("Error in proxy API:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
+  if (!eid) {
+    return res.status(400).json({ error: "Missing `eid` parameter" });
   }
-  
+
+  try {
+    const apiKey = process.env.NEXT_PUBLIC_EXAM_APIKEY;
+    const [resultsData, examData] = await Promise.all([
+      fetchFromAPI(`https://exam.proctoring365.io/index.php?option=com_exams&task=api.queryResults&format=raw&code=${apiKey}&eid=${eid}`),
+      fetchFromAPI(`https://exam.proctoring365.io/index.php?option=com_exams&task=api.getExams&format=raw&code=${apiKey}&eid=${eid}`)
+    ]);
+
+    const [result] = resultsData; // Assume `resultsData` is an array
+    const [exam] = examData; // Assume `examData` is an array
+
+    const { startTime, endTime, passed, tid, name,sid } = result;
+    // const startDate = new Date(startTime * 1000);
+    // const endDate = new Date(endTime * 1000);
+
+    // result.startTime = startDate.toLocaleString('en-US', {
+    //   year: 'numeric',
+    //   month: 'long',
+    //   day: 'numeric',
+    //   hour: 'numeric',
+    //   minute: 'numeric',
+    //   hour12: true
+    // });
+    // result.endTime = endDate.toLocaleString('en-US', {
+    //   year: 'numeric',
+    //   month: 'long',
+    //   day: 'numeric',
+    //   hour: 'numeric',
+    //   minute: 'numeric',
+    //   hour12: true
+    // });
+    result.startTime=convertToMMDDYYYY(startTime)
+    result.endTime=convertToMMDDYYYY(endTime)
+
+    let qrUrl = null;
+
+    if (passed) {
+      const loginData = await fetchFromAPI(
+        `${process.env.NEXT_PUBLIC_BASE_URL_USER}/api/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: process.env.NEXT_PUBLIC_ISSUER_EMAIL,
+            password: process.env.NEXT_PUBLIC_ISSUER_PASS,
+          }),
+        }
+      );
+
+      const issuanceResponse = await fetchFromAPI(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/issuance`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${loginData.data.JWTToken}`,
+          },
+          body: JSON.stringify({
+            email: process.env.NEXT_PUBLIC_ISSUER_EMAIL,
+            certificateNumber: tid,
+            name,
+            course: exam.title,
+            grantDate: convertToMMDDYYYY(endTime),
+            expirationDate: "1",
+            flag: false,
+          }),
+        }
+      );
+
+      qrUrl = issuanceResponse.qrCodeImage;
+    }
+
+    res.status(200).json({ ...result, ...exam, qrUrl });
+  } catch (error) {
+    console.error("Error in proxy API:", error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}

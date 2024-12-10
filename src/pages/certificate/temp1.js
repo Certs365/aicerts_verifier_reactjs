@@ -3,7 +3,7 @@ import Image from 'next/legacy/image';
 import Button from '../../../shared/button/button';
 
 // @ts-ignore
-const CertificateTemplateOne = ({apiData}) => {
+const CertificateTemplateOne = ({ apiData }) => {
     const [html2pdfModule, setHtml2pdfModule] = useState(null);
 
     // Load html2pdf.js only on the client-side
@@ -18,8 +18,8 @@ const CertificateTemplateOne = ({apiData}) => {
 
     // const handleDownload = () => {
     //     if (html2pdfModule) {
-    //         const element = document.getElementById('template-3');
-            
+    //         const element = document.getElementById('template-4');
+
     //         // Create a clone of the element to modify dimensions for PDF generation
     //         const clonedElement = element.cloneNode(true);
     //         clonedElement.style.width = '1009px';
@@ -45,8 +45,8 @@ const CertificateTemplateOne = ({apiData}) => {
 
     const handleDownload = () => {
         if (html2pdfModule) {
-            const element = document.getElementById('template-3');
-            
+            const element = document.getElementById('template-4');
+
             // Create a clone of the element to modify dimensions for PDF generation
             // @ts-ignore
             const clonedElement = element.cloneNode(true);
@@ -65,14 +65,14 @@ const CertificateTemplateOne = ({apiData}) => {
                     margin: auto;
                     font-family: 'Kanit', sans-serif;
                 }
-                .certificate-template#template-3 {
-                    background-image: url(/backgrounds/certifiicate-template-3-bg.svg);
+                .certificate-template#template-4 {
+                    background-image: url(/backgrounds/certificate-template-4-bg.svg);
                     padding: 32px 0 5.625em;
                 }
-                .certificate-template#template-3 .badge-position {
+                .certificate-template#template-4 .badge-position {
                     bottom: 240px;
                 }
-                .certificate-template#template-3 .bottom-info {
+                .certificate-template#template-4 .bottom-info {
                     bottom: 190px;
                 }
                 .certificate-template .hero-logo img {
@@ -209,18 +209,23 @@ const CertificateTemplateOne = ({apiData}) => {
             <div className='position-relative h-100'>
                 <div className='vertical-center verify-cert'>
                     <div className='container py-5'>
-                        <div className='certificate-template position-relative' id="template-3">
-                            <div className='hero-logo text-center'>
-                                {/* eslint-disable-next-line */}
-                                <img                                
-                                    src='/logo.png'
+                        <div className='certificate-template position-relative' id="template-4">
+                            <div className='hero-logo text-center' style={{paddingTop:"4%"}}>
+                                <img
+                                    src="https://images.netcomlearning.com/ai-certs/Certs365-logo.svg"
                                     alt='AI Certs logo'
                                 />
                             </div>
-                            <div className='hero-info text-center'>This is to certify that</div>
+                            <div className='hero-info text-center' style={{paddingTop:"3%"}}>This is to certify that</div>
                             <div className='issued-to text-center'>{apiData?.Details['name']}</div>
-                            <div className='hero-message text-center'>Has successfully Pass the Exam {apiData?.Details['title']}</div>
-                            <div className='course-name text-center'>With Score {apiData?.Details['score']} out of {apiData?.Details['total_score']} </div>
+                            <div className='hero-message text-center' style={{paddingTop:"0%"}}>Has successfully Pass the Exam</div>
+                            <div className='course-name text-center'>{apiData?.Details['title']}</div>
+                            <div className='qr-details'>
+                                <div className='qr-wrapper' style={{ paddingLeft: "40%", paddingBottom: "40%" }}>
+                                
+                                    <img src={apiData?.Details['qrUrl']} style={{width:"130px",height:"130px"}}/>
+                                </div>
+                            </div>
                             <div className='issued-by text-center'>
                                 <div className='signature'>
                                     {/* eslint-disable-next-line */}
@@ -229,23 +234,22 @@ const CertificateTemplateOne = ({apiData}) => {
                                         alt='Russel Sarder'
                                     />
                                 </div>
-                                <hr />
-                                <div className='issuer-info d-flex justify-content-between align-items-center'>
+                                <div className='issuer-info d-flex justify-content-between align-items-center' style={{paddingBottom:"3%"}}>
                                     <div className='issuer-name'>Russell Sarder</div>
                                     <div className='issuer-designation'>Chairman & CEO, AI Certs<sup>&trade;</sup></div>
                                 </div>
                             </div>
-                            <div className='badge-position position-absolute'>
-                                <div className='ai-badge-logo'>
+                            {/* <div className='badge-position position-absolute'>
+                                <div className='ai-badge-logo'> */}
                                     {/* eslint-disable-next-line */}
-                                    <img
+                                    {/* <img
                                         src='/backgrounds/bitcoin-certified-trainer-badge.svg'
                                         alt='Russel Sarder'
                                     />
                                 </div>
-                            </div>
-                            <div className='bottom-info d-flex justify-content-center align-items-center w-100 position-absolute'>
-                                <div className='certificate-info'>Certificate No.: {apiData?.Details['tid']}</div> 
+                            </div> */}
+                            <div className='bottom-info d-flex justify-content-center align-items-center w-100 position-absolute' >
+                                <div className='certificate-info'>Certificate No.: {apiData?.Details['tid']}</div>
                                 <span>|</span>
                                 <div className='certificate-info'>Exam Start Time: {apiData?.Details['startTime']}</div>
                                 <span>|</span>
