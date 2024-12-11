@@ -141,7 +141,7 @@ const UploadSpreadsheet = () => {
                         />
                       </div>
                       <h5 className="text-center cert-label">
-                        Upload spreadsheet with recipent's data
+                        Upload spreadsheet with recipent&apos;s data
                       </h5>
                       <Form>
                         <div className="d-flex flex-column align-items-center ">

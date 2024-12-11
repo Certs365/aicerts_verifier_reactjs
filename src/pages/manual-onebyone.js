@@ -321,7 +321,7 @@ const ManualOneByOne = () => {
                       <tbody>
                         {certificateIds.length > 0 ? (
                           certificateIds?.map((item, index) => (
-                            <tr>
+                            <tr key={index}>
                               <td>{index + 1}.</td>
                               <td> {editingIndex === index ? (
                                   <input
