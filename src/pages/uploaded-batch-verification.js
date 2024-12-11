@@ -18,9 +18,9 @@ const UploadedBatchVerifictionData = () => {
   };
 
   const maxRows = Math.max(
-    groupedData.valid.length,
-    groupedData.invalid.length,
-    groupedData.revoked.length
+    groupedData.valid?.length,
+    groupedData.invalid?.length,
+    groupedData.revoked?.length
   );
   const normalize = (arr, length) =>
     Array.from({ length }, (_, i) => arr[i] || { id: "", status: "" });
