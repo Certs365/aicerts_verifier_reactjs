@@ -28,6 +28,14 @@ const UploadSpreadsheet = () => {
       setProgress(0);
     }
   }, [loading]);
+const handleDownload = ()  => {
+  const filePath = "/sampleExcel/validationSample.xlsx";
+  const link = document.createElement("a");
+  link.href = filePath;
+  link.download = "sample.xlsx";
+  link.click();
+}
+  // Specify the file name for download link.click();
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -62,42 +70,47 @@ const UploadSpreadsheet = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
-  
+
     if (!selectedFile) {
-      alert("No valid file selected. Please upload a valid CSV, XLSX, or XLS file within the size limit.");
+      alert(
+        "No valid file selected. Please upload a valid CSV, XLSX, or XLS file within the size limit."
+      );
       return;
     }
-  
+
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    formData.append("file", selectedFile);
 
     console.log("FormData:", formData);
-  
+
     try {
       setLoading(true);
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_TEST_BASE_URL}/api/verify-batch`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-  
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_TEST_BASE_URL}/api/verify-batch`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       if (response.status === 200) {
         // alert("File uploaded successfully!");
         setLoading(false);
         setCertificateData(response?.data);
-        console.log("response", response)
-        router.push('/uploaded-batch-verification')
+        console.log("response", response);
+        router.push("/uploaded-batch-verification");
       } else {
         alert("Failed to upload the file. Please try again.");
         setLoading(false);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.error("Error uploading the file:", error);
       alert("An error occurred during file upload. Please try again.");
     }
   };
-  
 
   return (
     <>
@@ -169,9 +182,15 @@ const UploadSpreadsheet = () => {
                           />
                         </div>
                         <div
-                          style={{ color: "#CFA935" }}
+                          style={{ color: "#CFA935", cursor: "pointer" }}
                           className="txt-14 fw-semibold mt-4 mb-4"
+                          onClick={() => handleDownload()}
                         >
+                          {/* <a
+                            href="/sampleExcel/validationSample.xlsx"
+                            download="validationSample.xlsx"
+                            style={{ textDecoration: "none", color: "inherit" }}
+                          ></a> */}
                           <i class="bx bx-download me-2"></i>
                           Download Spreadsheet Template
                         </div>

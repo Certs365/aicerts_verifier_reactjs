@@ -38,13 +38,13 @@ const ManualOneByOne = () => {
 
   const handleInput = (e) => {
     const text = e.target.innerText;
-    console.log("ggggg", text);
+
     if (text.includes(",")) {
       const parts = text
         .split(",")
         .map((part) => part.trim())
         .filter(Boolean);
-      console.log("parts ", parts);
+
       if (parts.length === 1) {
         setContent([...content, ...parts]);
       } else {
