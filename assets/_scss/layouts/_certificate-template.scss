@@ -156,4 +156,286 @@
             height: 172px;
         }
     }
+}.certificate-template {
+    background-size: cover;
+    width: 1009px;
+    height: 720px;
+    margin: auto;
+    font-family: 'Kanit', sans-serif;
+
+    &#template-3 {
+        background-image: url(/backgrounds/certifiicate-template-3-bg.svg);
+        background-size:cover;
+        padding: 32px 0 5.625em;
+
+        .badge-position {
+            bottom: 240px;
+        }
+
+        .bottom-info {
+            bottom: 190px;
+        }
+    }
+
+
+    &#template-4 {
+        background-image: url(/backgrounds/certificate-template-4-bg.svg);
+        background-size:cover;
+        padding: 32px 0 5.625em;
+
+        .badge-position {
+            bottom: 240px;
+        }
+
+        .bottom-info {
+            bottom: 190px;
+        }
+    }
+
+
+    &#template-5 {
+        background-image: url(/backgrounds/certificate-template-5-bg.svg);
+        background-size:cover;
+        padding: 32px 0 5.625em;
+
+        .badge-position {
+            bottom: 240px;
+        }
+
+        .bottom-info {
+            bottom: 190px;
+        }
+    }
+
+    &#template-6 {
+        background-image: url(/backgrounds/certificate-template-6-bg.svg);
+        background-size:cover;
+        padding: 32px 0 5.625em;
+
+        .badge-position {
+            bottom: 240px;
+        }
+
+        .bottom-info {
+            bottom: 190px;
+        }
+    }
+    &#template-7 {
+        background-image: url(/backgrounds/certificate-template-7-bg.svg);
+        padding: 8.125em 0 5.625em;
+    }
+
+
+
+    .hero-logo {
+        img {
+            width: auto;
+            height: 48px;
+        }
+    }
+
+    .hero-info {
+        color: #4D4D4D;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+        letter-spacing: 0.04em;
+        margin: 30px 0 0;
+    }
+
+    .issued-to {
+        color: #0C393D;
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 50px;
+        letter-spacing: 0.04em;
+        text-transform: capitalize;
+    }
+
+    .hero-message {
+        color: #4D4D4D;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 36px;
+        letter-spacing: 0.01em;
+        margin: 20px 0 0;
+    }
+
+    .course-name {
+        color: #0C393D;
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 40px;
+        letter-spacing: 0.04em;
+    }
+
+    .issued-by {
+        width: 355px;
+        margin: 60px auto 0;
+
+        .signature {
+           img {
+                width: 217px;
+                height: 58px;
+                margin: auto;
+           }
+        }
+
+        hr {
+            height: 2px;
+            border: 1px solid #B2B2B2;
+            margin: 20px 0 8px;
+        }
+
+        .issuer-info {
+
+            .issuer-name {
+                color: $black;
+                font-size: 18px;
+                font-weight: 600;
+                line-height: 27px;
+                letter-spacing: 0em;
+                position: relative;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 7px;
+                    right: -10px;
+                    width: 2px;
+                    height: 16px;
+                    background-color: $black;
+                }
+            }
+
+            .issuer-designation {
+                color: #707070;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 27px;
+                letter-spacing: 0.01em;
+            }
+        }
+    }
+
+    .badge-position {
+        left: 165px;
+        bottom: 154px;
+
+        .ai-badge-logo {
+            img {
+                width: 130px;
+                height: 130px;
+            }
+        }
+    }
+
+    .bottom-info {
+        bottom: 80px;
+
+        .certificate-info {
+            color: $black;
+            font-size: 14px;
+            line-height: 20px;
+            text-align: left;
+            letter-spacing: 0.03px;
+            text-transform: capitalize;
+        }
+
+        span {
+            color: #4D4D4D;
+            width: 2px;
+            display: block;
+            margin: 0 10px;        
+        }
+    }
+
+    .qr-details {
+        position: absolute;
+        right: 165px;
+        bottom: 230px;
+
+        img {
+            width: 171px;
+            height: 172px;
+        }
+    }
+
+    @media (min-width: $small-min) and (max-width: $small-max) {
+        width: 820px;
+        height: 585px;
+
+        &#template-3 {
+            .bottom-info {
+                bottom: 162px;
+
+                .certificate-info {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .badge-position {
+            left: 134px;
+        }
+
+        .hero-logo {
+            img {
+                width: 176px;
+                height: 34px;
+            }
+        }
+
+        .hero-info {
+            font-size: 14px;
+            margin: 20px 0 0;
+        }
+
+        .hero-message {
+            font-size: 14px;
+            line-height: 36px;
+            margin: 10px 0 0;
+        }
+
+        .issued-to, .course-name {
+            font-size: 26px;
+            line-height: 36px;
+        }
+
+        .badge-position {
+            .ai-badge-logo {
+                img {
+                    width: 86px;
+                    height: 86px;
+                }
+            }
+        }
+
+        .issued-by {
+            width: 336px;
+            margin: 32px auto 0;
+
+            .signature {
+                img {
+                    width: 145px;
+                    height: 35px;
+                }
+            }
+
+            .issuer-info {
+                .issuer-name {
+                    font-size: 16px;
+                    line-height: 26px;
+                }
+            }
+        }
+    }
+
+    @media (min-width: $laptop-min) and (max-width: $laptop-max) {
+        &#template-3 {
+            .badge-position {
+                bottom: 218px;
+            }
+        }
+    }
 }

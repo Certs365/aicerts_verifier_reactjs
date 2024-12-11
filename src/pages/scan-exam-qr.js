@@ -13,7 +13,7 @@ import ExamDocumentsValid from "../../src/pages/exam-certificate"
 import InvalidCertificate from "../../src/pages/unable-certificate"
 import CertificateTemplateOne from "../../src/pages/certificate/temp7"
 
-
+import QrReaderExam from "../components/QrExam"
 
 const ScanDocuments = () => {
     const { apiData, setApiData } = useContext(ApiDataContext);
@@ -30,7 +30,7 @@ const ScanDocuments = () => {
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
     const handleClick = () => {
-        router.push("/verify-documents");
+        router.push("/verify-exam");
     };
 
     const toggleScanner = () => {
@@ -269,7 +269,7 @@ const ScanDocuments = () => {
                                                     ) : (
                                                         <div className='d-flex flex-column align-items-center'>
 
-                                                            <QrReader />
+                                                            <QrReaderExam/>
                                                         </div>
                                                     )}
                                                     {/* {scannerActive && <QrReader />} */}
