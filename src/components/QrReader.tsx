@@ -57,7 +57,7 @@ const QrReader = () => {
     } catch (error: any) {
       setLoading(false);  // Stop loading on error
 
-      if (error.response.data.message === 'Certification has revoked' || error.response.data.message === "Credential has revoked") {
+      if (error?.response?.data?.message === 'Certification has revoked' || error?.response?.data?.message === "Credential has revoked") {
         router.push('/certificate-revoked');
       } else {
         router.push('/invalid-certificate');
