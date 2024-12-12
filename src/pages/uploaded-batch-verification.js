@@ -3,9 +3,13 @@ import { Card, Col, Form, Modal, Row, Table } from "react-bootstrap";
 import Button from "../../shared/button/button";
 import Image from "next/image";
 import { ApiDataContext } from "../utils/ContextState";
+import Navigation from '@/app/navigation';
+import { useRouter } from "next/router";
+import * as XLSX from "xlsx";
 
 const UploadedBatchVerifictionData = () => {
   const { certificateData } = useContext(ApiDataContext);
+  const router = useRouter();
 
   const groupedData = {
     valid: certificateData?.details?.filter((item) => item.status === "valid"),
@@ -35,16 +39,48 @@ const UploadedBatchVerifictionData = () => {
     revoked: revokedData[i]?.id || "",
   }));
 
-  console.log("resdffff", certificateData);
+
+  const convertToCSV = (data) => {
+    const headers = Object.keys(data[0]);
+    const rows = data.map((row) =>
+      headers.map((header) => row[header]).join(",")
+    );
+    return [headers.join(","), ...rows].join("\n");
+  };
+  const downloadCSV = () => {
+    const csvData = convertToCSV(certificateData?.details);
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "data.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const downloadExcel = () => {
+    // Create a worksheet from the JSON data
+    const worksheet = XLSX.utils.json_to_sheet(certificateData?.details);
+
+    // Create a new workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Write the workbook and create a Blob
+    XLSX.writeFile(workbook, "data.xlsx");
+  };
+
   return (
     <>
-      <div className="page-bg">
+      <Navigation />
+      <div className="page-bg" style={{ paddingTop: "70px" }}>
         <div className="position-relative">
           <div className="vertical-center verify-cert">
             <div className="container-fluid">
               {/* <Button className='back-btn' label='Back' /> */}
               <Row className="justify-content-center mt-4 verify-documents">
-                <div className="d-flex justify-content-between align-items-center col-md-10 mb-3">
+              <div className="d-flex justify-content-between align-items-center col-md-10 mb-3 flex-wrap gap-3">
                   <h1 className="title mb-0 text-center">Batch Verification</h1>
                   <div
                     className="d-flex p-1"
@@ -52,7 +88,8 @@ const UploadedBatchVerifictionData = () => {
                   >
                     <Button
                       className={`white rounded-0`}
-                      label="Single Issuance"
+                      label="Single Verification"
+                      onClick={()=> router.push('/verify-documents')}
                     />
                     <Button
                       className={`golden rounded-0`}
@@ -62,7 +99,7 @@ const UploadedBatchVerifictionData = () => {
                 </div>
                 <div className="col-lg-10 mb-3 mb-lg-4">
                   <div className="row">
-                    <div className="col-md-6 col-lg-3 col-xl-3">
+                    <div className="col-md-6 col-lg-3 col-xl-3 mb-3">
                       <div className="card-batch d-flex justify-content-between align-items-center">
                         <div>
                           <p className="txt-14 fw-semibold mb-2">
@@ -80,7 +117,7 @@ const UploadedBatchVerifictionData = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-3 col-xl-3">
+                    <div className="col-md-6 col-lg-3  mb-3">
                       <div className="card-batch d-flex justify-content-between align-items-center">
                         <div>
                           <p className="txt-14 fw-semibold mb-2">
@@ -98,7 +135,7 @@ const UploadedBatchVerifictionData = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-3 col-xl-3">
+                    <div className="col-md-6 col-lg-3  mb-3">
                       <div className="card-batch d-flex justify-content-between align-items-center">
                         <div>
                           <p className="txt-14 fw-semibold mb-2">
@@ -116,7 +153,7 @@ const UploadedBatchVerifictionData = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-3 col-xl-3">
+                    <div className="col-md-6 col-lg-3  mb-3">
                       <div className="card-batch d-flex justify-content-between align-items-center">
                         <div>
                           <p className="txt-14 fw-semibold mb-2">
@@ -136,47 +173,13 @@ const UploadedBatchVerifictionData = () => {
                     </div>
                   </div>
                 </div>
-                {/* <Col md={{ span: 10 }} className="mb-4">
-                  <Card className="" style={{ border: "1px solid #BFC0C2" }}>
-                    <h5
-                      className="fw-semibold txt-22"
-                      style={{
-                        padding: "16px 20px",
-                        backgroundColor: "#f3f3f3",
-                      }}
-                    >
-                      Add Recipent(s)
-                    </h5>
-                    <div className="" style={{ padding: "20px" }}>
-                      <Form>
-                        <Form.Group>
-                          <Form.Label>Certificate Number</Form.Label>
-                          <div className="d-flex gap-3">
-                            <Form.Control type="text" />
-                            <button
-                              className="txt-12"
-                              style={{
-                                width: "182px",
-                                backgroundColor: "#CFA935",
-                                color: "white",
-                                border: "none",
-                              }}
-                            >
-                              Add receipent
-                            </button>
-                          </div>
-                        </Form.Group>
-                      </Form>
-                    </div>
-                  </Card>
-                </Col> */}
                 <Col md={{ span: 10 }}>
                   <Card
                     className="add-recipent"
                     style={{ border: "1px solid #BFC0C2" }}
                   >
                     <div
-                      className="d-flex justify-content-between align-items-center"
+                      className="d-flex justify-content-between align-items-center flex-column flex-md-row gap-3"
                       style={{ padding: "16px 20px" }}
                     >
                       <h5
@@ -185,18 +188,19 @@ const UploadedBatchVerifictionData = () => {
                       >
                         Recipients
                       </h5>
-                      <div className="d-flex gap-2 align-items-center">
-                        <button className="upload-batch">
+                      <div className="d-flex gap-2 align-items-center flex-wrap">
+                        <button className="upload-batch" onClick={downloadCSV}>
                           <i class="bx bx-download"></i> CSV
                         </button>
-                        <button className="upload-batch">
+                        <button className="upload-batch" onClick={downloadExcel}>
                           <i class="bx bx-download"></i> XLS
                         </button>
-                        <button className="upload-batch">
+                        <button className="upload-batch" onClick={downloadExcel}>
                           <i class="bx bx-download"></i> XLSX
                         </button>
                       </div>
                     </div>
+                    <div className="overflow-auto">
                     <Table>
                       <thead>
                         <tr className="" style={{ backgroundColor: "#F3F3F3" }}>
@@ -218,8 +222,7 @@ const UploadedBatchVerifictionData = () => {
                         ))}
                       </tbody>
                     </Table>
-                     
-              
+                    </div>
                   </Card>
                 </Col>
               </Row>

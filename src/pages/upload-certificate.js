@@ -242,14 +242,15 @@ const UploadCertificate = () => {
                 <div className="container-fluid">
                   {/* <Button className='back-btn' label='Back' /> */}
                   <Row className="justify-content-center mt-4 verify-documents">
-                    <div className="d-flex justify-content-between align-items-center col-md-10 mb-3">
+                    <div className="d-flex justify-content-between align-items-center col-md-10 mb-3 flex-wrap gap-3">
                       <h1 className="title mb-0 text-center">
                         Please upload your certification to validate.
                       </h1>
                       <div className="d-flex p-1" style={{border:"2px solid #BFC0C2", background:"white"}}>
                         <Button
                           className={`golden rounded-0`}
-                          label="Single Issuance"
+                          label="Single Verification"
+                          onClick={()=> router.push('/verify-documents')}
                         />
                         <Button
                           className={`white rounded-0`}

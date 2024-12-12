@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { ApiDataContext } from "../utils/ContextState";
+import Navigation from "@/app/navigation";
 
 const UploadSpreadsheet = () => {
   const { setCertificateData } = useContext(ApiDataContext);
@@ -28,13 +29,13 @@ const UploadSpreadsheet = () => {
       setProgress(0);
     }
   }, [loading]);
-const handleDownload = ()  => {
-  const filePath = "/sampleExcel/validationSample.xlsx";
-  const link = document.createElement("a");
-  link.href = filePath;
-  link.download = "sample.xlsx";
-  link.click();
-}
+  const handleDownload = () => {
+    const filePath = "/sampleExcel/validationSample.xlsx";
+    const link = document.createElement("a");
+    link.href = filePath;
+    link.download = "sample.xlsx";
+    link.click();
+  };
   // Specify the file name for download link.click();
 
   const handleFileChange = async (event) => {
@@ -114,13 +115,14 @@ const handleDownload = ()  => {
 
   return (
     <>
-      <div className="page-bg">
+      <Navigation />
+      <div className="page-bg" style={{ paddingTop: "70px" }}>
         <div className="position-relative">
           <div className="vertical-center verify-cert">
             <div className="container-fluid">
               {/* <Button className='back-btn' label='Back' /> */}
               <Row className="justify-content-center mt-4 verify-documents">
-                <div className="d-flex justify-content-between align-items-center col-md-10 mb-3">
+              <div className="d-flex justify-content-between align-items-center col-md-10 mb-3 flex-wrap gap-3">
                   <h1 className="title mb-0 text-center">Batch Verification</h1>
                   <div
                     className="d-flex p-1"
@@ -128,7 +130,8 @@ const handleDownload = ()  => {
                   >
                     <Button
                       className={`white rounded-0`}
-                      label="Single Issuance"
+                      label="Single Verification"
+                      onClick={() => router.push("/verify-documents")}
                     />
                     <Button
                       className={`golden rounded-0`}
@@ -205,19 +208,16 @@ const handleDownload = ()  => {
               </Row>
 
               <div className="d-flex justify-content-center mt-4 gap-4">
-                {/* {!selectedFile ? ( */}
+                <Button
+                  className={`white rounded-0 border `}
+                  label="Cancel"
+                  onClick={() => router.push("/batch-verification")}
+                />
                 <Button
                   className={`golden rounded-0`}
                   label="Submit"
                   onClick={handleSubmit}
                 />
-                {/* ) : (
-            <Button
-              className={`golden rounded-0`}
-              label="Submit"
-              onClick={handleSubmit}
-            />
-          )} */}
               </div>
               <div
                 style={{ color: "#CFA935", cursor: "pointer" }}

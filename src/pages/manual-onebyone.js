@@ -1,10 +1,19 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Card, Col, Form, Modal, ProgressBar, Row, Table } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Form,
+  Modal,
+  ProgressBar,
+  Row,
+  Table,
+} from "react-bootstrap";
 import Button from "../../shared/button/button";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ApiDataContext } from "../utils/ContextState";
 import axios from "axios";
+import Navigation from "@/app/navigation";
 
 const ManualOneByOne = () => {
   const { setCertificateData } = useContext(ApiDataContext);
@@ -15,10 +24,8 @@ const ManualOneByOne = () => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedcertificateIds, setEditedcertificateIds] = useState("");
   const router = useRouter();
-  console.log("certificate", certificateIds);
   const [content, setContent] = useState([]);
   const inputRef = useRef(null);
-  console.log("content", content);
 
   useEffect(() => {
     if (loading) {
@@ -76,7 +83,7 @@ const ManualOneByOne = () => {
         certificationID: cert,
       }));
       setCertificatedId((prev) => [...prev, ...newRecipientsFromContent]);
-  
+
       // Clear the content array
       setContent([]);
     }
@@ -99,18 +106,18 @@ const ManualOneByOne = () => {
         : item
     );
     setCertificatedId(updatedCertificates);
-    setEditingIndex(null);  // Clear the edit mode
+    setEditingIndex(null); // Clear the edit mode
   };
 
   // const handleAddRecipient = (event) => {
   //   event.preventDefault();
-  
+
   //   if (newcertificateIds.trim() !== "") {
   //     const certIds = newcertificateIds
   //       .split(/[\s,]+/)  // Split by spaces or commas
   //       .map((cert) => cert.trim())
   //       .filter((cert) => cert);  // Filter out any empty strings
-  
+
   //     if (certIds.length > 0) {
   //       const newRecipients = certIds.map((cert) => ({
   //         certificationID: cert,
@@ -119,21 +126,24 @@ const ManualOneByOne = () => {
   //       setNewcertificateIds("");  // Clear the input field
   //     }
   //   }
-  
+
   //   if (content.length > 0) {
   //     const newRecipientsFromContent = content.map((cert) => ({
   //       certificationID: cert,
   //     }));
   //     setCertificatedId((prev) => [...prev, ...newRecipientsFromContent]);
-  
+
   //     setContent([]);  // Clear the content array
   //   }
   // };
-  
-
- 
 
   const handleSubmit = async () => {
+    if (!certificateIds || certificateIds.length === 0) {
+      alert(
+        "No certificate IDs are present. Please add them before proceeding."
+      );
+      return;
+    }
     try {
       setLoading(true);
       console.log("payload", certificateIds);
@@ -144,12 +154,14 @@ const ManualOneByOne = () => {
       const jsonBlob = new Blob([jsonData], { type: "application/json" });
 
       // Step 3: Create a File object (optional: specify filename)
-      const jsonFile = new File([jsonBlob], "data.json", { type: "application/json" });
+      const jsonFile = new File([jsonBlob], "data.json", {
+        type: "application/json",
+      });
 
       const formData = new FormData();
       formData.append("file", jsonFile);
       formData.append("json", 1);
-  
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_TEST_BASE_URL}/api/verify-batch`,
         formData,
@@ -159,7 +171,7 @@ const ManualOneByOne = () => {
           },
         }
       );
-  
+
       if (response.status === 200) {
         setLoading(false);
         setCertificateData(response?.data);
@@ -175,22 +187,22 @@ const ManualOneByOne = () => {
       alert("An error occurred during file upload. Please try again.");
     }
   };
-  
+
   const handleDelete = (index) => {
     const updatedCertificates = certificateIds.filter((_, i) => i !== index);
     setCertificatedId(updatedCertificates);
   };
 
-
   return (
     <>
-      <div className="page-bg">
+      <Navigation />
+      <div className="page-bg" style={{ paddingTop: "70px" }}>
         <div className="position-relative">
           <div className="vertical-center verify-cert">
             <div className="container-fluid">
               {/* <Button className='back-btn' label='Back' /> */}
               <Row className="justify-content-center mt-4 verify-documents">
-                <div className="d-flex justify-content-between align-items-center col-md-10 mb-3">
+              <div className="d-flex justify-content-between align-items-center col-md-10 mb-3 flex-wrap gap-3">
                   <h1 className="title mb-0 text-center">Batch Verification</h1>
                   <div
                     className="d-flex p-1"
@@ -198,7 +210,8 @@ const ManualOneByOne = () => {
                   >
                     <Button
                       className={`white rounded-0`}
-                      label="Single Issuance"
+                      label="Single Verification"
+                      onClick={() => router.push("/verify-documents")}
                     />
                     <Button
                       className={`golden rounded-0`}
@@ -222,7 +235,7 @@ const ManualOneByOne = () => {
                       <Form>
                         <Form.Group>
                           <Form.Label>Certificate Number</Form.Label>
-                          <div className="d-flex gap-3">
+                          <div className="d-flex gap-3 flex-column flex-md-row">
                             {/* <Form.Control
                               type="text"
                               value={newcertificateIds}
@@ -238,7 +251,7 @@ const ManualOneByOne = () => {
                                 display: "flex",
                                 flexWrap: "wrap",
                                 alignItems: "center",
-                                flexGrow:1
+                                flexGrow: 1,
                                 // width: "300px",
                               }}
                             >
@@ -282,9 +295,8 @@ const ManualOneByOne = () => {
                               ></div>
                             </div>
                             <button
-                              className="txt-12 fw-semibold"
+                              className="txt-12 fw-semibold p-2"
                               style={{
-                                width: "182px",
                                 backgroundColor: "#CFA935",
                                 color: "white",
                                 border: "none",
@@ -310,6 +322,7 @@ const ManualOneByOne = () => {
                     >
                       Added Recipients List
                     </h5>
+                    <div className="overflow-auto">
                     <Table>
                       <thead>
                         <tr className="" style={{ backgroundColor: "#F3F3F3" }}>
@@ -323,7 +336,9 @@ const ManualOneByOne = () => {
                           certificateIds?.map((item, index) => (
                             <tr key={index}>
                               <td>{index + 1}.</td>
-                              <td> {editingIndex === index ? (
+                              <td>
+                                {" "}
+                                {editingIndex === index ? (
                                   <input
                                     type="text"
                                     value={editedcertificateIds}
@@ -333,7 +348,10 @@ const ManualOneByOne = () => {
                                     onBlur={handleSaveEdit}
                                     autoFocus
                                   />
-                                ) : (<span>{item.certificationID}</span>)}</td>
+                                ) : (
+                                  <span>{item.certificationID}</span>
+                                )}
+                              </td>
                               <td style={{ display: "flex", gap: "8px" }}>
                                 <div
                                   className="edit-btn-hover"
@@ -372,7 +390,6 @@ const ManualOneByOne = () => {
                                   <span
                                     className="txt-12 fw-semibold"
                                     style={{ color: "#DB371F" }}
-                                    
                                   >
                                     Delete
                                   </span>
@@ -524,22 +541,20 @@ const ManualOneByOne = () => {
                         </tr> */}
                       </tbody>
                     </Table>
+                    </div>
                   </Card>
                 </Col>
                 <div className="d-flex justify-content-center mt-4 gap-4">
-                  {/* {!selectedFile ? ( */}
+                  <Button
+                    className={`white rounded-0 border `}
+                    label="Cancel"
+                    onClick={() => router.push("/batch-verification")}
+                  />
                   <Button
                     className={`golden rounded-0`}
                     label="Submit"
                     onClick={handleSubmit}
                   />
-                  {/* ) : (
-            <Button
-              className={`golden rounded-0`}
-              label="Submit"
-              onClick={handleSubmit}
-            />
-          )} */}
                 </div>
                 <div
                   style={{ color: "#CFA935", cursor: "pointer" }}
@@ -554,11 +569,11 @@ const ManualOneByOne = () => {
                 <Modal.Body>
                   <div className="certificate-loader">
                     <Image
-                  src="/backgrounds/verification.gif"
-                  layout="fill"
-                  objectFit="contain"
-                  alt="Loader"
-                />
+                      src="/backgrounds/verification.gif"
+                      layout="fill"
+                      objectFit="contain"
+                      alt="Loader"
+                    />
                   </div>
                   <div className="text">Batch Verification In Progress</div>
                   <ProgressBar now={progress} label={`${progress}%`} />
