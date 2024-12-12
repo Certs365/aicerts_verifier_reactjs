@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { ApiDataContext } from "../utils/ContextState";
 import axios from "axios";
 import Navigation from "@/app/navigation";
+import { toast } from "react-toastify";
 
 const ManualOneByOne = () => {
   const { setCertificateData } = useContext(ApiDataContext);
@@ -139,9 +140,14 @@ const ManualOneByOne = () => {
 
   const handleSubmit = async () => {
     if (!certificateIds || certificateIds.length === 0) {
-      alert(
-        "No certificate IDs are present. Please add them before proceeding."
-      );
+      toast.error("No certificate IDs are present. Please add them before proceeding.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+    });
       return;
     }
     try {
@@ -178,13 +184,27 @@ const ManualOneByOne = () => {
         console.log("response", response);
         router.push("/uploaded-batch-verification");
       } else {
-        alert("Failed to upload the file. Please try again.");
+        toast.error("Failed to upload the file. Please try again.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+      });
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
       console.error("Error uploading the file:", error);
-      alert("An error occurred during file upload. Please try again.");
+      toast.error("An error occurred during file upload. Please try again.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+    })
     }
   };
 

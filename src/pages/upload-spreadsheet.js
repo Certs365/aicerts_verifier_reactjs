@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { ApiDataContext } from "../utils/ContextState";
 import Navigation from "@/app/navigation";
+import { toast } from "react-toastify";
 
 const UploadSpreadsheet = () => {
   const { setCertificateData } = useContext(ApiDataContext);
@@ -47,21 +48,40 @@ const UploadSpreadsheet = () => {
       .toLowerCase();
 
     if (!file) {
-      alert("No file selected. Please choose a file.");
+      toast.error("No file selected. Please choose a file.", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+          })
       return;
     }
 
     if (!validExtensions.includes(fileExtension)) {
-      alert(
-        "Only CSV, XLSX, and XLS files are supported. Please select a valid file."
-      );
+
+      toast.error("Only CSV, XLSX, and XLS files are supported. Please select a valid file.", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+          })
       setSelectedFile(null); // Clear the selected file
       return;
     }
 
     if (file && file.size > maxSize) {
-      // File size exceeds the maximum allowed size
-      alert("File size exceeds 2MB limit. Please select a smaller file.");
+      toast.error("File size exceeds 2MB limit. Please select a smaller file.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+    })
       setSelectedFile(null); // Clear the selected file
     } else {
       // File size is within the limit, proceed with the upload
@@ -73,9 +93,14 @@ const UploadSpreadsheet = () => {
     event.preventDefault(); // Prevent default form submission
 
     if (!selectedFile) {
-      alert(
-        "No valid file selected. Please upload a valid CSV, XLSX, or XLS file within the size limit."
-      );
+      toast.error( "No valid file selected. Please upload a valid CSV, XLSX, or XLS file within the size limit.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+    })
       return;
     }
 
@@ -103,13 +128,27 @@ const UploadSpreadsheet = () => {
         console.log("response", response);
         router.push("/uploaded-batch-verification");
       } else {
-        alert("Failed to upload the file. Please try again.");
+        toast.error( "Failed to upload the file. Please try again.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+      })
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
       console.error("Error uploading the file:", error);
-      alert("An error occurred during file upload. Please try again.");
+      toast.error( "An error occurred during file upload. Please try again.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+    })
     }
   };
 

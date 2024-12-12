@@ -9,6 +9,7 @@ import axios from "axios";
 import { ApiDataContext } from "@/utils/ContextState";
 import { apiCallWithRetries } from "@/utils/apiUtils";
 import { Modal, ProgressBar } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 //@ts-ignore
 const QrReader = () => {
@@ -109,9 +110,14 @@ const QrReader = () => {
   // ❌ If "camera" is not allowed in browser permissions, show an alert.
   useEffect(() => {
     if (!qrOn)
-      alert(
-        "Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload."
-      );
+      toast.error("Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+    })
   }, [qrOn]);
 
   return (

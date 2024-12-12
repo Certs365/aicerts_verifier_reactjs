@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import DocumentDetail from "../components/DocumentDetail";
 import Head from "next/head";
 import { ApiDataContext } from "../utils/ContextState";
+import { toast } from "react-toastify";
 
 const UploadCertificate = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -85,7 +86,14 @@ const UploadCertificate = () => {
 
     if (file && file.size > maxSize) {
       // File size exceeds the maximum allowed size
-      alert("File size exceeds 2MB limit. Please select a smaller file.");
+       toast.error("File size exceeds 2MB limit. Please select a smaller file.", {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+          })
       setSelectedFile(null); // Clear the selected file
     } else {
       // File size is within the limit, proceed with the upload

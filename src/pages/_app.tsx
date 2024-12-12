@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import "boxicons/css/boxicons.min.css";
 import { ApiDataProvider, ApiDataContext } from '../utils/ContextState'; // Updated import path
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -52,6 +54,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ApiDataProvider>
       <Layout />
+      <ToastContainer />
     </ApiDataProvider>
   );
 };
