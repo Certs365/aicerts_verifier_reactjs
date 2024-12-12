@@ -207,7 +207,7 @@ const CertificateTemplateOne = ({ apiData }) => {
     const handleDownload = async () => {
       console.log(apiData)
       const certificateDetails = {
-        backgroundImageUrl: 'https://certs365-live.s3.amazonaws.com/uploads/Certificate_template_07.png',
+        backgroundImageUrl: "https://certs365-live.s3.amazonaws.com/uploads/Certificate%20of%20Participation%2002.png",
         name: apiData?.Details['name'] || apiData?.Details['Name'],
         courseName: apiData?.Details['title'] || apiData?.Details['Course Name'],
         qrUrl: apiData?.Details['qrUrl'],
@@ -328,7 +328,7 @@ const CertificateTemplateOne = ({ apiData }) => {
       >
         {/* Background Image */}
          <img
-          src={"https://certs365-live.s3.amazonaws.com/uploads/Certificate_template_07.png"}
+          src={"https://certs365-live.s3.amazonaws.com/uploads/Certificate%20of%20Participation%2002.png"}
           alt="Background"
           style={{
             position: 'absolute',

@@ -39,8 +39,8 @@ export default async function handler(req, res) {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    email: "Test123@gmail.com",
-                    password: "Abcd#0011",
+                    email:process.env.NEXT_PUBLIC_ISSUER_EMAIL,
+                    password: process.env.NEXT_PUBLIC_ISSUER_PASS,
                 }),
             }
         );
