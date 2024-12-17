@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import axios from "axios";
 import { ApiDataContext } from "@/utils/ContextState";
 import { apiCallWithRetries } from "@/utils/apiUtils";
-import { Modal, ProgressBar } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 //@ts-ignore
@@ -23,15 +23,7 @@ const QrReaderExam = () => {
 
   // Result
   const [scannedResult, setScannedResult] = useState<string | undefined>("");
-  const [selected, setSelected] = useState("certification verification");
-    const [startScan, setStartScan] = useState(true);
-    const [loadingScan, setLoadingScan] = useState(false);
-    const [data, setData] = useState("");
-    const [loginError, setLoginError] = useState('');
-    const [loginSuccess, setLoginSuccess] = useState('');
-    const [show, setShow] = useState(false);
     const { apiData, setApiData } = useContext(ApiDataContext);
-    const [hasScanned, setHasScanned] = useState<boolean>(false); // Flag to track scanning state
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -48,11 +40,6 @@ const QrReaderExam = () => {
         const qrScanResponse = await apiCallWithRetries(`${apiUrl}/api/decode-qr-scan`, { receivedCode: scannedUrl });
         
         if (qrScanResponse?.status === "SUCCESS") {
-        //   setApiData({
-        //     Details: qrScanResponse?.Details || qrScanResponse?.details,
-        //     message: qrScanResponse?.message,
-        //   });
-
         const QrResponse = await fetch(`/api/fetch_student`, {
             method: "POST",
             headers: {
@@ -64,8 +51,6 @@ const QrReaderExam = () => {
         });
         let QrData=QrResponse.ok?await QrResponse.json():null
         console.log(QrData)
-            // Assuming response is in JSON format
-            
             setApiData({
                 // @ts-ignore: Implicit any for children prop
                 Details: {...(qrScanResponse?.details ||  qrScanResponse?.Details),...QrData},
@@ -75,26 +60,19 @@ const QrReaderExam = () => {
          
             setLoading(false);
 
-          // Stop loading after success
         }
       }
     } catch (error: any) {
         console.log(error)
-    //   setLoading(false);  // Stop loading on error
 console.log("hello")
       if (error.response?.data?.message === 'Certification has revoked' || error.response?.data?.message === "Credential has revoked") {
         router.push('/certificate-revoked');
       } 
-    // else{
-    //     router.push('/invalid-certificate');
-    //   }
     }
   };
 
-  // Fail
   const onScanFail = (err: string | Error) => {
-    // 🖨 Print the "err" to browser console.
-    // console.log(err);
+
   };
 
   useEffect(() => {
@@ -132,7 +110,6 @@ console.log("hello")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ❌ If "camera" is not allowed in browser permissions, show an alert.
   useEffect(() => {
     if (!qrOn)
       toast.error("Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload.", {
@@ -148,7 +125,6 @@ console.log("hello")
   return (
     <>
     <div className="qr-reader" >
-      {/* QR */}
       <video ref={videoEl}></video>
       <div ref={qrBoxEl} className="qr-box">
         <Image

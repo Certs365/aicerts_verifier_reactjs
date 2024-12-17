@@ -239,7 +239,6 @@ const CertificateTemplateOne = ({ apiData }) => {
         window.URL.revokeObjectURL(url); // Revoke the object URL
       } catch (error) {
         console.error('Error downloading certificate:', error);
-        alert('Failed to download certificate. Please try again.');
       }
     };
       

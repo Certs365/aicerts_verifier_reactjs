@@ -14,15 +14,12 @@ const QRScan = () => {
     const [loginSuccess, setLoginSuccess] = useState('');
     const [show, setShow] = useState(false);
     const { apiData, setApiData } = useContext(ApiDataContext);
-    // const [apiData, setApiData] = useState([]);
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    // useEffect to set the data when startScan changes to "Stop scan"
     useEffect(() => {
         if (startScan != false) {
-            // Perform any data retrieval or processing here
-            // For example, fetching data from an API or setting some default value
+           
             setData('');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

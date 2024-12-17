@@ -23,11 +23,13 @@ export default async function handler(req, res) {
 
   try {
     const apiKey = process.env.NEXT_PUBLIC_EXAM_APIKEY;
+    console.log(apiKey,"api key");
+
     const [resultsData, examData] = await Promise.all([
       fetchFromAPI(`https://exam.proctoring365.io/index.php?option=com_exams&task=api.queryResults&format=raw&code=${apiKey}&eid=${eid}`),
       fetchFromAPI(`https://exam.proctoring365.io/index.php?option=com_exams&task=api.getExams&format=raw&code=${apiKey}&eid=${eid}`)
     ]);
-
+    console.log(resultsData,examData,"api Data");
     const [result] = resultsData; // Assume `resultsData` is an array
     const [exam] = examData; // Assume `examData` is an array
 

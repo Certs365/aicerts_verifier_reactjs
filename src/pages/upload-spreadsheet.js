@@ -151,7 +151,6 @@ const UploadSpreadsheet = () => {
       );
 
       if (response.status === 200) {
-        // alert("File uploaded successfully!");
         setLoading(false);
         setCertificateData(response?.data);
         console.log("response", response);
