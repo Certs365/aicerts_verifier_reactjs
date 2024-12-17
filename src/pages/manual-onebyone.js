@@ -46,12 +46,20 @@ const ManualOneByOne = () => {
 
   const handleInput = (e) => {
     const text = e.target.innerText;
-
-    if (text.includes(",")) {
+    if (text.includes(" ") || e.key === "Enter" ||  e.keyCode === 32) {
+      e.preventDefault(); 
+  
       const parts = text
-        .split(",")
+        .split(/[\s]+/) 
         .map((part) => part.trim())
-        .filter(Boolean);
+        .filter(Boolean); 
+  
+
+    // if (text.includes(" ")) {
+    //   const parts = text
+    //     .split(" ")
+    //     .map((part) => part.trim())
+    //     .filter(Boolean);
 
       if (parts.length === 1) {
         setContent([...content, ...parts]);
@@ -148,6 +156,17 @@ const ManualOneByOne = () => {
         pauseOnHover: true,
         draggable: true,
     });
+      return;
+    }
+    if (certificateIds.length > 100) {
+      toast.error("Maximum limit exceeded! You can only upload up to 100 certificate IDs.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       return;
     }
     try {
@@ -306,6 +325,7 @@ const ManualOneByOne = () => {
                                 contentEditable
                                 ref={inputRef}
                                 onInput={handleInput}
+                                onKeyDown={handleInput}
                                 style={{
                                   outline: "none",
                                   minWidth: "100px",

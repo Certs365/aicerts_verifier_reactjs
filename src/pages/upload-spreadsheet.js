@@ -7,6 +7,7 @@ import axios from "axios";
 import { ApiDataContext } from "../utils/ContextState";
 import Navigation from "@/app/navigation";
 import { toast } from "react-toastify";
+import * as XLSX from "xlsx";
 
 const UploadSpreadsheet = () => {
   const { setCertificateData } = useContext(ApiDataContext);
@@ -38,6 +39,7 @@ const UploadSpreadsheet = () => {
     link.click();
   };
   // Specify the file name for download link.click();
+  
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -58,6 +60,32 @@ const UploadSpreadsheet = () => {
           })
       return;
     }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" }); // Read the file
+  
+      // Get the first sheet
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName]; // Define worksheet
+  
+      // Convert worksheet to JSON
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+  
+      // Check for row limit
+      if (jsonData.length > 1000) {
+        toast.error("File contains more than 1000 rows. Max limit is 1000." ,{
+          position: 'top-center',
+          autoClose: 3000
+        });
+        setSelectedFile(null);
+        return;
+      }
+      console.log("Parsed JSON Data:", jsonData);
+      setSelectedFile(file);
+    };
+  
+    reader.readAsArrayBuffer(file);
 
     if (!validExtensions.includes(fileExtension)) {
 
@@ -72,6 +100,7 @@ const UploadSpreadsheet = () => {
       setSelectedFile(null); // Clear the selected file
       return;
     }
+
 
     if (file && file.size > maxSize) {
       toast.error("File size exceeds 2MB limit. Please select a smaller file.", {
