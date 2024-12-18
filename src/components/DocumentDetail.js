@@ -89,44 +89,12 @@ function convertToCustomArray(jsonString) {
             window.location.reload();
         };
 
-
-        // const shareValue = apiData?.Details["Polygon URL"];
-
-        // const copyToClipboard = () => {
-        //     navigator.clipboard.writeText(shareValue).then(() => {
-        //         setCopied(true)
-        //         setTimeout(() => setCopied(false), 3000);
-        //     }).catch(err => {
-        //         // console.error('Failed to copy text: ', err);
-        //     });
-        // };
-
-        // @ts-ignore: Implicit any for children prop
-        const formatDate = (dateString) => {
-            if (!dateString) return '';
-
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) return 'Invalid Date';
-
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            const year = date.getFullYear();
-
-            return `${month}/${day}/${year}`;
-        };
-
         let shareUrl = apiData?.Details?.url;
         if(shareUrl) {
              shareUrl = shareUrl.replace('/verify-documents', '');
         }
         
     const shareTitle =  apiData?.message || "Certs365 Blockchain Based Secured Document Verification Platform";
-
-    const title = 'Ai Certificate';
-    const description = 'Test description';
-    const image = 'https://images.netcomlearning.com/ai-certs/cer365AllPageBg.png';
-
-    
 
     return (
         <>

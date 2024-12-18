@@ -12,9 +12,9 @@ import { ApiDataContext } from '@/utils/ContextState';
 import ExamDocumentsValid from "../../src/pages/exam-certificate"
 import InvalidCertificate from "../../src/pages/unable-certificate"
 import CertificateTemplateOne from "../../src/pages/certificate/temp7"
+
+import QrReaderExam from "../components/QrExam"
 import { toast } from 'react-toastify';
-
-
 
 const ScanDocuments = () => {
     const { apiData, setApiData } = useContext(ApiDataContext);
@@ -31,7 +31,7 @@ const ScanDocuments = () => {
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
     const handleClick = () => {
-        router.push("/verify-documents");
+        router.push("/verify-exam");
     };
 
     const toggleScanner = () => {
@@ -94,11 +94,6 @@ const ScanDocuments = () => {
                     })
                 }
                 else {
-                    // const errorData = await certificateResponse.json();
-                    // if (errorData.message == 'Certification has revoked' || errorData.message == "Credential has revoked") {
-                    //     router.push('/certificate-revoked')
-                    //     return
-                    // }
                     setLoginError("Unable to Fetch info")
                     setShow(true)
                 }
@@ -224,13 +219,13 @@ const ScanDocuments = () => {
         if (file && file.size > maxSize) {
             // File size exceeds the maximum allowed size
             toast.error("File size exceeds 2MB limit. Please select a smaller file.", {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            })
+                   position: "top-center",
+                   autoClose: 3000,
+                   hideProgressBar: false,
+                   closeOnClick: true,
+                   pauseOnHover: true,
+                   draggable: true,
+               })
             setSelectedFile(null); // Clear the selected file
         } else {
             // File size is within the limit, proceed with the upload
@@ -276,7 +271,7 @@ const ScanDocuments = () => {
                                                     ) : (
                                                         <div className='d-flex flex-column align-items-center'>
 
-                                                            <QrReader />
+                                                            <QrReaderExam/>
                                                         </div>
                                                     )}
                                                     {/* {scannerActive && <QrReader />} */}

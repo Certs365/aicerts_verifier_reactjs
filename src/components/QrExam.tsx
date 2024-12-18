@@ -8,11 +8,11 @@ import { useRouter } from 'next/router';
 import axios from "axios";
 import { ApiDataContext } from "@/utils/ContextState";
 import { apiCallWithRetries } from "@/utils/apiUtils";
-import { Modal, ProgressBar } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 //@ts-ignore
-const QrReader = () => {
+const QrReaderExam = () => {
   // QR StatesDetails
   const scanner = useRef<QrScanner>();
   const videoEl = useRef<HTMLVideoElement>(null);
@@ -23,15 +23,7 @@ const QrReader = () => {
 
   // Result
   const [scannedResult, setScannedResult] = useState<string | undefined>("");
-  const [selected, setSelected] = useState("certification verification");
-    const [startScan, setStartScan] = useState(true);
-    const [loadingScan, setLoadingScan] = useState(false);
-    const [data, setData] = useState("");
-    const [loginError, setLoginError] = useState('');
-    const [loginSuccess, setLoginSuccess] = useState('');
-    const [show, setShow] = useState(false);
     const { apiData, setApiData } = useContext(ApiDataContext);
-    const [hasScanned, setHasScanned] = useState<boolean>(false); // Flag to track scanning state
 
     const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -47,27 +39,37 @@ const QrReader = () => {
       if (scannedUrl) {
         const qrScanResponse = await apiCallWithRetries(`${apiUrl}/api/decode-qr-scan`, { receivedCode: scannedUrl });
         
-        if (qrScanResponse.status === "SUCCESS") {
-          setApiData({
-            Details: qrScanResponse?.Details || qrScanResponse?.details,
-            message: qrScanResponse?.message,
-          });
-          setLoading(false);  // Stop loading after success
+        if (qrScanResponse?.status === "SUCCESS") {
+        const QrResponse = await fetch(`/api/fetch_student`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                data:qrScanResponse?.details ||  qrScanResponse?.Details,
+            }),
+        });
+        let QrData=QrResponse.ok?await QrResponse.json():null
+            setApiData({
+                // @ts-ignore: Implicit any for children prop
+                Details: {...(qrScanResponse?.details ||  qrScanResponse?.Details),...QrData},
+                message: "Pass",
+                type:"exam"
+            });
+         
+            setLoading(false);
+
         }
       }
     } catch (error: any) {
-      setLoading(false);  // Stop loading on error
-
-      if (error?.response?.data?.message === 'Certification has revoked' || error?.response?.data?.message === "Credential has revoked") {
+      if (error.response?.data?.message === 'Certification has revoked' || error.response?.data?.message === "Credential has revoked") {
         router.push('/certificate-revoked');
-      } else {
-        router.push('/invalid-certificate');
-      }
+      } 
     }
   };
 
-  // Fail
   const onScanFail = (err: string | Error) => {
+
   };
 
   useEffect(() => {
@@ -105,23 +107,21 @@ const QrReader = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ❌ If "camera" is not allowed in browser permissions, show an alert.
   useEffect(() => {
     if (!qrOn)
       toast.error("Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload.", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-    })
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+          })
   }, [qrOn]);
 
   return (
     <>
     <div className="qr-reader" >
-      {/* QR */}
       <video ref={videoEl}></video>
       <div ref={qrBoxEl} className="qr-box">
         <Image
@@ -164,4 +164,4 @@ const QrReader = () => {
   );
 };
 
-export default QrReader;
+export default QrReaderExam;

@@ -20,10 +20,12 @@ export const ApiDataProvider = ({ children }) => {
     },
     message: null,
   });
+
+  const [certificateData, setCertificateData] = useState([]);
   
 
   return (
-    <ApiDataContext.Provider value={{ apiData, setApiData }}>
+    <ApiDataContext.Provider value={{ apiData, setApiData, certificateData, setCertificateData }}>
       {children}
     </ApiDataContext.Provider>
   );

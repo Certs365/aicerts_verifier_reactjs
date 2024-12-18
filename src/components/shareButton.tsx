@@ -61,8 +61,6 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, description, image, ur
       quote: `${title} - ${description} - ${image}`,
       hashtag: '#Example',
     }, (response: any) => {
-      // Callback function
-      console.log(response);
     });
   };
 

@@ -68,7 +68,9 @@ a {
         width: 100%;
     }
 }
-
+.txt-22{
+    font-size: 22px;
+}
 .copy-right {
     color: $white;
     font-size: 18px;
@@ -131,4 +133,31 @@ a {
         -ms-transform: translateY(-78%);
         -o-transform: translateY(-78%);
 }
+}
+.add-recipent table th{
+    background-color: #F3F3F3;
+    padding:16px 20px;
+    border-right: 1px solid #e2e2e2;
+    &:nth-last-child(1){
+        border-right: none;
+    }
+}
+.add-recipent table td{
+    padding:16px 20px;
+border-right: 1px solid #e2e2e2;
+&:nth-last-child(1){
+    border-right: none;
+}
+}
+.card-batch{
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #BFC0C2;
+}
+.upload-batch{
+    color: #CFA935;
+    border: 1px solid #CFA935;
+    padding: 10px;
+    font-size: 14px;
+    background-color: transparent;
 }
