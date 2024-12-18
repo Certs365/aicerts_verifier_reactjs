@@ -50,7 +50,6 @@ const QrReaderExam = () => {
             }),
         });
         let QrData=QrResponse.ok?await QrResponse.json():null
-        console.log(QrData)
             setApiData({
                 // @ts-ignore: Implicit any for children prop
                 Details: {...(qrScanResponse?.details ||  qrScanResponse?.Details),...QrData},
@@ -63,8 +62,6 @@ const QrReaderExam = () => {
         }
       }
     } catch (error: any) {
-        console.log(error)
-console.log("hello")
       if (error.response?.data?.message === 'Certification has revoked' || error.response?.data?.message === "Credential has revoked") {
         router.push('/certificate-revoked');
       } 

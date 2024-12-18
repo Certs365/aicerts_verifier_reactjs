@@ -69,8 +69,6 @@ const UploadExamCertificate = () => {
 
     }
 
-    // console.log(apiData)
-
     // @ts-ignore: Implicit any for children prop
     const handleFileChange = async (event) => {
         // setSelectedFile(event.target.files[0]);
@@ -114,8 +112,6 @@ const UploadExamCertificate = () => {
 
                 if (certificateResponse.ok) {
                     const certificateData = await certificateResponse.json();
-                    console.log(certificateData?.details['Certificate Number'])
-
                     const QrResponse = await fetch(`/api/fetch_student`, {
                         method: "POST",
                         headers: {
@@ -126,7 +122,6 @@ const UploadExamCertificate = () => {
                         }),
                     });
                     let QrData=QrResponse.ok?await QrResponse.json():null
-                    console.log(QrData)
                         // Assuming response is in JSON format
                         setApiData({
                             // @ts-ignore: Implicit any for children prop
@@ -176,12 +171,10 @@ const UploadExamCertificate = () => {
                         // Both API calls failed, handle errors
                         const errorData = await fileResponse.json();
                         if (errorData.message == 'Certification has revoked' || errorData.message == "Credential has revoked") {
-                            // console.log(errorData.message)
                             router.push('/certificate-revoked')
                             return;
                         }
                         else if (errorData.message == 'Certification is not valid') {
-                            // console.log(errorData.message)
                             router.push('/invalid-certificate')
                             return;
                         }

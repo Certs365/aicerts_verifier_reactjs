@@ -211,10 +211,11 @@ const CertificateTemplateOne = ({ apiData }) => {
                     <div className='container py-5'>
                         <div className='certificate-template position-relative' id="template-4">
                             <div className='hero-logo text-center' style={{paddingTop:"4%"}}>
-                                <img
-                                    src="https://images.netcomlearning.com/ai-certs/Certs365-logo.svg"
-                                    alt='AI Certs logo'
-                                />
+                            <Image
+  src="https://images.netcomlearning.com/ai-certs/Certs365-logo.svg"
+  alt="AI Certs logo"
+ layout='fill'
+/>
                             </div>
                             <div className='hero-info text-center' style={{paddingTop:"3%"}}>This is to certify that</div>
                             <div className='issued-to text-center'>{apiData?.Details['name']}</div>
@@ -223,7 +224,12 @@ const CertificateTemplateOne = ({ apiData }) => {
                             <div className='qr-details'>
                                 <div className='qr-wrapper' style={{ paddingLeft: "40%", paddingBottom: "40%" }}>
                                 
-                                    <img src={apiData?.Details['qrUrl']} style={{width:"130px",height:"130px"}}/>
+                                <Image
+  src={apiData?.Details['qrUrl'] } // Provide a fallback image if `qrUrl` is undefined
+  alt="QR Code"
+  width={130}
+  height={130}
+/>
                                 </div>
                             </div>
                             <div className='issued-by text-center'>

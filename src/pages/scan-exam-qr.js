@@ -92,14 +92,8 @@ const ScanDocuments = () => {
                         message: certificateData.passed == 1 ? "Pass" : "Fail",
                         type: "exam"
                     })
-                    console.log(certificateData)
                 }
                 else {
-                    // const errorData = await certificateResponse.json();
-                    // if (errorData.message == 'Certification has revoked' || errorData.message == "Credential has revoked") {
-                    //     router.push('/certificate-revoked')
-                    //     return
-                    // }
                     setLoginError("Unable to Fetch info")
                     setShow(true)
                 }

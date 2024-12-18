@@ -75,12 +75,8 @@ const UploadCertificate = () => {
     }
   };
 
-  // console.log(apiData)
-
   // @ts-ignore: Implicit any for children prop
   const handleFileChange = async (event) => {
-    // setSelectedFile(event.target.files[0]);
-
     const file = event.target.files[0];
     const maxSize = 2 * 1024 * 1024; // 2MB in bytes
 
@@ -171,11 +167,9 @@ const UploadCertificate = () => {
               errorData.message == "Certification has revoked" ||
               errorData.message == "Credential has revoked"
             ) {
-              // console.log(errorData.message)
               router.push("/certificate-revoked");
               return;
             } else if (errorData.message == "Certification is not valid") {
-              // console.log(errorData.message)
               router.push("/invalid-certificate");
               return;
             }

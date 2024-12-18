@@ -20,7 +20,6 @@ export default async function handler(req, res) {
     }
 
     const { data } = req.body;
-    console.log(data)
     if (
         !data ||
         !data["Certificate Number"] ||
@@ -44,10 +43,6 @@ export default async function handler(req, res) {
                 }),
             }
         );
-
-        console.log("Login data:", loginData);
-
-        // Prepare the certificate issuance request payload
         const issuancePayload = {
             email: process.env.NEXT_PUBLIC_ISSUER_EMAIL,
             certificateNumber: data["Certificate Number"],
@@ -58,9 +53,6 @@ export default async function handler(req, res) {
             flag: false,
         };
 
-        console.log("Issuance payload:", issuancePayload);
-
-        // Issue certificate
         const issuanceResponse = await fetchFromAPI(
             `${process.env.NEXT_PUBLIC_BASE_URL}/api/issuance`,
             {
@@ -72,8 +64,6 @@ export default async function handler(req, res) {
                 body: JSON.stringify(issuancePayload),
             }
         );
-
-        console.log("Issuance response:", issuanceResponse);
 
         // Extract QR code URL
         const qrUrl = issuanceResponse.qrCodeImage;

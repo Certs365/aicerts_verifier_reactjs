@@ -81,7 +81,6 @@ const UploadSpreadsheet = () => {
         setSelectedFile(null);
         return;
       }
-      console.log("Parsed JSON Data:", jsonData);
       setSelectedFile(file);
     };
   
@@ -135,9 +134,6 @@ const UploadSpreadsheet = () => {
 
     const formData = new FormData();
     formData.append("file", selectedFile);
-
-    console.log("FormData:", formData);
-
     try {
       setLoading(true);
       const response = await axios.post(
@@ -153,7 +149,6 @@ const UploadSpreadsheet = () => {
       if (response.status === 200) {
         setLoading(false);
         setCertificateData(response?.data);
-        console.log("response", response);
         router.push("/uploaded-batch-verification");
       } else {
         toast.error( "Failed to upload the file. Please try again.", {

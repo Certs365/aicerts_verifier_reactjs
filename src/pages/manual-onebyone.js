@@ -171,8 +171,6 @@ const ManualOneByOne = () => {
     }
     try {
       setLoading(true);
-      console.log("payload", certificateIds);
-
       const jsonData = JSON.stringify(certificateIds);
 
       // Step 2: Create a Blob from JSON data
@@ -200,7 +198,6 @@ const ManualOneByOne = () => {
       if (response.status === 200) {
         setLoading(false);
         setCertificateData(response?.data);
-        console.log("response", response);
         router.push("/uploaded-batch-verification");
       } else {
         toast.error("Failed to upload the file. Please try again.", {

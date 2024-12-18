@@ -92,7 +92,6 @@ const ScanDocuments = () => {
                         message: certificateData.passed == 1 ? "Pass" : "Fail",
                         type: "exam"
                     })
-                    console.log(certificateData)
                 }
                 else {
                     // const errorData = await certificateResponse.json();

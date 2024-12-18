@@ -29,23 +29,10 @@ const QRScan = () => {
         setLoadingScan(true);
         let scanFailed = true; // Flag to track if the scan failed
         var scanResponse = "No URL found";
-
-        // Start a timer for 10 seconds
-        // const timeout = setTimeout(() => {
-        //     if (scanFailed) {
-        //         // If the scan failed after 10 seconds, pass the custom URL to the API
-        //         scanResponse = "Unable to detect QR, Try again with different Verification method";
-        //         setLoadingScan(false);
-        //         setData(scanResponse);
-        //         setStartScan(false);
-        //     }
-        // }, 10000); // 10 seconds in milliseconds
-
         if (scanData) {
             try {
               const url = scanData.text;
               const paramValue = url.split('=')[1];
-            //   console.log(paramValue);
                 // First API call with QR Scanned data
                 const qrScanResponse = await fetch(`${apiUrl}/api/decode-qr-scan`, {
                     method: "POST",
@@ -57,12 +44,9 @@ const QRScan = () => {
                     }),
                 });
 
-                // console.log(`QR data: ${paramValue}`);
                 scanResponse = scanData ? paramValue : scanResponse;
                 if (qrScanResponse.ok) { // Check if response is successful
                     const responseData = await qrScanResponse.json(); // Parse response body as JSON
-                    // console.log("The response", responseData.data); // Do something with the response data
-                    // console.log("The response", responseData?.details?.url); // Do something with the response data
                     window.location.href=responseData?.details?.url;
                    
 
@@ -73,10 +57,8 @@ const QRScan = () => {
                     });
                     
                     scanFailed = false;
-                    // clearTimeout(timeout); // Clear the timeout if the API call succeeds before the 10-second timeout
                 } else {
                     const responseData = await qrScanResponse.json(); // Parse response body as JSON
-                    // console.error("The response", responseData);
                     scanFailed = true; // Set flag to true if the scan failed
                     setLoginError( responseData.message || "Unable to scan the QR. Please review and try again.")
                     setShow(true)
@@ -122,7 +104,6 @@ const QRScan = () => {
         if (scanData) {
           const info=scanData.text;
           const paramValue = info.split('=')[1];
-        //    console.log(paramValue);
             try {
                 // First API call with QR Scanned data
                 const qrScanResponse = await fetch(`${apiUrl}/api/verify-certification-id`, {
@@ -135,11 +116,9 @@ const QRScan = () => {
                     }),
                 });
     
-                // console.log(`QR data: ${paramValue}`);
                 scanResponse = scanData ? paramValue : scanResponse;
                 if (qrScanResponse.ok) { // Check if response is successful
                     const responseData = await qrScanResponse.json(); // Parse response body as JSON
-                    // console.log("The response", responseData.data); // Do something with the response data
                     window.location.href=responseData?.details?.url;
                     setApiData({
                         // @ts-ignore: Implicit any for children prop
