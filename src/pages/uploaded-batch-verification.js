@@ -1,15 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Card, Col, Form, Modal, Row, Table } from "react-bootstrap";
 import Button from "../../shared/button/button";
 import Image from "next/image";
 import { ApiDataContext } from "../utils/ContextState";
-import Navigation from '@/app/navigation';
+import Navigation from "@/app/navigation";
 import { useRouter } from "next/router";
 import * as XLSX from "xlsx";
+import PaginationComponent from "../components/pagination/PaginationComponent";
 
 const UploadedBatchVerifictionData = () => {
+  const [open, setOpen] = useState(false);
   const { certificateData } = useContext(ApiDataContext);
   const router = useRouter();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const groupedData = {
     valid: certificateData?.details?.filter((item) => item.status === "valid"),
@@ -38,7 +43,6 @@ const UploadedBatchVerifictionData = () => {
     invalid: invalidData[i]?.id || "",
     revoked: revokedData[i]?.id || "",
   }));
-
 
   const convertToCSV = (data) => {
     const headers = Object.keys(data[0]);
@@ -71,6 +75,14 @@ const UploadedBatchVerifictionData = () => {
     XLSX.writeFile(workbook, "data.xlsx");
   };
 
+  const totalPages = Math.ceil(maxRows / itemsPerPage);
+
+  // Get current page data
+  const currentData = tableRows.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <>
       <Navigation />
@@ -80,7 +92,7 @@ const UploadedBatchVerifictionData = () => {
             <div className="container-fluid">
               {/* <Button className='back-btn' label='Back' /> */}
               <Row className="justify-content-center mt-4 verify-documents">
-              <div className="d-flex justify-content-between align-items-center col-md-10 mb-3 flex-wrap gap-3">
+                <div className="d-flex justify-content-between align-items-center col-md-10 mb-3 flex-wrap gap-3">
                   <h1 className="title mb-0 text-center">Batch Verification</h1>
                   <div
                     className="d-flex p-1"
@@ -89,7 +101,7 @@ const UploadedBatchVerifictionData = () => {
                     <Button
                       className={`white rounded-0`}
                       label="Single Verification"
-                      onClick={()=> router.push('/verify-documents')}
+                      onClick={() => router.push("/verify-documents")}
                     />
                     <Button
                       className={`golden rounded-0`}
@@ -99,10 +111,10 @@ const UploadedBatchVerifictionData = () => {
                 </div>
                 <div className="col-lg-10 mb-3 mb-lg-4">
                   <div className="row">
-                    <div className="col-md-6 col-lg-3 col-xl-3 mb-3">
+                    <div className="col-6 col-lg-3 mb-3">
                       <div className="card-batch d-flex justify-content-between align-items-center">
                         <div>
-                          <p className="txt-14 fw-semibold mb-2">
+                          <p className="text-xs fw-semibold mb-2">
                             Total Credentials
                           </p>
                           <h3>{certificateData?.total}</h3>
@@ -117,10 +129,10 @@ const UploadedBatchVerifictionData = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-3  mb-3">
+                    <div className="col-6 col-lg-3  mb-3">
                       <div className="card-batch d-flex justify-content-between align-items-center">
                         <div>
-                          <p className="txt-14 fw-semibold mb-2">
+                          <p className="text-xs fw-semibold mb-2">
                             Valid Credentials
                           </p>
                           <h3>{certificateData?.valid}</h3>
@@ -135,10 +147,10 @@ const UploadedBatchVerifictionData = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-3  mb-3">
+                    <div className="col-6 col-lg-3  mb-3">
                       <div className="card-batch d-flex justify-content-between align-items-center">
                         <div>
-                          <p className="txt-14 fw-semibold mb-2">
+                          <p className="text-xs fw-semibold mb-2">
                             Invalid Credentials
                           </p>
                           <h3>{certificateData?.invalid}</h3>
@@ -153,10 +165,10 @@ const UploadedBatchVerifictionData = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-3  mb-3">
+                    <div className="col-6 col-lg-3  mb-3">
                       <div className="card-batch d-flex justify-content-between align-items-center">
                         <div>
-                          <p className="txt-14 fw-semibold mb-2">
+                          <p className="text-xs fw-semibold mb-2">
                             Revoked Credentials
                           </p>
                           <h3>{certificateData?.revoked}</h3>
@@ -179,7 +191,7 @@ const UploadedBatchVerifictionData = () => {
                     style={{ border: "1px solid #BFC0C2" }}
                   >
                     <div
-                      className="d-flex justify-content-between align-items-center flex-column flex-md-row gap-3"
+                      className="d-flex justify-content-between align-items-center flex-row gap-3"
                       style={{ padding: "16px 20px" }}
                     >
                       <h5
@@ -188,59 +200,70 @@ const UploadedBatchVerifictionData = () => {
                       >
                         Recipients
                       </h5>
+
                       <div className="d-flex gap-2 align-items-center flex-wrap">
                         <button className="upload-batch" onClick={downloadCSV}>
                           <i class="bx bx-download"></i> CSV
                         </button>
-                        <button className="upload-batch" onClick={downloadExcel}>
+                        <button
+                          className="upload-batch"
+                          onClick={downloadExcel}
+                        >
                           <i class="bx bx-download"></i> XLS
                         </button>
-                        <button className="upload-batch" onClick={downloadExcel}>
+                        <button
+                          className="upload-batch"
+                          onClick={downloadExcel}
+                        >
                           <i class="bx bx-download"></i> XLSX
                         </button>
                       </div>
                     </div>
                     <div className="overflow-auto">
-                    <Table>
-                      <thead>
-                        <tr className="" style={{ backgroundColor: "#F3F3F3" }}>
-                          <th>S.No.</th>
-                          <th>Valid Certificate(s)</th>
-                          <th>Invalid Certificate(s)</th>
-                          <th>Revoked Certificate(s)</th>
-                          {/* <th>Action</th> */}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Array.from({ length: maxRows }).map((_, index) => (
-                          <tr key={index}>
-                            <td>{index + 1}.</td>
-                            <td>{validData[index]?.id}</td>
-                            <td>{invalidData[index]?.id}</td>
-                            <td>{revokedData[index]?.id}</td>
+                      <Table>
+                        <thead>
+                          <tr
+                            className=""
+                            style={{ backgroundColor: "#F3F3F3" }}
+                          >
+                            <th>S.No.</th>
+                            <th>Valid Certificate(s)</th>
+                            <th>Invalid Certificate(s)</th>
+                            <th>Revoked Certificate(s)</th>
+                            {/* <th>Action</th> */}
                           </tr>
-                        ))}
-                      </tbody>
-                    </Table>
+                        </thead>
+                        <tbody>
+                          {/* {Array.from({ length: maxRows }).map((_, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}.</td>
+                              <td>{validData[index]?.id}</td>
+                              <td>{invalidData[index]?.id}</td>
+                              <td>{revokedData[index]?.id}</td>
+                            </tr>
+                          ))} */}
+                          {currentData.map((row, index) => (
+                            <tr key={index}>
+                              <td>
+                                {(currentPage - 1) * itemsPerPage + index + 1}.
+                              </td>
+                              <td>{row.valid}</td>
+                              <td>{row.invalid}</td>
+                              <td>{row.revoked}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                      <PaginationComponent
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        setCurrentPage={setCurrentPage}
+                        maxRows={maxRows}
+                      />
                     </div>
                   </Card>
                 </Col>
               </Row>
-
-              <Modal className="loader-modal" centered>
-                <Modal.Body>
-                  <div className="certificate-loader">
-                    {/* <Image
-                  src="/backgrounds/verification.gif"
-                  layout="fill"
-                  objectFit="contain"
-                  alt="Loader"
-                /> */}
-                  </div>
-                  <div className="text">Verification In Progress</div>
-                  {/* <ProgressBar now={progress} label={`${progress}%`} /> */}
-                </Modal.Body>
-              </Modal>
             </div>
           </div>
         </div>

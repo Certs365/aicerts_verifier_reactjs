@@ -153,11 +153,32 @@ border-right: 1px solid #e2e2e2;
     padding: 20px;
     background-color: #fff;
     border: 1px solid #BFC0C2;
+    height: 100%;
+    @media (min-width: 320px) and (max-width: 768px) {
+        padding: 8px;
+      }
 }
+
 .upload-batch{
     color: #CFA935;
     border: 1px solid #CFA935;
     padding: 10px;
     font-size: 14px;
     background-color: transparent;
+}
+.text-xs{
+    font-size: 12px;
+    @media (min-width: 768px) {
+        font-size: 16px!important;
+      }
+}
+.inner-box{
+    @media (min-width: 320px) and (max-width: 768px) {
+        padding: 1rem 0 4rem 0;
+      }
+}
+.h-desk-70{
+    @media (min-width: 768px) {
+       height: 70vh;
+      }
 }

@@ -265,10 +265,10 @@ const UploadCertificate = () => {
                     <Col md={{ span: 10 }}>
                       <Card className="p-4">
                         <Row className="card-certificate ">
-                          <Form className="form-certificate-number card-certificate">
+                          <Form className="form-certificate-number card-certificate align-items-center">
                             <Form.Group
                               controlId="certificate-number"
-                              className="mb-3 card-certificate"
+                              className="mb-3 card-certificate "
                             >
                               <Form.Label className="cert-label">
                                 Enter Certification Number:

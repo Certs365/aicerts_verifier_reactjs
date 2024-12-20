@@ -2,6 +2,10 @@
     border-radius: 12px;
     border: none;
     padding: 14px 30px;
+    @media (min-width: 320px) and (max-width: 768px) {
+        padding: 6px;
+       
+      }
 
     &.golden {
         color: $white;
