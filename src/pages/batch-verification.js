@@ -70,7 +70,7 @@ const BatchVerification = () => {
                             />
                             <div className="mt-4 m-2">
                               <Form.Check
-                                type="checkbox"
+                                type="radio"
                                 label="Manually, one by one"
                                 id="manual"
                                 checked={uploadType === "manual"}
@@ -93,7 +93,7 @@ const BatchVerification = () => {
                             />
                             <div className="mt-4 m-2">
                               <Form.Check
-                                type="checkbox"
+                                type="radio"
                                 label="Spreadsheet upload"
                                 id="spreadsheet"
                                 checked={uploadType === "spreadsheet"}
@@ -120,7 +120,7 @@ const BatchVerification = () => {
                 </Col>
               </Row>
 
-              <div className="d-flex justify-content-center mt-4 gap-4">
+              <div className="d-flex justify-content-center mt-4 gap-4 mb-4 pb-4">
                 {/* {!selectedFile ? ( */}
                 <Button
                   className={`white rounded-0 border `}
