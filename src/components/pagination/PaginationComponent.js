@@ -56,7 +56,7 @@ const PaginationComponent = ({
   };
 
   return (
-    <div className="d-flex justify-content-between">
+    <div className="d-flex justify-content-between align-items-center pagination-container">
       <div style={{marginLeft:"10px"}}>
         Showing{" "}
         <strong>
@@ -97,7 +97,7 @@ const PaginationComponent = ({
         />
         <Pagination.Last onClick={() => handlePageClick(totalPages)} />
       </Pagination>
-      <div className="d-flex align-items-center" style={{ marginRight: "10px" }}>
+      <div className="d-flex align-items-center jump-section" style={{ marginRight: "10px" }}>
         <Form.Label style={{ marginRight: "5px" }}>Jump to:</Form.Label>
         <Form.Control
           type="number"

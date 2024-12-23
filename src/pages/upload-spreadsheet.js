@@ -61,28 +61,28 @@ const UploadSpreadsheet = () => {
       return;
     }
     const reader = new FileReader();
-    // reader.onload = (e) => {
-    //   const data = new Uint8Array(e.target.result);
-    //   const workbook = XLSX.read(data, { type: "array" }); // Read the file
+    reader.onload = (e) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" }); // Read the file
   
-    //   // Get the first sheet
-    //   const firstSheetName = workbook.SheetNames[0];
-    //   const worksheet = workbook.Sheets[firstSheetName]; // Define worksheet
+      // Get the first sheet
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName]; // Define worksheet
   
-    //   // Convert worksheet to JSON
-    //   const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      // Convert worksheet to JSON
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
   
-    //   // Check for row limit
-    //   if (jsonData.length > 1000) {
-    //     toast.error("File contains more than 1000 rows. Max limit is 1000." ,{
-    //       position: 'top-center',
-    //       autoClose: 3000
-    //     });
-    //     setSelectedFile(null);
-    //     return;
-    //   }
-    //   setSelectedFile(file);
-    // };
+      // Check for row limit
+      if (jsonData.length > 1000) {
+        toast.error("File contains more than 1000 rows. Max limit is 1000." ,{
+          position: 'top-center',
+          autoClose: 3000
+        });
+        setSelectedFile(null);
+        return;
+      }
+      setSelectedFile(file);
+    };
   
     reader.readAsArrayBuffer(file);
 

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Card, Col, Form, Modal, Row, Table } from "react-bootstrap";
+import { Card, Col, Dropdown, Form, Modal, Row, Table } from "react-bootstrap";
 import Button from "../../shared/button/button";
 import Image from "next/image";
 import { ApiDataContext } from "../utils/ContextState";
@@ -90,7 +90,7 @@ const UploadedBatchVerifictionData = () => {
         <div className="position-relative">
           <div className="vertical-center verify-cert">
             <div className="container-fluid">
-              {/* <Button className='back-btn' label='Back' /> */}
+              <Button className='back-btn' label='Back' onClick={()=>router.push('/batch-verification')} />
               <Row className="justify-content-center mt-4 verify-documents">
                 <div className="d-flex justify-content-between align-items-center col-md-10 mb-3 flex-wrap gap-3">
                   <h1 className="title mb-0 text-center">Batch Verification</h1>
@@ -201,7 +201,51 @@ const UploadedBatchVerifictionData = () => {
                         Recipients
                       </h5>
 
-                      <div className="d-flex gap-2 align-items-center flex-wrap">
+                      <Dropdown className="mobile-dropdown">
+                        <Dropdown.Toggle
+                          id="dropdown-basic"
+                          className="upload-batch custom-dropdown"
+                        >
+                          <i class="bx bx-download"></i>
+                          Download
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu
+                          style={{ minWidth: "110px", padding: "10px" }}
+                        >
+                          <Dropdown.Item className="custom-dropdown-item">
+                            <button
+                              className="upload-batch"
+                              onClick={downloadCSV}
+                              style={{ border: "none" }}
+                            >
+                              <i class="bx bx-download"></i> CSV
+                            </button>
+                          </Dropdown.Item>
+                          <Dropdown.Item className="custom-dropdown-item">
+                            <button
+                              className="upload-batch"
+                              onClick={downloadExcel}
+                              style={{ border: "none" }}
+                            >
+                              <i class="bx bx-download"></i> XLS
+                            </button>
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            style={{ backgroundColor: "transparent" }}
+                          >
+                            <button
+                              className="upload-batch"
+                              onClick={downloadExcel}
+                              style={{ border: "none" }}
+                            >
+                              <i class="bx bx-download"></i> XLSX
+                            </button>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+
+                      <div className="d-flex gap-2 align-items-center flex-wrap desktop-view">
                         <button className="upload-batch" onClick={downloadCSV}>
                           <i class="bx bx-download"></i> CSV
                         </button>
