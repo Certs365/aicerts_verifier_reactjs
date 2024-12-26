@@ -50,15 +50,15 @@ const BatchVerification = () => {
 
                 <Col md={{ span: 10 }}>
                   <Card
-                    className="p-4 align-items-center justify-content-center"
-                    style={{ height: "70vh" }}
+                    className="p-2 p-md-4 align-items-center justify-content-center h-desk-70"
+                    
                   >
-                    <div>
+                    <div className="inner-box" >
                       <h5 className="text-center cert-label mb-3">
                         How would you like to add the recipients?
                       </h5>
-                      <div className="d-flex justify-content-center gap-2 flex-column flex-md-row">
-                        <div className="border m-2 p-2 text-center d-flex align-items-center justify-content-center pt-5">
+                      <div className="d-flex justify-content-center gap-2 flex-row">
+                        <div className="border  p-2 text-center d-flex align-items-center justify-content-center pt-5">
                           <Form.Group>
                             <Image
                               src="/backgrounds/manual.png"
@@ -70,7 +70,7 @@ const BatchVerification = () => {
                             />
                             <div className="mt-4 m-2">
                               <Form.Check
-                                type="checkbox"
+                                type="radio"
                                 label="Manually, one by one"
                                 id="manual"
                                 checked={uploadType === "manual"}
@@ -81,7 +81,7 @@ const BatchVerification = () => {
                             </div>
                           </Form.Group>
                         </div>
-                        <div className="border m-2 p-2 text-center d-flex align-items-center justify-content-center pt-5">
+                        <div className="border  p-2 text-center d-flex align-items-center justify-content-center pt-5">
                           <Form.Group>
                             <Image
                               src="/backgrounds/spreadsheet.svg"
@@ -93,7 +93,7 @@ const BatchVerification = () => {
                             />
                             <div className="mt-4 m-2">
                               <Form.Check
-                                type="checkbox"
+                                type="radio"
                                 label="Spreadsheet upload"
                                 id="spreadsheet"
                                 checked={uploadType === "spreadsheet"}
@@ -105,7 +105,9 @@ const BatchVerification = () => {
                           </Form.Group>
                         </div>
                       </div>
-                      <div className="mt-2 text-center">
+                      
+                    </div>
+                    <div className="mt-2 text-center">
                         <Form.Check
                           type="checkbox"
                           label="I have rights to use the personal data of these recipents."
@@ -114,12 +116,11 @@ const BatchVerification = () => {
                           onChange={(e) => setHasRights(e.target.checked)}
                         />
                       </div>
-                    </div>
                   </Card>
                 </Col>
               </Row>
 
-              <div className="d-flex justify-content-center mt-4 gap-4">
+              <div className="d-flex justify-content-center mt-4 gap-4 mb-4 pb-4">
                 {/* {!selectedFile ? ( */}
                 <Button
                   className={`white rounded-0 border `}

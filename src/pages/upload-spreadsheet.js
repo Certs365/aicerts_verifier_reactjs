@@ -225,7 +225,7 @@ const UploadSpreadsheet = () => {
                         <div className="d-flex flex-column align-items-center ">
                           {selectedFile ? (
                             // @ts-ignore: Implicit any for children prop
-                            <p className="selected-file-name mt-4">
+                            <p className="selected-file-name mt-4 text-center">
                               {selectedFile.name}
                             </p>
                           ) : (
