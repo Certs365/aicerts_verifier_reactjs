@@ -1,14 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../assets/css/styles.scss";
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import ClipLoader from 'react-spinners/ClipLoader';
+
 import { ApiDataProvider, ApiDataContext } from '../utils/ContextState'; // Updated import path
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const router = useRouter();
-  
+  const [isBotOpen, setBotOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   // Move this inside ApiDataProvider so that it gets the context after it's provided
   const Layout = () => {
     const { apiData } = useContext(ApiDataContext);
@@ -47,10 +50,33 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
       </>
     );
   };
+  const toggleBot = () => {
+    setBotOpen(!isBotOpen);
+    setLoading(true);
+  };
 
   return (
     <ApiDataProvider>
       <Layout />
+      <div className="bot-icon" onClick={toggleBot}>
+        <img src={isBotOpen ? "/BotCross.png" : "/BotIcon.png"} alt="Chatbot" />
+      </div>
+      {isBotOpen && (
+        <div className="bot-iframe-container">
+          {/* Loader */}
+          {loading && (
+            <div className="iframe-loader">
+              <ClipLoader color="#555" size={40} />
+            </div>
+          )}
+          <iframe
+            src="https://app.xbot365.io/widget/c489775bb3824445b3291d6be38a23fb"
+            frameBorder="0"
+            allow="clipboard-read; clipboard-write"
+            onLoad={() => setLoading(false)}
+          ></iframe>
+        </div>
+      )}
     </ApiDataProvider>
   );
 };
