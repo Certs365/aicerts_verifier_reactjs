@@ -4,8 +4,12 @@ import { Form, Row, Col, Card, Modal, ProgressBar, Button} from 'react-bootstrap
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
-import { SlSocialFacebook, SlSocialLinkedin, SlSocialTwitter } from 'react-icons/sl';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton,  TwitterIcon, LinkedinIcon } from 'react-share';
+import  facebookIcon  from "../../assets/facebookicon.png"
+import  linkedIcon  from "../../assets/linkedin.png"
+import  twitterIcon  from "../../assets/twitter.png"
+import  iosIcon  from "../../assets/App Store.png";
+import  androidIcon  from "../../assets/Play.png";
 
     // @ts-ignore: Implicit any for children prop
     const DocumentsValid = ({ handleFileChange, apiData, isLoading }) => {
@@ -81,7 +85,13 @@ import { SlSocialFacebook, SlSocialLinkedin, SlSocialTwitter } from 'react-icons
 
             return `${month}/${day}/${year}`;
         };
+        // @ts-ignore: Implicit any for children prop
 
+        const handleRedirect = (url) => {
+            if (url) {
+                window.open(url, '_blank');
+            }
+        };
        
         
     const shareTitle =  apiData?.message || "Certs365 Blockchain Based Secured Document Verification Platform";
@@ -135,8 +145,8 @@ import { SlSocialFacebook, SlSocialLinkedin, SlSocialTwitter } from 'react-icons
                                                     <>
                                                         <Card ref={certificateRef} className='valid-cerficate-info'>
                                                             <Card className='dark-card position-relative'>
-                                                                <div className='d-block d-lg-flex justify-content-between align-items-center certificate-internal-info'>
-                                                                    <div className='badge-banner'>
+                                                                <div  className='d-block d-flex  align-items-center certificate-internal-info'>
+                                                                    <div className='badge-banner d-none d-md-flex'>
                                                                         <Image
                                                                             src="/backgrounds/varified-certificate-badge.gif"
                                                                             layout='fill'
@@ -144,33 +154,42 @@ import { SlSocialFacebook, SlSocialLinkedin, SlSocialTwitter } from 'react-icons
                                                                             alt='Badge Banner'
                                                                         />
                                                                     </div>
-                                                                    <div className='hash-info'>
-                                                                        <Row className='position-relative'>
-                                                                            <Col className='border-right' xs={{ span: 12 }} md={{ span: 6 }}>
-                                                                                <div className='hash-title'>Certification Number</div>
-                                                                                <div className='hash-info'>{apiData?.Details['Certificate Number'] ? apiData?.Details['Certificate Number'] : apiData?.Details['Certification Number'] || apiData?.Details['certificateNumber']}</div>
-                                                                            </Col>
-                                                                            <Col xs={{ span: 12 }} md={{ span: 6 }}>
-                                                                                <div className='hash-title'>Certification Name</div>
-                                                                                <div className='hash-info'>{apiData?.Details['Course Name'] ? apiData?.Details['Course Name'] : apiData?.Details['Certification Name'] || apiData?.Details['course']}</div>
-                                                                            </Col>
-                                                                            <hr />
-                                                                            <hr className='vertical-line' />
-                                                                        </Row>
+                                                                    <div className='d-md-none'>
+                                                                        <Image
+                                                                            src="/backgrounds/varified-certificate-badge.gif"
+                                                                            width={74}
+                                                                            height={74}
+                                                                            objectFit='contain'
+                                                                            alt='Badge Banner'
+                                                                        />
+                                                                    </div>
+                                                                    <div  className='hash-info'>
+                                                                                <div className='hash-wrapper mb-1 mb-md-4'>{apiData?.Details['Certificate Number'] ? apiData?.Details['Certificate Number'] : apiData?.Details['Certification Number'] || apiData?.Details['certificateNumber']}</div>
+                                                                                <div className=' hash-text'>{apiData?.Details['Course Name'] ? apiData?.Details['Course Name'] : apiData?.Details['Certification Name'] || apiData?.Details['course']}</div>
                                                                     </div>
                                                                 </div>
                                                             </Card>
 
-                                                            <div className='cerficate-external-info d-block d-lg-flex justify-content-between align-items-center text-md-left text-center mb-md-0 mb-4'>
-                                                                <div className='details'>
+                                                            <div className='cerficate-external-info d-block d-lg-flex justify-content-between align-items-center text-md-left  mb-md-0 '>
+                                                                <div className='details '>
                                                                     <div className='heading'>Name</div>
                                                                     <div className='heading-info'>{apiData?.Details['Name'] || apiData?.Details['name']}</div>
                                                                 </div>
-                                                                <div className='details'>
+                                                                <div className='details d-flex flex-row justify-content-between'>
+                                                                    <div>
                                                                     <div className='heading'>Grant Date</div>
                                                                     <div className='heading-info'>{formatDate(apiData?.Details['Grant Date'] || apiData?.Details['grantDate'])}</div>
+                                                                    </div>
+                                                                  
+                                                                    <div className='d-flex flex-column d-md-none'>
+
+                                                                    <div className='heading'>Expiration Date</div>
+                                                                    <div className='heading-info'>
+                                                                        {apiData?.Details['Expiration Date'] === "1" || apiData?.Details['expirationDate'] === "1" ? "-" : formatDate(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate']) || 'No Expiration Date available'}
+                                                                    </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div className='details'>
+                                                                <div className='details d-none d-md-flex flex-column'>
                                                                     <div className='heading'>Expiration Date</div>
                                                                     <div className='heading-info'>
                                                                         {apiData?.Details['Expiration Date'] === "1" || apiData?.Details['expirationDate'] === "1" ? "-" : formatDate(apiData?.Details['Expiration Date'] || apiData?.Details['expirationDate']) || 'No Expiration Date available'}
@@ -184,45 +203,58 @@ import { SlSocialFacebook, SlSocialLinkedin, SlSocialTwitter } from 'react-icons
                                                                 </div>
                                                             </div>
                                                         </Card>
-                                                        <div className='d-flex justify-content-center mt-4'>
+                                                        <div className='d-flex flex-column-reverse flex-md-row justify-content-between align-items-center '>
+                                                        <div className='d-flex justify-content-start flex-column mt-4'>
                                                         <p className='share-text'>Share Your Certificate:</p>
-                                                        </div>
-                                                        <div className='d-flex justify-content-center align-items-center '>
-                                                            <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <FacebookIcon size={32} round />
-                                                                {/* <div className="px-2 py-1  rounded" style={{backgroundColor:"#F3F3F3"}}>
-                                        <SlSocialFacebook size={"1.3em"} />
-                                     </div> */}
-                                                            </FacebookShareButton>
-                                                            <TwitterShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <TwitterIcon size={32} round />
-                                                                {/* <div className="px-2 py-1  rounded"style={{backgroundColor:"#F3F3F3"}}>
-                                        <SlSocialTwitter size={"1.3em"} />
-                                     </div> */}
-                                                            </TwitterShareButton>
-                                                            <LinkedinShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <LinkedinIcon size={32} round />
-                                                                {/* <div className="px-2 py-1  rounded" style={{backgroundColor:"#F3F3F3"}}>
-                                        <SlSocialLinkedin size={"1.3em"} />
-                                     </div> */}
-                                                            </LinkedinShareButton>
-{/* <button onClick={()=>{handleShare()}}>
-    share
-</button> */}
-                                                        </div>
+                                                        <div className='d-flex flex-row'>
+    <FacebookShareButton url={shareUrl}>
+    <div className='icon-button-wrapper'>
+            <Image src={facebookIcon} alt='facebookicon' />
+    </div>
+                                </FacebookShareButton>
+                                <LinkedinShareButton url={shareUrl} title={title} summary={description} source="Certs365">
+                                      <div className='icon-button-wrapper'>
+            <Image src={linkedIcon} alt='linkedinicon' />
+    </div>
+                                </LinkedinShareButton>
+                                <TwitterShareButton url={shareUrl} title={title}>
+                                <div className='icon-button-wrapper'>
+            <Image src={twitterIcon} alt='twittericon' />
+    </div>
+                                </TwitterShareButton>
+</div>
+                                                        </div>                   
                                                         {/* <button onClick={()=>{handleShare()}}>share</button> */}
-                                                        <div className='d-flex justify-content-center'>
-                                                        <hr className='horizontal-line-cert'/>
-                                                        </div>
-                                                        <Form className='p-4 p-md-0'>
-                                                            <div className='d-flex justify-content-center align-items-center'>
-                                                                <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again">Validate Another</Link>
-                                                            </div>
-                                                            <div className='information text-center'>
+                                                        <Form className='p-md-4 p-md-0 d-flex flex-column-reverse flex-md-column'>
+                                                        <div className='information text-center'>
                                                                 Only <strong>PDF</strong> is supported. (Upto 2 MB)
                                                             </div>
+                                                            <div className='d-flex justify-content-center justify-content-md-end align-items-center'>
+                                                                <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again">Validate Another</Link>
+                                                            </div>
+                                                           
                                                         </Form>
-                                                      
+                                                        </div>
+                                                        <div className='bottom-verify-wrapper mt-4 d-flex flex-column  align-items-center text-center'>
+                                                            <p className='d-flex text-center text-verify'>
+                                                            Download our app to access and verify all your certificates in one place.
+                                                            </p>
+                                                            <div className='d-flex flex-row justify-content-center'>
+                                                            <div
+    onClick={() => handleRedirect(process.env.NEXT_PUBLIC_IOS_LINK)}
+    className="mobile-link-wrapper d-flex justify-content-center align-items-center me-3"
+>
+    <Image className="responsive-image" src={iosIcon} alt="iosicon" />
+</div>
+<div
+    onClick={() => handleRedirect(process.env.NEXT_PUBLIC_ANDROID_LINK)}
+    className="d-flex justify-content-center align-items-center mobile-link-wrapper"
+>
+    <Image className="responsive-image" src={androidIcon} alt="iosicon" />
+</div>
+
+                                                            </div>
+                                                        </div>
                                                     </>
                                                 ) : (
                                                     <>
