@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 .verify-documents {
     font-family: 'Montserrat', sans-serif;
+
     .title {
         // border: 1px solid red;
         color: #2F3847;
@@ -18,15 +21,17 @@
         -moz-border-radius: 0;
         -ms-border-radius: 0;
         -o-border-radius: 0;
-        
+
 
         .badge-banner {
-           
-           
+
+
             position: relative;
             width: 100%;
             height: 300px;
             margin: 0 auto;
+
+
         }
 
         .golden-upload {
@@ -51,7 +56,7 @@
             cursor: pointer;
             margin-top: 20px;
             text-decoration: none;
-            
+
             &:before {
                 content: '';
                 position: absolute;
@@ -75,7 +80,7 @@
             font-weight: 500;
             line-height: 22px;
             margin-top: 20px;
-            
+
         }
 
         .divider {
@@ -110,7 +115,7 @@
                 width: 32%;
             }
 
-             // 1600
+            // 1600
             @media (min-width: $large-min) and (max-width: $large-max) {
                 &::before {
                     left: 9.5em;
@@ -155,43 +160,47 @@
             }
         }
     }
+
     /* Media query for mobile screens */
-@media (max-width: 768px) {
-    .card{
-        .badge-banner {
-            height: 130px; /* Adjust height to 200px for mobile screens */
-        }
-        .golden-upload{
-            color: $white;
-            font-size: 17px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            padding: 12px 20px 12px 46px;
-            border-radius: 0;
-            -webkit-border-radius: 0;
-            -moz-border-radius: 0;
-            -ms-border-radius: 0;
-            -o-border-radius: 0;
-            background: $golden;
-            position: relative;
-            transition: 0.5s;
-            -webkit-transition: 0.5s;
-            -moz-transition: 0.5s;
-            -ms-transition: 0.5s;
-            -o-transition: 0.5s;
-            cursor: pointer;
-            margin-top: 20px;
-            text-decoration: none;
-            
-        }
-        .information{
-            font-size: 14px;
+    @media (max-width: 768px) {
+        .card {
+            .badge-banner {
+                height: 130px;
+                /* Adjust height to 200px for mobile screens */
+            }
+
+            .golden-upload {
+                color: $white;
+                font-size: 17px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                padding: 12px 20px 12px 46px;
+                border-radius: 0;
+                -webkit-border-radius: 0;
+                -moz-border-radius: 0;
+                -ms-border-radius: 0;
+                -o-border-radius: 0;
+                background: $golden;
+                position: relative;
+                transition: 0.5s;
+                -webkit-transition: 0.5s;
+                -moz-transition: 0.5s;
+                -ms-transition: 0.5s;
+                -o-transition: 0.5s;
+                cursor: pointer;
+                margin-top: 20px;
+                text-decoration: none;
+
+            }
+
+            .information {
+                font-size: 14px;
+            }
+
         }
 
     }
-  
-}
 
     .golden-upload-cert {
         color: $white;
@@ -199,7 +208,7 @@
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-        padding: 14px 30px;        
+        padding: 14px 30px;
         position: relative;
         transition: 0.5s;
         -webkit-transition: 0.5s;
@@ -216,8 +225,8 @@
         }
 
         &.has-file {
-           pointer-events: visible;
-           background: $golden;
+            pointer-events: visible;
+            background: $golden;
         }
     }
 
@@ -227,10 +236,12 @@
         border: none;
 
         .cerficate-external-info {
+            padding: 0 10px;
+
             .details {
                 margin-bottom: 14px;
                 // text-align: left;
-                
+
                 .heading {
                     color: #4D5060;
                     font-size: 16px;
@@ -249,6 +260,7 @@
                 }
 
                 &.varification-info {
+
                     .heading-info {
                         color: $golden;
                         font-size: 20px;
@@ -266,12 +278,14 @@
                     }
                 }
 
-             
-               
+
+
             }
         }
-        
-        .dark-card {  
+
+
+
+        .dark-card {
             background: #1C1F30;
             border: none;
             padding: 30px 40px 30px 0;
@@ -332,6 +346,34 @@
                     }
                 }
 
+                .hash-wrapper {
+                    color: $white;
+                    background: #494C59;
+                    padding: 14px 30px;
+
+                    @media (max-width: 480px) {
+                        padding: 2px 10px;
+
+                    }
+                }
+
+
+                .hash-text {
+                    color: $white;
+                    color: #FFF;
+                    font-family: Inter;
+                    font-size: 28px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+
+                    @media (max-width: 480px) {
+                        font-size: 18px;
+                        font-weight: 300;
+                        // Even smaller font size for very small devices
+                    }
+                }
+
                 .hash-info {
                     .hash-title {
                         color: $white;
@@ -388,9 +430,11 @@
             font-size: 18px;
             font-style: normal;
             font-weight: 600;
-            line-height: 28px; /* 155.556% */
+            line-height: 28px;
+            /* 155.556% */
             margin: 40px 0 20px;
         }
+
         .share-icon {
             width: 40px;
             height: 40px;
@@ -432,11 +476,11 @@
 
             .information {
                 margin-top: 10px;
-                
-                
+
+
             }
 
-            .valid-cerficate-info {    
+            .valid-cerficate-info {
                 .dark-card {
                     .certificate-internal-info {
                         .info {
@@ -464,7 +508,7 @@
 
             .golden-upload {
                 margin-top: 0;
-                
+
 
                 &.valid-again {
                     margin-top: 14px;
@@ -473,7 +517,7 @@
 
             .information {
                 margin-top: 10px;
-               
+
             }
         }
 
@@ -567,53 +611,56 @@
 
         .valid-cerficate-info {
             padding: 0;
-    
+
             .cerficate-external-info {
                 .details {
-                    &:not(:last-child) {                        margin-bottom: 14px;
+                    &:not(:last-child) {
+                        margin-bottom: 14px;
                     }
+
                     .heading {
                         font-size: 16px;
                         margin-bottom: 10px;
                     }
-    
+
                     .heading-info {
-                        font-size: 18px;
+                        font-size: 14px;
                     }
-    
+
                     &.varification-info {
-                        .heading-info {  
+                        .heading-info {
+                            width: 100%;
                             font-size: 20px;
                             padding: 14px 40px;
                         }
                     }
                 }
             }
-    
+
             .dark-card {
                 padding: 20px;
                 margin-bottom: 40px;
-    
+
                 .certificate-internal-info {
                     .badge-banner {
                         width: 100%;
                     }
-    
+
                     .hash-info {
                         .hash-title {
                             font-size: 16px;
                             margin-bottom: 10px;
                         }
-    
+
                         .hash-info {
                             font-size: 16px;
                             word-break: break-word;
                         }
-    
+
                         hr {
                             display: none;
                         }
-    
+
                         .vertical-line {
                             display: none;
                         }
@@ -621,6 +668,16 @@
                 }
             }
         }
+    }
+
+    .icon-button-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #F3F3F3;
+        margin-right: 20px;
+        width: 40px;
+        height: 40px;
     }
 }
 
@@ -631,7 +688,7 @@
         -moz-border-radius: 0;
         -ms-border-radius: 0;
         -o-border-radius: 0;
-        
+
         .modal-header {
             background: #F3F3F3;
 
@@ -659,22 +716,58 @@
             }
         }
     }
-   
+
 
 }
 
-.horizontal-line-cert{
+.bottom-verify-wrapper {
+
+    padding: 22px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.00);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.00);
+    background: linear-gradient(90deg, #FFF 0%, #F3F3F3 50%, #FFF 100%);
+}
+
+.horizontal-line-cert {
     // color:#EAEEF5;
     width: 70%;
     align-self: center;
-    
+    color: #000;
+
 }
 
-.share-text{
-    font-family:"Montserrat";
-font-size: 18px;
-font-weight: 600;
-line-height: 28px;
-text-align: center;
-color: #5B5A5F;
+.mobile-link-wrapper {
+    border: 1px solid #CFA935;
+    padding: 10px 25px;
+    cursor: pointer;
+
+    @media (min-width: $mobile-min) and (max-width: $mobile-max) {}
+
+}
+
+.responsive-image {
+    width: 108px; // Default width for desktop
+
+    @media (max-width: 480px) {
+        width: 88px; // Further adjust width for mobile devices
+    }
+}
+
+
+.text-verify {
+    color: #000;
+    text-align: center;
+    font-family: 'Inter';
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.share-text {
+    font-family: "Montserrat";
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    color: #5B5A5F;
 }
