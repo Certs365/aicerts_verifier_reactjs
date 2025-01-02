@@ -331,6 +331,7 @@
                         font-weight: 700;
                         line-height: normal;
                         padding: 14px 30px;
+
                         background: #494C59;
                         width: fit-content;
                     }
@@ -350,9 +351,11 @@
                     color: $white;
                     background: #494C59;
                     padding: 14px 30px;
+                    width: fit-content;
 
                     @media (max-width: 480px) {
                         padding: 2px 10px;
+                    width: fit-content;
 
                     }
                 }

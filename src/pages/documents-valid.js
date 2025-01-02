@@ -4,7 +4,7 @@ import { Form, Row, Col, Card, Modal, ProgressBar, Button} from 'react-bootstrap
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton,  TwitterIcon, LinkedinIcon } from 'react-share';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton,  TwitterIcon, LinkedinIcon, FacebookIcon } from 'react-share';
 import  facebookIcon  from "../../assets/facebookicon.png"
 import  linkedIcon  from "../../assets/linkedin.png"
 import  twitterIcon  from "../../assets/twitter.png"
@@ -207,7 +207,7 @@ import  androidIcon  from "../../assets/Play.png";
                                                         <div className='d-flex justify-content-start flex-column mt-4'>
                                                         <p className='share-text'>Share Your Certificate:</p>
                                                         <div className='d-flex flex-row'>
-    <FacebookShareButton url={shareUrl}>
+    {/* <FacebookShareButton url={shareUrl}>
     <div className='icon-button-wrapper'>
             <Image src={facebookIcon} alt='facebookicon' />
     </div>
@@ -221,7 +221,16 @@ import  androidIcon  from "../../assets/Play.png";
                                 <div className='icon-button-wrapper'>
             <Image src={twitterIcon} alt='twittericon' />
     </div>
-                                </TwitterShareButton>
+                                </TwitterShareButton> */}
+                                 <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-5'>
+                                                                                                <FacebookIcon size={32} round />
+                                                                                            </FacebookShareButton>
+                                                                                            <TwitterShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
+                                                                                                <TwitterIcon size={32} round />
+                                                                                            </TwitterShareButton>
+                                                                                            <LinkedinShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
+                                                                                                <LinkedinIcon size={32} round />
+                                                                                            </LinkedinShareButton>
 </div>
                                                         </div>                   
                                                         {/* <button onClick={()=>{handleShare()}}>share</button> */}
