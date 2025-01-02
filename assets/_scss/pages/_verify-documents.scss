@@ -297,9 +297,16 @@
                 right: 25px;
                 top: 25px;
                 background-image: url(/backgrounds/bubbles.svg);
-                width: 80px;
-                height: 80px;
+                width: 120px; // Bigger dots for desktop
+                height: 120px;
                 background-repeat: no-repeat;
+        
+                @media (max-width: 768px) { // Mobile styling
+                    background-image: url(/backgrounds/bubbles-small.svg);
+                    width: 80px; // Smaller dots for mobile
+                    height: 80px;
+                    right: 0px;
+                }
             }
 
             .certificate-name {
@@ -331,6 +338,7 @@
                         font-weight: 700;
                         line-height: normal;
                         padding: 14px 30px;
+
                         background: #494C59;
                         width: fit-content;
                     }
@@ -350,9 +358,11 @@
                     color: $white;
                     background: #494C59;
                     padding: 14px 30px;
+                    width: fit-content;
 
                     @media (max-width: 480px) {
                         padding: 2px 10px;
+                    width: fit-content;
 
                     }
                 }
@@ -721,11 +731,14 @@
 }
 
 .bottom-verify-wrapper {
-
+margin: 30px 0;
     padding: 22px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.00);
     border-bottom: 1px solid rgba(255, 255, 255, 0.00);
     background: linear-gradient(90deg, #FFF 0%, #F3F3F3 50%, #FFF 100%);
+}
+.text-footer-document{
+    max-width: 420px;
 }
 
 .horizontal-line-cert {
@@ -746,16 +759,18 @@
 }
 
 .responsive-image {
-    width: 108px; // Default width for desktop
+    width: 153px; // Default width for desktop
+    height: 44px;
 
     @media (max-width: 480px) {
-        width: 88px; // Further adjust width for mobile devices
+        width: 153px; // Default width for desktop
+        height: 44px;
     }
 }
 
 
 .text-verify {
-    color: #000;
+    color: #5B5A5F;
     text-align: center;
     font-family: 'Inter';
     font-size: 18px;

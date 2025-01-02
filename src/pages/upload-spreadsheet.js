@@ -70,14 +70,15 @@ const UploadSpreadsheet = () => {
       const worksheet = workbook.Sheets[firstSheetName]; // Define worksheet
   
       // Convert worksheet to JSON
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  
+      let jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+    // Remove rows with only empty cells
+    jsonData = jsonData.filter(
+      (row) => row.some((cell) => cell !== undefined && cell !== null && cell !== "")
+    );
       // Check for row limit
       if (jsonData.length > 1000) {
-        toast.error("File contains more than 1000 rows. Max limit is 1000." ,{
-          position: 'top-center',
-          autoClose: 3000
-        });
+        toast.error("File contains more than 1000 rows. Max limit is 1000.");
         setSelectedFile(null);
         return;
       }

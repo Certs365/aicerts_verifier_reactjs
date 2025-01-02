@@ -318,18 +318,40 @@ const ManualOneByOne = () => {
                                   </span>
                                 </div>
                               ))}
-                              <div
-                                contentEditable
-                                ref={inputRef}
-                                onInput={handleInput}
-                                onKeyDown={handleInput}
-                                style={{
-                                  outline: "none",
-                                  minWidth: "100px",
-                                  flexGrow: 1,
-                                  padding: "5px",
-                                }}
-                              ></div>
+                             <div
+  contentEditable
+  ref={inputRef}
+  onInput={(e) => {
+    // Fallback for handling content changes
+    if (e.target.textContent.trim() === "" && content.length > 0) {
+      removeCard(content.length - 1);
+    }
+  }}
+  onKeyDown={(e) => {
+    if (e.key === "Backspace" && e.target.textContent.trim() === "") {
+      // Remove the last card if input is empty and Backspace is pressed
+      if (content.length > 0) {
+        removeCard(content.length - 1);
+      }
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent a new line from being added in the editable div
+      const newContent = e.target.textContent.trim();
+      if (newContent) {
+        setContent((prevContent) => [...prevContent, newContent]);
+        e.target.textContent = ""; // Clear the editable div
+      }
+    }
+  }}
+  style={{
+    outline: "none",
+    minWidth: "100px",
+    flexGrow: 1,
+    padding: "5px",
+  }}
+></div>
+
                             </div>
                             <button
                               className="txt-12 fw-semibold p-2"

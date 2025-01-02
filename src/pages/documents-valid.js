@@ -4,11 +4,12 @@ import { Form, Row, Col, Card, Modal, ProgressBar, Button} from 'react-bootstrap
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton,  TwitterIcon, LinkedinIcon } from 'react-share';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton,  TwitterIcon, LinkedinIcon, FacebookIcon } from 'react-share';
 import  facebookIcon  from "../../assets/facebookicon.png"
 import  linkedIcon  from "../../assets/linkedin.png"
 import  twitterIcon  from "../../assets/twitter.png"
 import  iosIcon  from "../../assets/App Store.png";
+import  linkIcon  from "../../assets/link1.png";
 import  androidIcon  from "../../assets/Play.png";
 
     // @ts-ignore: Implicit any for children prop
@@ -132,10 +133,10 @@ import  androidIcon  from "../../assets/Play.png";
             </Head>
 
             <div className='page-bg'>
-                <div className='position-relative h-100'>
-                    <div className='vertical-center verify-cert'>
-                        <div className='container-fluid'>
-                            <Row className="justify-content-center mt-4 verify-documents">
+                <div  className='position-relative h-100'>
+                    <div  className='vertical-center verify-cert '>
+                        <div   className='container-fluid mb-5'>
+                            <Row  className="justify-content-center mt-4 verify-documents">
                                 <h1 className='title text-center'>{shareTitle}</h1>
                                 <Col xs={{ span: 12 }} md={{ span: 10 }}>
                                     <Card className='p-0 p-md-4'>
@@ -203,25 +204,20 @@ import  androidIcon  from "../../assets/Play.png";
                                                                 </div>
                                                             </div>
                                                         </Card>
-                                                        <div className='d-flex flex-column-reverse flex-md-row justify-content-between align-items-center '>
+                                                        <div className=' d-flex flex-column-reverse flex-md-row justify-content-between align-items-center '>
                                                         <div className='d-flex justify-content-start flex-column mt-4'>
                                                         <p className='share-text'>Share Your Certificate:</p>
-                                                        <div className='d-flex flex-row'>
-    <FacebookShareButton url={shareUrl}>
-    <div className='icon-button-wrapper'>
-            <Image src={facebookIcon} alt='facebookicon' />
-    </div>
-                                </FacebookShareButton>
-                                <LinkedinShareButton url={shareUrl} title={title} summary={description} source="Certs365">
-                                      <div className='icon-button-wrapper'>
-            <Image src={linkedIcon} alt='linkedinicon' />
-    </div>
-                                </LinkedinShareButton>
-                                <TwitterShareButton url={shareUrl} title={title}>
-                                <div className='icon-button-wrapper'>
-            <Image src={twitterIcon} alt='twittericon' />
-    </div>
-                                </TwitterShareButton>
+                                                        <div className='d-flex flex-row justify-content-center align-items-center mb-4'>
+    
+                                 <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-5'>
+                                                                                                <FacebookIcon size={32} round />
+                                                                                            </FacebookShareButton>
+                                                                                            <TwitterShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
+                                                                                                <TwitterIcon size={32} round />
+                                                                                            </TwitterShareButton>
+                                                                                            <LinkedinShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
+                                                                                                <LinkedinIcon size={32} round />
+                                                                                            </LinkedinShareButton>
 </div>
                                                         </div>                   
                                                         {/* <button onClick={()=>{handleShare()}}>share</button> */}
@@ -235,26 +231,7 @@ import  androidIcon  from "../../assets/Play.png";
                                                            
                                                         </Form>
                                                         </div>
-                                                        <div className='bottom-verify-wrapper mt-4 d-flex flex-column  align-items-center text-center'>
-                                                            <p className='d-flex text-center text-verify'>
-                                                            Download our app to access and verify all your certificates in one place.
-                                                            </p>
-                                                            <div className='d-flex flex-row justify-content-center'>
-                                                            <div
-    onClick={() => handleRedirect(process.env.NEXT_PUBLIC_IOS_LINK)}
-    className="mobile-link-wrapper d-flex justify-content-center align-items-center me-3"
->
-    <Image className="responsive-image" src={iosIcon} alt="iosicon" />
-</div>
-<div
-    onClick={() => handleRedirect(process.env.NEXT_PUBLIC_ANDROID_LINK)}
-    className="d-flex justify-content-center align-items-center mobile-link-wrapper"
->
-    <Image className="responsive-image" src={androidIcon} alt="iosicon" />
-</div>
-
-                                                            </div>
-                                                        </div>
+                                                       
                                                     </>
                                                 ) : (
                                                     <>
@@ -278,15 +255,40 @@ import  androidIcon  from "../../assets/Play.png";
                                                     </>
                                                 )}
                                             </Col>
+                                            
                                         </Row>
                                     </Card>
                                 </Col>
                             </Row>
+                            <div className='bottom-verify-wrapper mt-4 d-flex flex-column flex-md-row justify-content-evenly  align-items-center text-center'>
+                                                           <div className=' mt-4 d-flex flex-column  align-items-center text-center'>
+                                                            <p  className='d-flex text-center text-verify text-footer-document'>
+                                                            Download our app to access and verify all your certificates in one place.
+                                                            </p>
+                                                            <div className='d-flex flex-row justify-content-center'>
+                                                       
+    <Image onClick={() => handleRedirect(process.env.NEXT_PUBLIC_IOS_LINK)} className="responsive-image me-2" src={iosIcon} alt="iosicon" />
+    <Image onClick={() => handleRedirect(process.env.NEXT_PUBLIC_ANDROID_LINK)} className="responsive-image me-2" src={androidIcon} alt="iosicon" />
+
+                                                            </div>
+                                                           </div>
+                                                           <div className=' mt-4 d-flex flex-column  align-items-center text-center'>
+                                                            <p className='text-footer-document d-flex text-center text-verify'>
+                                                            Download our app to access and verify all your certificates in one place.
+                                                            </p>
+                                                            <div className='d-flex flex-row justify-content-center'>
+                                                       
+    <Image onClick={() => handleRedirect(process.env.NEXT_PUBLIC_NEWS_LINK)} className="responsive-image me-2" src={linkIcon} alt="iosicon" />
+
+                                                            </div>
+                                                           </div>
+
+                                                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='page-footer-bg'></div>
+            <div   className='page-footer-bg '></div>
 
             <Modal className='loader-modal' show={isLoading} centered>
                 <Modal.Body>
