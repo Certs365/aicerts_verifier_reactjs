@@ -78,10 +78,7 @@ const UploadSpreadsheet = () => {
     );
       // Check for row limit
       if (jsonData.length > 1000) {
-        toast.error("File contains more than 1000 rows. Max limit is 1000." ,{
-          position: 'top-center',
-          autoClose: 3000
-        });
+        toast.error("File contains more than 1000 rows. Max limit is 1000.");
         setSelectedFile(null);
         return;
       }
