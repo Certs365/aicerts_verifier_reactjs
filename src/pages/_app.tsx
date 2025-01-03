@@ -71,8 +71,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <div className="bot-iframe-container">
           {/* Loader */}
           {loading && (
-            <div className="iframe-loader">
+            <div className="iframe-loader ">
               <ClipLoader color="#555" size={40} />
+
             </div>
           )}
           <iframe
