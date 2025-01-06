@@ -154,7 +154,7 @@ function convertToCustomArray(jsonString) {
                                                                                 <div className='hash-title'>Name</div>
                                                                                 <div className='hash-info'>{apiData?.Details['Name'] || apiData?.Details['name']}</div>
                                                                             </Col>
-                                                                            <hr />
+                                                                            {/* <hr /> */}
                                                                             <hr className='vertical-line' />
                                                                         </Row>
                                                                     </div>
@@ -187,7 +187,7 @@ function convertToCustomArray(jsonString) {
                                                         <Form className='p-md-4 p-md-0 d-flex flex-column-reverse flex-md-column'>
 
                                                         <div style={{marginTop:"20px"}} className='d-flex flex-column flex-md-row justify-content-center justify-content-md-end align-items-center '>
-<Button href={apiData?.Details['Polygon URL'] ? ensureHttp(apiData?.Details['Polygon URL']) : ensureHttp(apiData?.Details['Verify On Blockchain'])} target="_blank" className='golden-upload-verified me-2 mb-2 mb-md-0' >
+<Button style={{marginTop:"20px"}}href={apiData?.Details['Polygon URL'] ? ensureHttp(apiData?.Details['Polygon URL']) : ensureHttp(apiData?.Details['Verify On Blockchain'])} target="_blank" className='golden-upload-verified me-2 mb-2 mb-md-0' >
                                                                         Verify on Blockchain
                                                                     </Button>    
                                                                 <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again me-2">Validate Another</Link>

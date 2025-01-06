@@ -338,22 +338,34 @@ const ManualOneByOne = () => {
     }
   }}
   onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent a new line in the editable div
+  
+      // Split by commas, trim whitespace, and filter out empty or space-only entries
+      const newContent = e.target.textContent
+        .split(',')
+        .map(item => item.trim())
+        .filter(item => item !== '' && !/\s/.test(item)); // Prevent any spaces in the value
+  
+      if (newContent.length > 0) {
+        setContent(prevContent => [...prevContent, ...newContent]);
+        e.target.textContent = ""; // Clear the editable div
+      }
+    }
+  
     if (e.key === "Backspace" && e.target.textContent.trim() === "") {
       // Remove the last card if input is empty and Backspace is pressed
       if (content.length > 0) {
         removeCard(content.length - 1);
       }
     }
-
-    if (e.key === "Enter") {
-      e.preventDefault(); // Prevent a new line from being added in the editable div
-      const newContent = e.target.textContent.trim();
-      if (newContent) {
-        setContent((prevContent) => [...prevContent, newContent]);
-        e.target.textContent = ""; // Clear the editable div
-      }
+  
+    // Prevent spaces from being typed
+    if (e.key === " ") {
+      e.preventDefault();
     }
   }}
+  
   style={{
     outline: "none",
     minWidth: "100px",
