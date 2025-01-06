@@ -270,7 +270,7 @@ const ManualOneByOne = () => {
                     <div className="" style={{ padding: "20px" }}>
                       <Form>
                         <Form.Group>
-                          <Form.Label>Certificate Number</Form.Label>
+                          <Form.Label>Certificate Number<span style={{color:"GrayText"}}> (Multiple users can we added by separating them with “,”)</span></Form.Label>
                           <div className="d-flex gap-3 flex-column flex-md-row">
                             {/* <Form.Control
                               type="text"
@@ -318,18 +318,50 @@ const ManualOneByOne = () => {
                                   </span>
                                 </div>
                               ))}
-                              <div
-                                contentEditable
-                                ref={inputRef}
-                                onInput={handleInput}
-                                onKeyDown={handleInput}
-                                style={{
-                                  outline: "none",
-                                  minWidth: "100px",
-                                  flexGrow: 1,
-                                  padding: "5px",
-                                }}
-                              ></div>
+                             <div
+  contentEditable
+  ref={inputRef}
+  onInput={(e) => {
+    // Fallback for handling content changes
+    if (e.target.textContent.trim() === "" && content.length > 0) {
+      removeCard(content.length - 1);
+    }
+  }}
+  onPaste={(e) => {
+    // Prevent image paste
+    const items = e.clipboardData.items;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf("image") !== -1) {
+        e.preventDefault(); // Prevent pasting the image
+        break;
+      }
+    }
+  }}
+  onKeyDown={(e) => {
+    if (e.key === "Backspace" && e.target.textContent.trim() === "") {
+      // Remove the last card if input is empty and Backspace is pressed
+      if (content.length > 0) {
+        removeCard(content.length - 1);
+      }
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent a new line from being added in the editable div
+      const newContent = e.target.textContent.trim();
+      if (newContent) {
+        setContent((prevContent) => [...prevContent, newContent]);
+        e.target.textContent = ""; // Clear the editable div
+      }
+    }
+  }}
+  style={{
+    outline: "none",
+    minWidth: "100px",
+    flexGrow: 1,
+    padding: "5px",
+  }}
+></div>
+
                             </div>
                             <button
                               className="txt-12 fw-semibold p-2"

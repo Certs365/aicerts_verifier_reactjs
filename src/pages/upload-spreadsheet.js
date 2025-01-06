@@ -50,14 +50,7 @@ const UploadSpreadsheet = () => {
       .toLowerCase();
 
     if (!file) {
-      toast.error("No file selected. Please choose a file.", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-          })
+      toast.error("No file selected. Please choose a file.")
       return;
     }
     const reader = new FileReader();
@@ -78,10 +71,7 @@ const UploadSpreadsheet = () => {
     );
       // Check for row limit
       if (jsonData.length > 1000) {
-        toast.error("File contains more than 1000 rows. Max limit is 1000." ,{
-          position: 'top-center',
-          autoClose: 3000
-        });
+        toast.error("File contains more than 1000 rows. Max limit is 1000.");
         setSelectedFile(null);
         return;
       }
@@ -92,14 +82,7 @@ const UploadSpreadsheet = () => {
 
     if (!validExtensions.includes(fileExtension)) {
 
-      toast.error("Only CSV, XLSX, and XLS files are supported. Please select a valid file.", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-          })
+      toast.error("Only CSV, XLSX, and XLS files are supported. Please select a valid file.")
       setSelectedFile(null); // Clear the selected file
       return;
     }
@@ -125,14 +108,7 @@ const UploadSpreadsheet = () => {
     event.preventDefault(); // Prevent default form submission
 
     if (!selectedFile) {
-      toast.error( "No valid file selected. Please upload a valid CSV, XLSX, or XLS file within the size limit.", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-    })
+      toast.error( "No valid file selected. Please upload a valid CSV, XLSX, or XLS file within the size limit.")
       return;
     }
 
@@ -155,27 +131,13 @@ const UploadSpreadsheet = () => {
         setCertificateData(response?.data);
         router.push("/uploaded-batch-verification");
       } else {
-        toast.error( "Failed to upload the file. Please try again.", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-      })
+        toast.error( "Failed to upload the file. Please try again.")
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
       console.error("Error uploading the file:", error);
-      toast.error( "An error occurred during file upload. Please try again.", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-    })
+      toast.error( "An error occurred during file upload. Please try again.")
     }
   };
 

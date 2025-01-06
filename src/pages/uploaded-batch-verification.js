@@ -187,7 +187,7 @@ const UploadedBatchVerifictionData = () => {
                 </div>
                 <Col md={{ span: 10 }}>
                   <Card
-                    className="add-recipent"
+                    className="add-recipent mb-5"
                     style={{ border: "1px solid #BFC0C2" }}
                   >
                     <div
@@ -263,7 +263,7 @@ const UploadedBatchVerifictionData = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="overflow-auto">
+                    <div className="overflow-auto ">
                       <Table>
                         <thead>
                           <tr
