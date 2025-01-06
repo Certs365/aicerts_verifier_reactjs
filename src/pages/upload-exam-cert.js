@@ -109,7 +109,6 @@ const UploadExamCertificate = () => {
                         id: certificateNumber,
                     }),
                 });
-
                 if (certificateResponse.ok) {
                     const certificateData = await certificateResponse.json();
                     const QrResponse = await fetch(`/api/fetch_student`, {
@@ -168,6 +167,7 @@ const UploadExamCertificate = () => {
                             setShow(true)
                         }
                     } else {
+
                         // Both API calls failed, handle errors
                         const errorData = await fileResponse.json();
                         if (errorData.message == 'Certification has revoked' || errorData.message == "Credential has revoked") {

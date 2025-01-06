@@ -338,33 +338,27 @@ const ManualOneByOne = () => {
     }
   }}
   onKeyDown={(e) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); // Prevent a new line in the editable div
+    // Check if Enter, Space, or Comma is pressed
+    if (e.key === "Enter" || e.key === " " || e.key === ",") {
+      e.preventDefault(); // Prevent default behavior (e.g., new lines)
   
-      // Split by commas, trim whitespace, and filter out empty or space-only entries
-      const newContent = e.target.textContent
-        .split(',')
-        .map(item => item.trim())
-        .filter(item => item !== '' && !/\s/.test(item)); // Prevent any spaces in the value
+      // Get the current content, trim it, and check if it's not empty
+      const newItem = e.target.textContent.trim();
   
-      if (newContent.length > 0) {
-        setContent(prevContent => [...prevContent, ...newContent]);
-        e.target.textContent = ""; // Clear the editable div
+      if (newItem !== "") {
+        setContent(prevContent => [...prevContent, newItem]); // Add to content
+        e.target.textContent = ""; // Clear the input field
       }
     }
   
+    // Handle Backspace to remove the last item if the input is empty
     if (e.key === "Backspace" && e.target.textContent.trim() === "") {
-      // Remove the last card if input is empty and Backspace is pressed
       if (content.length > 0) {
         removeCard(content.length - 1);
       }
     }
-  
-    // Prevent spaces from being typed
-    if (e.key === " ") {
-      e.preventDefault();
-    }
   }}
+  
   
   style={{
     outline: "none",

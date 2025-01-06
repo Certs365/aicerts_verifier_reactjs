@@ -10,8 +10,7 @@ const InvalidCertificate = () => {
     const router = useRouter();
 
     const handleUploadRedirect = () => {
-        router.push('/verify-documents');
-
+        window.location.href ='/';
     }
     const handlebackRedirect = () => {
         router.push('/verify-documents');
