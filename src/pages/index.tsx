@@ -63,6 +63,9 @@ export async function getServerSideProps(context: any) {
             const data = await res.json();
             // Set the OG image based on the API response
             ogImage = data?.details?.certificateUrl || null;
+            if(ogImage){
+                ogImage += `?t=${new Date().getTime()}`;
+            }
         } catch (error) {
             console.error("Error fetching API data:", error);
         }
