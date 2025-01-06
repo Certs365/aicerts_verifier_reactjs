@@ -30,6 +30,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 
     return (
       <>
+      <Head>
+  <link rel="icon" href="https://images.netcomlearning.com/ai-certs/favIcon.svg" />
+      </Head>
         <Component {...pageProps} router={router} />
       </>
     );
@@ -43,6 +46,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     setLoading(true);
   };
   return (
+
     <ApiDataProvider>
       <Layout />
       <ToastContainer />

@@ -281,7 +281,7 @@ const UploadExamCertificate = () => {
                                                                 <p className="selected-file-name">&nbsp;</p>
                                                             )}
                                                             <label htmlFor="fileInput" className="golden-upload mt-0 ">
-                                                                Upload Certification
+                                                            Upload Credential
                                                             </label>
 
                                                             <input

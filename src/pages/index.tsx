@@ -62,7 +62,7 @@ export async function getServerSideProps(context: any) {
             });
             const data = await res.json();
             // Set the OG image based on the API response
-            ogImage = data?.details?.certificateUrl || null;
+            ogImage = data?.details?.certificateUrl || process.env.NEXT_PUBLIC_BASE_URL_IMAGE;
             if(ogImage){
                 ogImage += `?t=${new Date().getTime()}`;
             }
