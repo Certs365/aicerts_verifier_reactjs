@@ -240,7 +240,7 @@
 
             .details {
                 margin-bottom: 14px;
-                // text-align: left;
+                text-align: left;
 
                 .heading {
                     color: #4D5060;
@@ -285,6 +285,7 @@
 
 
 
+
         .dark-card {
             background: #1C1F30;
             border: none;
@@ -300,8 +301,9 @@
                 width: 120px; // Bigger dots for desktop
                 height: 120px;
                 background-repeat: no-repeat;
-        
-                @media (max-width: 768px) { // Mobile styling
+
+                @media (max-width: 768px) {
+                    // Mobile styling
                     background-image: url(/backgrounds/bubbles-small.svg);
                     width: 80px; // Smaller dots for mobile
                     height: 80px;
@@ -362,7 +364,7 @@
 
                     @media (max-width: 480px) {
                         padding: 2px 10px;
-                    width: fit-content;
+                        width: fit-content;
 
                     }
                 }
@@ -502,6 +504,22 @@
                 }
             }
         }
+    }
+
+    .golden-upload-verified {
+        color: $golden;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        background: #F5EED7;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        -o-border-radius: 0;
+        border: none;
+        padding: 14px 40px;
     }
 
     // 1366
@@ -731,13 +749,14 @@
 }
 
 .bottom-verify-wrapper {
-margin: 30px 0;
-    padding: 22px 0;
+    margin: 30px 0;
+    padding: 22px 0 60px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.00);
     border-bottom: 1px solid rgba(255, 255, 255, 0.00);
     background: linear-gradient(90deg, #FFF 0%, #F3F3F3 50%, #FFF 100%);
 }
-.text-footer-document{
+
+.text-footer-document {
     max-width: 420px;
 }
 
