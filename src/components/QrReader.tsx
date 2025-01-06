@@ -39,14 +39,12 @@ const QrReader = () => {
   const onScanSuccess = async (result: QrScanner.ScanResult) => {
     if (loading) return;  // Prevent additional scans during loading
     setLoading(true);  // Start loading
-
     try {
       setScannedResult(result.data);
       const scannedUrl = result.data;
 
       if (scannedUrl) {
         const qrScanResponse = await apiCallWithRetries(`${apiUrl}/api/decode-qr-scan`, { receivedCode: scannedUrl });
-        
         if (qrScanResponse.status === "SUCCESS") {
           setApiData({
             Details: qrScanResponse?.Details || qrScanResponse?.details,
@@ -57,7 +55,6 @@ const QrReader = () => {
       }
     } catch (error: any) {
       setLoading(false);  // Stop loading on error
-
       if (error?.response?.data?.message === 'Certification has revoked' || error?.response?.data?.message === "Credential has revoked") {
         router.push('/certificate-revoked');
       } else {

@@ -43,7 +43,6 @@ const QRScan = () => {
                         receivedCode: paramValue.toString(),
                     }),
                 });
-
                 scanResponse = scanData ? paramValue : scanResponse;
                 if (qrScanResponse.ok) { // Check if response is successful
                     const responseData = await qrScanResponse.json(); // Parse response body as JSON
@@ -55,7 +54,6 @@ const QRScan = () => {
                         Details: responseData?.Details ? responseData?.Details : responseData?.details,
                         message: responseData?.message
                     });
-                    
                     scanFailed = false;
                 } else {
                     const responseData = await qrScanResponse.json(); // Parse response body as JSON

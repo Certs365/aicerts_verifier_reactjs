@@ -317,7 +317,7 @@ const UploadCertificate = () => {
                           <div className="d-flex flex-column align-items-center ">
                             {selectedFile ? (
                               // @ts-ignore: Implicit any for children prop
-                              <p className="selected-file-name">
+                              <p className="selected-file-name d-flex flex-column align-items-center">
                                 {selectedFile.name}
                               </p>
                             ) : (
@@ -327,7 +327,7 @@ const UploadCertificate = () => {
                               htmlFor="fileInput"
                               className="golden-upload mt-0 "
                             >
-                              Upload Certification
+                              Upload Credential
                             </label>
 
                             <input

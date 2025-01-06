@@ -30,24 +30,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 
     return (
       <>
-
-        <Head>
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content={shareTitle} />
-          <meta property="og:description" content={shareDescription} />
-          <meta property="og:image" content={imageUrl || ""} />
-          <meta property="og:image:secure_url" content={imageUrl || ""} />
-          <meta property="og:image:type" content="image/png" />
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={shareTitle} />
-          <meta name="twitter:description" content={shareDescription} />
-          <meta name="twitter:image" content={imageUrl || ""} />
-          <title>{shareTitle}</title>
-          <meta name="description" content={shareDescription} />
-          <link rel="icon" href="https://images.netcomlearning.com/ai-certs/favIcon.svg" />
-        </Head>
+      <Head>
+  <link rel="icon" href="https://images.netcomlearning.com/ai-certs/favIcon.svg" />
+      </Head>
         <Component {...pageProps} router={router} />
       </>
     );
@@ -61,6 +46,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     setLoading(true);
   };
   return (
+
     <ApiDataProvider>
       <Layout />
       <ToastContainer />
@@ -71,8 +57,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <div className="bot-iframe-container">
           {/* Loader */}
           {loading && (
-            <div className="iframe-loader">
+            <div className="iframe-loader ">
               <ClipLoader color="#555" size={40} />
+
             </div>
           )}
           <iframe

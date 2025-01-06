@@ -11,6 +11,8 @@ import  twitterIcon  from "../../assets/twitter.png"
 import  iosIcon  from "../../assets/App Store.png";
 import  linkIcon  from "../../assets/link1.png";
 import  androidIcon  from "../../assets/Play.png";
+import  downloadIcon  from "../../assets/downloadIcon.svg";
+import  communityIcon  from "../../assets/communityIcon.svg";
 
     // @ts-ignore: Implicit any for children prop
     const DocumentsValid = ({ handleFileChange, apiData, isLoading }) => {
@@ -111,30 +113,9 @@ import  androidIcon  from "../../assets/Play.png";
     }
     return (
         <>
-          
-           <Head>
-           <title>{title}</title>
-                <meta name="description" content={description} />
-                <meta property="og:title" content={title} />
-                <meta property="og:description" content={description} />
-                <meta property="og:image" content={imageUrl} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:image:type" content="image/png" />
-                <meta property="og:image:secure_url" content={imageUrl} />
-                <meta property="og:url" content={shareUrl} />
-                <meta property="og:type" content='website' />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={title} />
-                <meta name="twitter:description" content={description} />
-                <meta name="twitter:image" content={imageUrl} />
-                <meta name="description" content={description} />
-
-            </Head>
-
             <div className='page-bg'>
-                <div  className='position-relative h-100'>
-                    <div  className='vertical-center verify-cert '>
+                <div  className='position-relative h-100 '>
+                    <div  className='vertical-center verify-cert  '>
                         <div   className='container-fluid mb-5'>
                             <Row  className="justify-content-center mt-4 verify-documents">
                                 <h1 className='title text-center'>{shareTitle}</h1>
@@ -260,8 +241,8 @@ import  androidIcon  from "../../assets/Play.png";
                                     </Card>
                                 </Col>
                             </Row>
-                            <div className='bottom-verify-wrapper mt-4 d-flex flex-column flex-md-row justify-content-evenly  align-items-center text-center'>
-                                                           <div className=' mt-4 d-flex flex-column  align-items-center text-center'>
+                            <div className='bottom-verify-wrapper mt-4  d-flex flex-column align-items-center text-center'>
+                                                           {/* <div className=' mt-4 d-flex flex-column  align-items-center text-center'>
                                                             <p  className='d-flex text-center text-verify text-footer-document'>
                                                             Download our app to access and verify all your certificates in one place.
                                                             </p>
@@ -281,14 +262,18 @@ import  androidIcon  from "../../assets/Play.png";
     <Image onClick={() => handleRedirect(process.env.NEXT_PUBLIC_NEWS_LINK)} className="responsive-image me-2" src={linkIcon} alt="iosicon" />
 
                                                             </div>
-                                                           </div>
+                                                           </div> */}
+                                                           <p className='text-footer-verify'><Image src={downloadIcon} alt=''/> Download app to keep track of your credentials. <span onClick={() => handleRedirect(process.env.NEXT_PUBLIC_IOS_LINK)} className='golden_underline'>App Store</span> or <span onClick={() => handleRedirect(process.env.NEXT_PUBLIC_ANDROID_LINK)} className='golden_underline'>Play Store</span></p>
+                                                           <p className='text-footer-verify '><Image src={communityIcon} alt=''/>  Join Our Community. <span onClick={() => handleRedirect(process.env.NEXT_PUBLIC_NEWS_LINK)} className='golden_underline'>AI CERTs News</span></p>
 
                                                         </div>
+            <div style={{height:"20px"}}></div>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div   className='page-footer-bg '></div>
+            <div    className='page-footer-bg '></div>
 
             <Modal className='loader-modal' show={isLoading} centered>
                 <Modal.Body>

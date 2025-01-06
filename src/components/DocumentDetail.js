@@ -4,6 +4,8 @@ import { Form, Row, Col, Card, Modal, ProgressBar, Button} from 'react-bootstrap
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import Head from 'next/head';
+import  downloadIcon  from "../../assets/downloadIcon.svg";
+import  communityIcon  from "../../assets/communityIcon.svg";
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
 
         // @ts-ignore: Implicit any for children prop
@@ -75,7 +77,13 @@ function convertToCustomArray(jsonString) {
                     });
             }
         }, [apiData]);
+        // @ts-ignore: Implicit any for children prop
 
+        const handleRedirect = (url) => {
+            if (url) {
+                window.open(url, '_blank');
+            }
+        };
         useEffect(() => {
             if (apiData && apiData?.Details && apiData?.Details['Custom Fields']) {
               const customFields = convertToCustomArray(apiData.Details['Custom Fields']);
@@ -114,16 +122,29 @@ function convertToCustomArray(jsonString) {
                                                     <>
                                                         <Card ref={certificateRef} className='valid-cerficate-info'>
                                                             <Card className='dark-card position-relative'>
-                                                                <div className='d-block d-lg-flex justify-content-between align-items-center certificate-internal-info'>
-                                                                    <div className='badge-banner'>
-                                                                        <Image
-                                                                            src="/backgrounds/varified-certificate-badge.gif"
-                                                                            layout='fill'
-                                                                            objectFit='contain'
-                                                                            alt='Badge Banner'
-                                                                        />
-                                                                    </div>
-                                                                    <div className='hash-info'>
+ <div  className='d-block d-flex  align-items-center certificate-internal-info'>
+    <div className='badge-banner d-none d-md-flex'>
+                                                                                                                                    <Image
+                                                                                                                                        src="/backgrounds/varified-certificate-badge.gif"
+                                                                                                                                        layout='fill'
+                                                                                                                                        objectFit='contain'
+                                                                                                                                        alt='Badge Banner'
+                                                                                                                                    />
+                                                                                                                                </div>
+                                                                                                                                <div className='d-md-none'>
+                                                                                                                                    <Image
+                                                                                                                                        src="/backgrounds/varified-certificate-badge.gif"
+                                                                                                                                        width={74}
+                                                                                                                                        height={74}
+                                                                                                                                        objectFit='contain'
+                                                                                                                                        alt='Badge Banner'
+                                                                                                                                    />
+                                                                                                                                </div>
+                                                                                                                                {/* <div  className='hash-info'>
+                                                                                                                                            <div className='hash-wrapper mb-1 mb-md-4'>{apiData?.Details['Certificate Number'] ? apiData?.Details['Certificate Number'] : apiData?.Details['Certification Number'] || apiData?.Details['certificateNumber']}</div>
+                                                                                                                                            <div className='hash-info'>{apiData?.Details['Name'] || apiData?.Details['name']}</div>
+                                                                                                                                </div> */}
+                                                                            <div className='hash-info'>
                                                                         <Row className='position-relative'>
                                                                             <Col className='border-right' xs={{ span: 12 }} md={{ span: 6 }}>
                                                                                 <div className='hash-title'>Document Number</div>
@@ -133,71 +154,74 @@ function convertToCustomArray(jsonString) {
                                                                                 <div className='hash-title'>Name</div>
                                                                                 <div className='hash-info'>{apiData?.Details['Name'] || apiData?.Details['name']}</div>
                                                                             </Col>
-                                                                            <hr />
+                                                                            {/* <hr /> */}
                                                                             <hr className='vertical-line' />
                                                                         </Row>
                                                                     </div>
-                                                                </div>
-                                                            </Card>
+                                                                                                                            </div>
+                                                                                                                        </Card>
 
-                                                            <div className='cerficate-external-info d-block d-lg-flex  text-md-left text-center mb-md-0 mb-4'>
-                                                          {customFieldsArray.length > 0 &&
-                                                          
-                                                          
-                                                            <div className='col-12 col-md-6'>
-                                                            <table style={{ backgroundColor: "transparent"}} className='table table-bordered'>
-    <tbody>
-        {customFieldsArray.map((field, index) => (
-            <tr key={index} style={{ backgroundColor: "transparent" }}>
-                <td style={{ backgroundColor: "transparent",maxWidth:"200px"  }}>{Object.keys(field)[0]}</td>
-                <td style={{ backgroundColor: "transparent",maxWidth:"200px" }}>{Object.values(field)[0]}</td>
-            </tr>
-        ))}
-    </tbody>
-</table>
+                                                            <div className='cerficate-external-info'>
 
-                                                        </div>
-                                                          }
+                                                            <Row>
+  {customFieldsArray.length > 0 && customFieldsArray.map((field, index) => {
+    return (
+      <Col xs={6} md={3} key={index}>
+        <div className="details ">
+          <div className="heading">{Object.keys(field)[0]}</div>
+          <div className="heading-info">{Object.values(field)[0]}</div>
+        </div>
+      </Col>
+    );
+  })}
+   
+</Row>
+                                                           
 
-<div className={`col-12 ${customFieldsArray?.length >0 ? "col-md-6" : "col-md-12"}`}>
-                                                                <div className='details varification-info'>
-                                                                    <Button href={apiData?.Details['Polygon URL'] ? ensureHttp(apiData?.Details['Polygon URL']) : ensureHttp(apiData?.Details['Verify On Blockchain'])} target="_blank" className='heading-info' variant="primary">
-                                                                        Verify on Blockchain
-                                                                    </Button>
-                                                                </div>
-
-                                                                <Form className='p-4 p-md-0'>
-                                                            <div className='d-flex justify-content-center align-items-center'>
-                                                                <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again">Validate Another</Link>
-                                                            </div>
-                                                            <div className='information text-center'>
-                                                                Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
-                                                            </div>
-                                                        </Form>
-                                                                <div className='d-flex justify-content-center mt-4'>
-                                                        <p className='share-text'>Share Your Certificate:</p>
-                                                        </div>
-                                                        <div className='d-flex justify-content-center align-items-center '>
-                                                            <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-5'>
-                                                                <FacebookIcon size={32} round />
-                                                            </FacebookShareButton>
-                                                            <TwitterShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <TwitterIcon size={32} round />
-                                                            </TwitterShareButton>
-                                                            <LinkedinShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
-                                                                <LinkedinIcon size={32} round />
-                                                            </LinkedinShareButton>
-                                                            
-                                                        </div>
-                                                        </div>
                                                             </div>
                                                         </Card>
-                                                       
+                                                    
+<div className=' d-flex flex-column justify-content-center align-items-center '>
+                                              
+                                                        {/* <button onClick={()=>{handleShare()}}>share</button> */}
+                                                        <Form className='p-md-4 p-md-0 d-flex flex-column-reverse flex-md-column'>
+
+                                                        <div style={{marginTop:"20px"}} className='d-flex flex-column flex-md-row justify-content-center justify-content-md-end align-items-center '>
+<Button style={{marginTop:"20px"}}href={apiData?.Details['Polygon URL'] ? ensureHttp(apiData?.Details['Polygon URL']) : ensureHttp(apiData?.Details['Verify On Blockchain'])} target="_blank" className='golden-upload-verified me-2 mb-2 mb-md-0' >
+                                                                        Verify on Blockchain
+                                                                    </Button>    
+                                                                <Link href="/" onClick={handleLogoClick} className="golden-upload valid-again me-2">Validate Another</Link>
+                                                                                                     </div>
+                                                        <div className='information text-center align-items-center justify-content-center d-flex flex-column'>
+                                                            <span className='d-flex flex-row'>
+                                                                Only <strong> PDF </strong> is supported. 
+                                                            </span>
+                                                                <span>(Upto 2 MB)</span>
+                                                            </div>
+                                                           
+                                                            
+                                                           
+                                                        </Form>
+                                                        <div className='d-flex justify-content-start flex-column mt-4'>
                                                         <div className='d-flex justify-content-center'>
                                                         <hr className='horizontal-line-cert'/>
                                                         </div>
-                                                       
-                                                      
+                                                        <p className='share-text'>Share Your Certificate:</p>
+                                                        <div className='d-flex flex-row justify-content-center align-items-center mb-4'>
+    
+                                 <FacebookShareButton style={{marginRight:"5px"}} url={shareUrl} title={shareTitle} className='mr-5'>
+                                                                                                <FacebookIcon size={32} round />
+                                                                                            </FacebookShareButton>
+                                                                                            <TwitterShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
+                                                                                                <TwitterIcon size={32} round />
+                                                                                            </TwitterShareButton>
+                                                                                            <LinkedinShareButton  style={{marginRight:"5px"}}  url={shareUrl} title={shareTitle} className='mr-2'>
+                                                                                                <LinkedinIcon size={32} round />
+                                                                                            </LinkedinShareButton>
+</div>
+                                                        </div> 
+                                                        </div>   
+                                                        
                                                     </>
                                                 ) : (
                                                     <>
@@ -210,13 +234,24 @@ function convertToCustomArray(jsonString) {
                                                             />
                                                         </div>
                                                         <Form>
+                                                            
+                                                             
                                                             <div className='d-flex justify-content-center align-items-center'>
                                                                 <label htmlFor="fileInput" className="golden-upload">Validate again</label>
                                                                 <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleFileChange} />
+                                                                
                                                             </div>
+                                                             <div className='details varification-info'>
+                                                             <Button href={apiData?.Details['Polygon URL'] ? ensureHttp(apiData?.Details['Polygon URL']) : ensureHttp(apiData?.Details['Verify On Blockchain'])} target="_blank" className='heading-info' variant="primary">
+                                                                                                                                    Verify on Blockchain
+                                                                                                                                </Button>                                     
+                                                                                                                            </div>
+
+                                                          
                                                             <div className='information text-center pb-md-0 pb-4'>
                                                                 Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
                                                             </div>
+
                                                         </Form>
                                                     </>
                                                 )}
@@ -225,6 +260,11 @@ function convertToCustomArray(jsonString) {
                                     </Card>
                                 </Col>
                             </Row>
+                            <div className='bottom-verify-wrapper mt-4  d-flex flex-column align-items-center text-center'>
+                                                           <p className='text-footer-verify'><Image src={downloadIcon} alt=''/> Download app to keep track of your credentials. <span onClick={() => handleRedirect(process.env.NEXT_PUBLIC_IOS_LINK)} className='golden_underline'>App Store</span> or <span onClick={() => handleRedirect(process.env.NEXT_PUBLIC_ANDROID_LINK)} className='golden_underline'>Play Store</span></p>
+                                                           <p className='text-footer-verify '><Image src={communityIcon} alt=''/>  Join Our Community. <span onClick={() => handleRedirect(process.env.NEXT_PUBLIC_NEWS_LINK)} className='golden_underline'>AI CERTs News</span></p>
+
+                                                        </div>
                         </div>
                     </div>
                 </div>

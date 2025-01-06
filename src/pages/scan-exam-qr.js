@@ -295,7 +295,7 @@ const ScanDocuments = () => {
 
                                             <Button
                                                 className=' w-[256px] h-[50px] p-[14px] gap-[10px] border-t-2 mb-2 border-r-0 border-b-0 border-l-0 border-[#CFA935] opacity-1 rounded-0 upload cert bg-white  '
-                                                label="Upload Certificate"
+                                                label="Upload Credential"
                                                 onClick={handleClick}
                                             />
 
