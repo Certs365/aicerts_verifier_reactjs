@@ -71,6 +71,7 @@ const CertificateTemplateOne = ({ apiData }) => {
       >
         {/* Background Image */}
         <Image
+        layout='fill'
   src="https://certs365-live.s3.amazonaws.com/uploads/Certificate%20of%20Participation%2002.png"
   alt="Background"
         // @ts-ignore: Implicit any for children prop

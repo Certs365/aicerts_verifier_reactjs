@@ -10,7 +10,7 @@ const InvalidCertificate = () => {
     const router = useRouter();
 
     const handleUploadRedirect = () => {
-        window.location.href = "/";
+        router.push('/verify-documents');
     }
     const handlebackRedirect = () => {
         router.push('/verify-documents');
@@ -36,14 +36,12 @@ const InvalidCertificate = () => {
                                                 alt='Badge banner'
                                             />
                                         </div>
-                                        <Form >
                                             <div className='d-flex flex-column align-items-center'>                                                
-                                                <Button className="golden-upload" label='Upload again' onClick={handleUploadRedirect} />
+                                                <Button className="golden-upload" label='Upload again' onClick={handlebackRedirect} />
                                             </div>
                                             <div className='information text-center'>
                                                 Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
                                             </div>
-                                        </Form >
                                     </Card>
                                 </Col>
                             </Row>

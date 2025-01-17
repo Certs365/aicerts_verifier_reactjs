@@ -36,14 +36,12 @@ const InvalidPdfSize = () => {
                                                 alt='Badge banner'
                                             />
                                         </div>
-                                        <Form >
                                             <div className='d-flex flex-column align-items-center'>                                                
                                                 <Button className="golden-upload" label='Upload again' onClick={handleUploadRedirect} />
                                             </div>
                                             <div className='information text-center'>
                                                 Only <strong>PDF</strong> is supported. <br /> (Upto 2 MB)
                                             </div>
-                                        </Form >
                                     </Card>
                                 </Col>
                             </Row>
